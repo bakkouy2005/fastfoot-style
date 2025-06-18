@@ -12,7 +12,7 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 
-<header class="bg-[#0A0A0A] shadow-md">
+<header class="bg-[#293829] shadow-md">
     <div class="container mx-auto flex justify-between items-center py-4 px-6">
         <!-- Logo -->
         <a href="<?php echo esc_url(home_url('/')); ?>" class="flex items-center">
