@@ -11,6 +11,10 @@ Text Domain: fastfoot-style
 */
 
 /* Custom styles */
+body{
+    background-color: red;
+}
+
 .header {
     position: fixed;
     top: 0;
