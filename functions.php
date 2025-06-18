@@ -22,7 +22,6 @@ function fastfoot_style_setup() {
         'footer-menu'  => __('Footer Menu', 'fastfoot-style'),
     ));
 }
-add_action('init', 'fastfoot_style_setup');
 add_action('after_setup_theme', 'fastfoot_style_setup');
 
 // Enqueue styles and scripts
