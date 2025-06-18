@@ -8,7 +8,6 @@ $search_group = !empty($hero_group['search_group']) ? $hero_group['search_group'
   class="relative w-full min-h-screen bg-cover bg-center rounded-lg" 
   style="background-image: url('<?php echo !empty($hero_group['hero_background_image']) ? $hero_group['hero_background_image'] : ''; ?>');"
 >
-  <div class="absolute inset-0 bg-black/60"></div> <!-- darker overlay -->
 
   <div class="relative z-10 container mx-auto h-full px-4 py-16 flex flex-col justify-center">
     
