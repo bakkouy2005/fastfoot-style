@@ -1,6 +1,6 @@
 <?php 
 $hero_group = get_field('hero', get_the_ID());
-
+$search_group = !empty($hero_group['search_group']) ? $hero_group['search_group'] : null;
 ?>
 
 <?php if (!empty($hero_group['hero_heading']) || !empty($hero_group['hero_subtext']) || !empty($hero_group['hero_background_image'])): ?>
