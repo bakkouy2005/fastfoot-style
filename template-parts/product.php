@@ -1,7 +1,7 @@
 <?php
 $term = $args['term'] ?? '';
 $taxonomy = $args['taxonomy'] ?? 'product_cat';
-$title = $args['title'] ?? 'Producten';
+$title = $args['title'] ?? 'New collection';
 $per_page = $args['limit'] ?? 3;
 
 $args = [
@@ -17,31 +17,36 @@ $args = [
 $query = new WP_Query($args);
 ?>
 
-<section class="max-w-7xl mx-auto py-12">
-  <h2 class="text-3xl font-bold mb-6"><?php echo esc_html($title); ?></h2>
-  
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-    <?php while ($query->have_posts()) : $query->the_post(); global $product; ?>
-      <div class="bg-white rounded-xl shadow p-4 flex flex-col">
-        <a href="<?php the_permalink(); ?>">
-          <?php echo $product->get_image('woocommerce_thumbnail', ['class' => 'w-full h-64 object-cover mb-4 rounded-md']); ?>
-        </a>
-        <h3 class="text-xl font-semibold mb-2"><?php the_title(); ?></h3>
-        <p class="text-[#12A212] font-bold mb-4"><?php echo $product->get_price_html(); ?></p>
-        <a href="<?php the_permalink(); ?>" class="mt-auto text-[#12A212] font-medium hover:underline">Bekijk product</a>
-      </div>
-    <?php endwhile; wp_reset_postdata(); ?>
-  </div>
-
-  <?php if ($query->found_posts > $per_page): ?>
-    <div class="text-center mt-8">
-      <button 
-        class="view-more-btn bg-[#12A212] hover:bg-[#0e8d0e] text-white px-6 py-3 rounded transition"
-        data-category="<?php echo esc_attr($term); ?>"
-        data-limit="<?php echo esc_attr($per_page); ?>"
-      >
-        View more
-      </button>
+<section class="bg-black text-white py-12">
+  <div class="max-w-7xl mx-auto px-4">
+    <h2 class="text-4xl font-bold mb-10"><?php echo esc_html($title); ?></h2>
+    
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <?php while ($query->have_posts()) : $query->the_post(); global $product; ?>
+        <div class="group relative">
+          <div class="relative aspect-[3/4] overflow-hidden bg-[url('/wp-content/themes/fastfoot-style/assets/images/mesh-pattern.png')] bg-cover">
+            <a href="<?php the_permalink(); ?>" class="block w-full h-full">
+              <?php echo $product->get_image('woocommerce_thumbnail', ['class' => 'w-full h-full object-contain p-8 transition-transform duration-300 group-hover:scale-105']); ?>
+            </a>
+          </div>
+          <div class="mt-4">
+            <h3 class="text-xl font-medium"><?php the_title(); ?></h3>
+            <p class="text-xl mt-2">$<?php echo $product->get_price(); ?></p>
+          </div>
+        </div>
+      <?php endwhile; wp_reset_postdata(); ?>
     </div>
-  <?php endif; ?>
+
+    <?php if ($query->found_posts > $per_page): ?>
+      <div class="text-center mt-12">
+        <button 
+          class="view-more-btn inline-flex items-center justify-center px-8 py-3 border border-white text-base font-medium hover:bg-white hover:text-black transition-colors"
+          data-category="<?php echo esc_attr($term); ?>"
+          data-limit="<?php echo esc_attr($per_page); ?>"
+        >
+          View all
+        </button>
+      </div>
+    <?php endif; ?>
+  </div>
 </section>
