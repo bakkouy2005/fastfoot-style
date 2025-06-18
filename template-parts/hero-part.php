@@ -1,6 +1,6 @@
 <section 
   class="relative h-screen bg-cover bg-center" 
-  style="background-image: url('<?php the_field('hero_background_image'); ?>');"
+  style="background-image: url('<?php echo get_field('hero')['background_image']; ?>');"
 >
   <div class="absolute inset-0 bg-black/70"></div> <!-- overlay -->
 
@@ -17,10 +17,10 @@
     <!-- Heading + subheading -->
     <div class="max-w-2xl">
       <h2 class="text-3xl md:text-4xl font-bold mb-4 leading-snug">
-        <?php the_field('hero_heading'); ?>
+        <?php echo get_field('hero')['heading']; ?>
       </h2>
       <p class="text-lg md:text-xl text-gray-300 mb-8">
-        <?php the_field('hero_subtext'); ?>
+        <?php echo get_field('hero')['subtext']; ?>
       </p>
     </div>
 
@@ -30,13 +30,13 @@
         type="text" 
         name="s"
         class="flex-grow px-5 py-3 rounded-l-lg text-black text-sm md:text-base focus:outline-none"
-        placeholder="<?php the_field('hero_search_placeholder'); ?>"
+        placeholder="<?php echo get_field('hero')['search_placeholder']; ?>"
       >
       <button 
         type="submit"
         class="bg-green-500 hover:bg-green-600 text-white font-semibold px-6 py-3 rounded-r-lg transition-all duration-200"
       >
-        <?php the_field('hero_search_button_text'); ?>
+        <?php echo get_field('hero')['search_button_text']; ?>
       </button>
     </form>
 
