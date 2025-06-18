@@ -3,13 +3,26 @@
  * Theme Functions
  */
 
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
+
 // Theme setup function
 function fastfoot_style_setup() {
     // Basic theme supports
     add_theme_support('title-tag'); 
     add_theme_support('post-thumbnails'); 
     add_theme_support('block-templates'); 
-    add_theme_support('menus'); // niet verplicht, maar kan
+    add_theme_support('menus');
+    add_theme_support('custom-logo');
+    add_theme_support('automatic-feed-links');
+    add_theme_support('html5', array(
+        'search-form',
+        'comment-form',
+        'comment-list',
+        'gallery',
+        'caption',
+    ));
 
     // Navigation menus
     register_nav_menus(array(
@@ -17,10 +30,15 @@ function fastfoot_style_setup() {
         'footer-menu'  => __('Footer Menu', 'fastfoot-style'),
     ));
 }
+add_action('init', 'fastfoot_style_setup');
 add_action('after_setup_theme', 'fastfoot_style_setup');
 
-// Enqueue styles
+// Enqueue styles and scripts
 function fastfoot_style_scripts() {
+    // Tailwind CSS
+    wp_enqueue_script('tailwindcss', 'https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio', array(), '3.4.1', false);
+    
+    // Theme stylesheet
     wp_enqueue_style('fastfoot-style-style', get_stylesheet_uri(), array(), '1.0.0');
 }
 add_action('wp_enqueue_scripts', 'fastfoot_style_scripts');
