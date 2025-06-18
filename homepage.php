@@ -4,7 +4,7 @@ get_header();
 ?>
 
 <div class="">
-    <div class="container mx-auto ">
+    <div class="container  ">
         <?php get_template_part('template-parts/hero-part'); ?>
     </div>
 </div>
