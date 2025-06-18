@@ -24,38 +24,58 @@ a {
 @keyframes wave-1 {
   0% {
     transform: translateX(-100%);
+    opacity: 0.3;
   }
-  50%, 100% {
+  50% {
+    transform: translateX(0%);
+    opacity: 0.6;
+  }
+  100% {
     transform: translateX(100%);
+    opacity: 0.3;
   }
 }
 
 @keyframes wave-2 {
   0% {
     transform: translateX(-100%);
+    opacity: 0.3;
   }
-  60%, 100% {
+  50% {
+    transform: translateX(0%);
+    opacity: 0.6;
+  }
+  100% {
     transform: translateX(100%);
+    opacity: 0.3;
   }
 }
 
 @keyframes wave-3 {
   0% {
     transform: translateX(-100%);
+    opacity: 0.3;
   }
-  70%, 100% {
+  50% {
+    transform: translateX(0%);
+    opacity: 0.6;
+  }
+  100% {
     transform: translateX(100%);
+    opacity: 0.3;
   }
 }
 
 .animate-wave-1 {
-  animation: wave-1 3s infinite;
+  animation: wave-1 4s ease-in-out infinite;
 }
 
 .animate-wave-2 {
-  animation: wave-2 3s infinite;
+  animation: wave-2 4s ease-in-out infinite;
+  animation-delay: 0.5s;
 }
 
 .animate-wave-3 {
-  animation: wave-3 3s infinite;
+  animation: wave-3 4s ease-in-out infinite;
+  animation-delay: 1s;
 }
