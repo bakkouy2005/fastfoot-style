@@ -39,7 +39,7 @@ $search_group = !empty($hero_group['search_group']) ? $hero_group['search_group'
 
       <!-- Search form -->
       <?php if (!empty($search_group['search_placeholder']) && !empty($search_group['search_button_text'])): ?>
-      <form action="/search" method="get" class="w-full max-w-2xl flex items-center bg-white/5 backdrop-blur-lg rounded-lg p-1 border border-white/10 transition-all duration-300 group focus-within:bg-white/10 focus-within:border-white/20 relative overflow-hidden">
+      <form action="/search" method="get" class="w-full max-w-2xl flex items-center bg-gradient-search backdrop-blur-lg rounded-lg p-1 border border-white/10 transition-all duration-300 group focus-within:border-white/20">
         <div class="flex-grow flex items-center relative z-10">
           <svg class="w-5 h-5 text-white/60 ml-3 transition-colors duration-300 group-focus-within:text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
@@ -57,14 +57,6 @@ $search_group = !empty($hero_group['search_group']) ? $hero_group['search_group'
         >
           <?php echo $search_group['search_button_text']; ?>
         </button>
-        
-        <!-- Wave animation elements -->
-        <div class="absolute inset-0 opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 overflow-hidden">
-          <div class="absolute inset-0 bg-gradient-to-r from-white/30 via-white/20 via-sky-100/10 to-transparent animate-wave-1 rounded-full scale-y-[2.0] -skew-x-12"></div>
-          <div class="absolute inset-0 bg-gradient-to-r from-sky-50/25 via-white/15 via-sky-50/10 to-transparent animate-wave-2 rounded-full scale-y-[1.8] -skew-x-6"></div>
-          <div class="absolute inset-0 bg-gradient-to-r from-white/20 via-sky-100/15 via-white/10 to-transparent animate-wave-3 rounded-full scale-y-[2.2] -skew-x-3"></div>
-          <div class="absolute inset-0 bg-gradient-to-r from-sky-50/20 via-white/20 via-sky-100/5 to-transparent animate-wave-4 rounded-full scale-y-[1.9] -skew-x-9"></div>
-        </div>
       </form>
       <?php endif; ?>
     </div>
