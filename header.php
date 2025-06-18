@@ -28,7 +28,7 @@
             <a href="#" class="text-white hover:text-gray-300">Sale</a>
             <a href="#" class="text-white hover:text-gray-300">Contact</a>
             <div class="flex items-center space-x-6">
-            <button class="text-white bg-green-800 rounded-full p-2 hover:text-gray-300">
+            <button class="text-white bg-green-800 hover:text-gray-300">
                 <i class="fas fa-search text-xl"></i>
             </button>
             <button class="text-white hover:text-gray-300">
