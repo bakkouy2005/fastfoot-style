@@ -1,19 +1,14 @@
 <?php
 /* Template Name: Homepages */
 get_header();
-
-
 ?>
 
-<div class="">
-
-<?php get_template_part('template-parts/hero-part'); ?>
-   
+<div class="bg-[#1A1A1A]">
+    <div class="container mx-auto px-4">
+        <?php get_template_part('template-parts/hero-part'); ?>
+    </div>
 </div>
 
 <?php
-
-
 get_footer();
-
 ?>
