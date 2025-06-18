@@ -24,6 +24,22 @@ function fastfoot_style_setup() {
 }
 add_action('after_setup_theme', 'fastfoot_style_setup');
 
+// Add custom class to menu items
+function add_additional_class_on_li($classes, $item, $args) {
+    if(isset($args->add_li_class)) {
+        $classes[] = $args->add_li_class;
+    }
+    return $classes;
+}
+add_filter('nav_menu_css_class', 'add_additional_class_on_li', 1, 3);
+
+// Add custom class to menu links
+function add_menu_link_class($atts, $item, $args) {
+    $atts['class'] = 'text-white hover:text-gray-300';
+    return $atts;
+}
+add_filter('nav_menu_link_attributes', 'add_menu_link_class', 1, 3);
+
 // Enqueue styles and scripts
 function fastfoot_style_scripts() {
     // Tailwind CSS
