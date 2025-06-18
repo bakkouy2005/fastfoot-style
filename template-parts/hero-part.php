@@ -23,7 +23,7 @@ $search_group = !empty($hero_group['search_group']) ? $hero_group['search_group'
       <!-- Heading + subheading -->
       <div class="max-w-2xl mb-8">
         <?php if (!empty($hero_group['hero_heading'])): ?>
-        <h2 class="text-5xl md:text-7xl font-bold mb-6 leading-tight text-white text-start">
+        <h2 class="text-5xl md:text-7xl font-bold mb-4 leading-tight text-white text-start">
           <?php echo $hero_group['hero_heading']; ?>
         </h2>
         <?php endif; ?>
