@@ -8,17 +8,18 @@ $search_group = !empty($hero_group['search_group']) ? $hero_group['search_group'
   class="relative w-full min-h-screen bg-cover bg-center rounded-lg p-8 md:p-12" 
   style="background-image: url('<?php echo !empty($hero_group['hero_background_image']) ? $hero_group['hero_background_image'] : ''; ?>');"
 >
-  <div class="max-w-7xl mx-auto h-full relative">
-    <!-- Logo at the top -->
-    <div class="relative z-10 pt-4">
-      <h1 class="text-5xl md:text-6xl font-bold text-start">
-        <span class="text-white block">Fast Foot</span>
-        <span class="text-white/90 block">Style</span>
-      </h1>
-    </div>
+  
+  <!-- Logo at the top -->
+  <div class="relative z-10 max-w-7xl mx-auto px-8 pt-4">
+    <h1 class="text-5xl md:text-6xl font-bold text-start">
+      <span class="text-white block">Fast Foot</span>
+      <span class="text-white/90 block">Style</span>
+    </h1>
+  </div>
 
-    <!-- Content at the absolute bottom -->
-    <div class="absolute bottom-0 left-0 right-0 z-10">
+  <!-- Content at the absolute bottom -->
+  <div class="absolute bottom-0 left-0 right-0 z-10 p-8 md:p-12">
+    <div class="max-w-7xl mx-auto">
       <!-- Heading + subheading -->
       <div class="max-w-5xl mb-8">
         <?php if (!empty($hero_group['hero_heading'])): ?>
