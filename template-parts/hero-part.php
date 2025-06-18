@@ -23,13 +23,13 @@ $search_group = !empty($hero_group['search_group']) ? $hero_group['search_group'
       <!-- Heading + subheading -->
       <div class="max-w-2xl mb-8">
         <?php if (!empty($hero_group['hero_heading'])): ?>
-        <h2 class="text-4xl md:text-5xl font-bold mb-4 leading-tight text-white text-start">
+        <h2 class="text-5xl md:text-7xl font-bold mb-4 leading-tight text-white text-start">
           <?php echo $hero_group['hero_heading']; ?>
         </h2>
         <?php endif; ?>
         
         <?php if (!empty($hero_group['hero_subtext'])): ?>
-        <p class="text-xl md:text-4xl text-white/90 mb-8 text-start">
+        <p class="text-2xl md:text-6xl text-white/90 mb-8 text-start leading-tight">
           <?php echo $hero_group['hero_subtext']; ?>
         </p>
         <?php endif; ?>
