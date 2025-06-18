@@ -19,6 +19,7 @@ function fastfoot_style_enqueue_assets() {
 
 add_action('wp_enqueue_scripts', 'fastfoot_style_enqueue_assets');
 
-// Add custom classes to menu items
-
-// Default menu fallback
+function registreer_mijn_menu() {
+    register_nav_menu('menu', __('menu'));
+}
+add_action('after_setup_theme', 'registreer_mijn_menu');
