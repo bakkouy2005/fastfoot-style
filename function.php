@@ -10,6 +10,11 @@ function fastfoot_style_setup() {
     add_theme_support('post-thumbnails'); 
     add_theme_support('block-templates'); 
     add_theme_support('menus');
+
+    function registreer_mijn_menu() {
+        register_nav_menu('menu', __('menu'));
+    }
+    add_action('after_setup_theme', 'registreer_mijn_menu');
     
     // Register navigation menus
     register_nav_menus(
@@ -20,10 +25,7 @@ function fastfoot_style_setup() {
 }
 add_action('after_setup_theme', 'fastfoot_style_setup');
 
-function registreer_mijn_menu() {
-    register_nav_menu('menu', __('menu'));
-}
-add_action('after_setup_theme', 'registreer_mijn_menu');
+
 
 
 // Enqueue scripts and styles
