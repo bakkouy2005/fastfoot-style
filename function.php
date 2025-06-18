@@ -13,7 +13,7 @@ function fastfoot_style_setup() {
     // Register navigation menus
     register_nav_menus(
         array(
-            'menu-1' => esc_html__('Primary', 'fastfoot-style'),
+            'primary-menu' => esc_html__('Primary Menu', 'fastfoot-style'),
         )
     );
 }
@@ -24,14 +24,6 @@ function fastfoot_style_scripts() {
     wp_enqueue_style('fastfoot-style-style', get_stylesheet_uri(), array(), '1.0.0');
 }
 add_action('wp_enqueue_scripts', 'fastfoot_style_scripts');
-
-// Register Navigation Menus
-function register_my_menus() {
-    register_nav_menus(array(
-        'primary-menu' => __('Primary Menu', 'fastfoot-style'),
-    ));
-}
-add_action('init', 'register_my_menus');
 
 // Add custom classes to menu items
 function add_additional_class_on_li($classes, $item, $args) {
@@ -50,8 +42,3 @@ function add_menu_link_class($atts, $item, $args) {
     return $atts;
 }
 add_filter('nav_menu_link_attributes', 'add_menu_link_class', 1, 3);
-
-function register_my_menu() {
-register_nav_menu('new-menu',__( 'New Menu' ));
-}
-add_action( 'init', 'register_my_menu' );
