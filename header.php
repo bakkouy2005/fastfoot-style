@@ -21,7 +21,7 @@
         </a>
         
         <!-- Main Navigation -->
-        <nav class="hidden md:flex space-x-8 border border-[#1f241f] rounded-lg px-4 py-2">
+        <nav class="hidden md:flex space-x-8">
             <a href="#" class="text-white hover:text-gray-300">Men</a>
             <a href="#" class="text-white hover:text-gray-300">Women</a>
             <a href="#" class="text-white hover:text-gray-300">Kids</a>
