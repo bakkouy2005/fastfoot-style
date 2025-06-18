@@ -24,7 +24,7 @@
         <nav class="hidden md:flex space-x-8">
             <?php
             wp_nav_menu(array(
-                'theme_location' => 'primary-menu',
+                'theme_location' => 'menu',
                 'container' => false,
                 'menu_class' => 'flex space-x-8',
                 'fallback_cb' => 'default_menu_fallback',
