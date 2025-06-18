@@ -1,48 +1,31 @@
 <?php 
-/** 
+/**
  * Theme Functions
- * 
  */
 
 // Theme setup function
 function fastfoot_style_setup() {
+    // Basic theme supports
     add_theme_support('title-tag'); 
     add_theme_support('post-thumbnails'); 
     add_theme_support('block-templates'); 
-    add_theme_support('menus');
+    add_theme_support('menus'); // niet verplicht, maar kan
 
-    function registreer_mijn_menu() {
-        register_nav_menu('menu', __('menu'));
-    }
-    add_action('after_setup_theme', 'registreer_mijn_menu');
-    
-    // Register navigation menus
-    register_nav_menus(
-        array(
-            'menu-1' => esc_html__('Primary', 'fastfoot-style_setup'),
-        )
-    );
+    // Navigation menus
+    register_nav_menus(array(
+        'primary-menu' => __('Primary Menu', 'fastfoot-style'),
+        'footer-menu'  => __('Footer Menu', 'fastfoot-style'),
+    ));
 }
 add_action('after_setup_theme', 'fastfoot_style_setup');
 
-
-
-
-// Enqueue scripts and styles
+// Enqueue styles
 function fastfoot_style_scripts() {
     wp_enqueue_style('fastfoot-style-style', get_stylesheet_uri(), array(), '1.0.0');
 }
 add_action('wp_enqueue_scripts', 'fastfoot_style_scripts');
 
-// Register Navigation Menus
-function register_my_menus() {
-    register_nav_menus(array(
-        'primary-menu' => __('Primary Menu', 'fastfoot-style'),
-    ));
-}
-add_action('init', 'register_my_menus');
-
-// Add custom classes to menu items
+// Add custom class to <li> elements in menu
 function add_additional_class_on_li($classes, $item, $args) {
     if(isset($args->add_li_class)) {
         $classes[] = $args->add_li_class;
@@ -51,7 +34,7 @@ function add_additional_class_on_li($classes, $item, $args) {
 }
 add_filter('nav_menu_css_class', 'add_additional_class_on_li', 1, 3);
 
-// Add custom classes to menu links
+// Add custom class to <a> elements in menu
 function add_menu_link_class($atts, $item, $args) {
     if (property_exists($args, 'link_class')) {
         $atts['class'] = $args->link_class;
