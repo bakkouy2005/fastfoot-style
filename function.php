@@ -14,7 +14,7 @@ function fastfoot_style_setup() {
     // Register navigation menus
     register_nav_menus(
         array(
-            'menu-1' => esc_html__('Primary', 'fastfoot-style'),
+            'menu-1' => esc_html__('Primary', 'fastfoot-style_setup'),
         )
     );
 }
