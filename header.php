@@ -14,12 +14,6 @@
 
 <header class="bg-[#0A0A0A] shadow-md">
     <div class="container mx-auto flex justify-between items-center py-4 px-6">
-        <!-- Logo -->
-        <a href="<?php echo esc_url(home_url('/')); ?>" class="flex items-center">
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.svg" alt="FastFoot Style" class="h-8">
-            <span class="text-white text-xl font-bold ml-2">Fast Foot Style</span>
-        </a>
-        
         <!-- Main Navigation -->
         <nav class="hidden md:flex space-x-8">
             <a href="#" class="text-white hover:text-gray-300">Men</a>
@@ -29,8 +23,15 @@
             <a href="#" class="text-white hover:text-gray-300">Contact</a>
         </nav>
 
-        <!-- Icons -->
+        <!-- Logo and Icons Group -->
         <div class="flex items-center space-x-6">
+            <!-- Logo -->
+            <a href="<?php echo esc_url(home_url('/')); ?>" class="flex items-center">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.svg" alt="FastFoot Style" class="h-8">
+                <span class="text-white text-xl font-bold ml-2">Fast Foot Style</span>
+            </a>
+            
+            <!-- Icons -->
             <button class="text-white hover:text-gray-300">
                 <i class="fas fa-search text-xl"></i>
             </button>
