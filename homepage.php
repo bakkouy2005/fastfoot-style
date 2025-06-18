@@ -6,6 +6,7 @@ get_header();
 <div class="">
     <div class="container mx-auto ">
         <?php get_template_part('template-parts/hero-part'); ?>
+        <?php get_template_part('template-parts/retro-hero-part'); ?>
     </div>
 </div>
 
