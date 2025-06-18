@@ -4,6 +4,15 @@
  * 
  */
 
+// Theme setup function
+function fastfoot_style_setup() {
+    add_theme_support('title-tag'); 
+    add_theme_support('post-thumbnails'); 
+    add_theme_support('block-templates'); 
+    add_theme_support('menus');
+}
+add_action('after_setup_theme', 'fastfoot_style_setup');
+
 function fastfoot_style_enqueue_assets() {
     // Tailwind CSS
     wp_enqueue_script('tailwindcss', 'https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio', array(), '3.4.1', false);
