@@ -5,7 +5,7 @@ $search_group = !empty($hero_group['search_group']) ? $hero_group['search_group'
 
 <?php if (!empty($hero_group['hero_heading']) || !empty($hero_group['hero_subtext']) || !empty($hero_group['hero_background_image'])): ?>
 <section 
-  class="relative w-full min-h-screen bg-cover bg-center bg-black rounded-lg  
+  class="relative w-full min-h-screen bg-cover bg-center bg-black rounded-lg mt-6" 
   style="background-image: url('<?php echo !empty($hero_group['hero_background_image']) ? $hero_group['hero_background_image'] : ''; ?>');"
 >
   <div class="absolute inset-0 bg-black/60"></div> <!-- darker overlay -->
