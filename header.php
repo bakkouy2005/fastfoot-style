@@ -16,7 +16,7 @@
     <div class="container mx-auto flex justify-between items-center py-4 px-6">
         <!-- Logo -->
         <a href="<?php echo esc_url(home_url('/')); ?>" class="flex items-center">
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.png" alt="FastFoot Style" class="h-8">
+            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.svg" alt="FastFoot Style" class="h-8">
             <span class="text-white text-xl font-bold ml-2">Fast Foot Style</span>
         </a>
         
