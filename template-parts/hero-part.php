@@ -3,65 +3,56 @@ $hero_group = get_field('hero', get_the_ID());
 $search_group = !empty($hero_group['search_group']) ? $hero_group['search_group'] : null;
 ?>
 
-<div class="bg-[#1A1A1A] w-full">
-  <?php if (!empty($hero_group['hero_heading']) || !empty($hero_group['hero_subtext']) || !empty($hero_group['hero_background_image'])): ?>
-  <div class="container mx-auto px-4">
-    <section 
-      class="relative w-full min-h-screen bg-cover bg-center bg-black" 
-      style="background-image: url('<?php echo !empty($hero_group['hero_background_image']) ? $hero_group['hero_background_image'] : ''; ?>');"
-    >
-      <div class="absolute inset-0 bg-black/60"></div> <!-- darker overlay -->
+<?php if (!empty($hero_group['hero_heading']) || !empty($hero_group['hero_subtext']) || !empty($hero_group['hero_background_image'])): ?>
+<section 
+  class="relative h-screen bg-cover bg-center" 
+  style="background-image: url('<?php echo !empty($hero_group['hero_background_image']) ? $hero_group['hero_background_image'] : ''; ?>');"
+>
+  <div class="absolute inset-0 bg-black/70"></div> <!-- overlay -->
 
-      <div class="relative z-10 h-full py-16 flex flex-col justify-center">
-        
-        <!-- Logo -->
-        <div class="mb-12">
-          <h1 class="text-5xl md:text-6xl font-bold text-start">
-            <span class="text-white block">Fast Foot</span>
-            <span class="text-white/90 block">Style</span>
-          </h1>
-        </div>
+  <div class="relative z-10 flex flex-col items-center justify-center h-full px-4 text-center text-white">
+    
+    <!-- Logo -->
+    <div class="mb-6">
+      <h1 class="text-5xl md:text-6xl font-extrabold leading-tight">
+        <span class="text-white">Fast Foot</span>
+        <span class="text-neutral-300">Style</span>
+      </h1>
+    </div>
 
-        <!-- Heading + subheading -->
-        <div class="max-w-2xl">
-          <?php if (!empty($hero_group['hero_heading'])): ?>
-          <h2 class="text-4xl md:text-5xl font-bold mb-4 leading-tight text-white text-start">
-            <?php echo $hero_group['hero_heading']; ?>
-          </h2>
-          <?php endif; ?>
-          
-          <?php if (!empty($hero_group['hero_subtext'])): ?>
-          <p class="text-xl md:text-2xl text-white/90 mb-12 text-start">
-            <?php echo $hero_group['hero_subtext']; ?>
-          </p>
-          <?php endif; ?>
-        </div>
+    <!-- Heading + subheading -->
+    <div class="max-w-2xl">
+      <?php if (!empty($hero_group['hero_heading'])): ?>
+      <h2 class="text-3xl md:text-4xl font-bold mb-4 leading-snug">
+        <?php echo $hero_group['hero_heading']; ?>
+      </h2>
+      <?php endif; ?>
+      
+      <?php if (!empty($hero_group['hero_subtext'])): ?>
+      <p class="text-lg md:text-xl text-gray-300 mb-8">
+        <?php echo $hero_group['hero_subtext']; ?>
+      </p>
+      <?php endif; ?>
+    </div>
 
-        <!-- Search form -->
-        <?php if (!empty($search_group['search_placeholder']) && !empty($search_group['search_button_text'])): ?>
-        <form action="/search" method="get" class="w-full max-w-2xl flex items-center bg-black/30 rounded-lg p-1">
-          <div class="flex-grow flex items-center">
-            <svg class="w-5 h-5 text-white/60 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-            </svg>
-            <input 
-              type="text" 
-              name="s"
-              class="w-full px-4 py-3 bg-transparent text-white placeholder-white/60 text-base focus:outline-none"
-              placeholder="<?php echo $search_group['search_placeholder']; ?>"
-            >
-          </div>
-          <button 
-            type="submit"
-            class="px-8 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-md transition-all duration-200"
-          >
-            <?php echo $search_group['search_button_text']; ?>
-          </button>
-        </form>
-        <?php endif; ?>
+    <!-- Search form -->
+    <?php if (!empty($search_group['search_placeholder']) && !empty($search_group['search_button_text'])): ?>
+    <form action="/search" method="get" class="w-full max-w-xl flex items-center">
+      <input 
+        type="text" 
+        name="s"
+        class="flex-grow px-5 py-3 rounded-l-lg text-black text-sm md:text-base focus:outline-none"
+        placeholder="<?php echo $search_group['search_placeholder']; ?>"
+      >
+      <button 
+        type="submit"
+        class="bg-green-500 hover:bg-green-600 text-white font-semibold px-6 py-3 rounded-r-lg transition-all duration-200"
+      >
+        <?php echo $search_group['search_button_text']; ?>
+      </button>
+    </form>
+    <?php endif; ?>
 
-      </div>
-    </section>
   </div>
-  <?php endif; ?>
-</div>
+</section>
+<?php endif; ?>
