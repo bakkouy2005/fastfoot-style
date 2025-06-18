@@ -40,7 +40,7 @@ $search_group = !empty($hero_group['search_group']) ? $hero_group['search_group'
       <form action="/search" method="get" class="w-full max-w-2xl flex items-center bg-[#1C261C] rounded-lg p-1">
         <div class="flex-grow flex items-center">
           <svg class="w-5 h-5 text-white/60 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="0" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
           </svg>
           <input 
             type="text" 
