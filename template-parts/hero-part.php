@@ -29,7 +29,7 @@ $search_group = !empty($hero_group['search_group']) ? $hero_group['search_group'
         <?php endif; ?>
         
         <?php if (!empty($hero_group['hero_subtext'])): ?>
-        <p class="text-xl md:text-2xl text-white/90 mb-8 text-start">
+        <p class="text-xl md:text-4xl text-white/90 mb-8 text-start">
           <?php echo $hero_group['hero_subtext']; ?>
         </p>
         <?php endif; ?>
