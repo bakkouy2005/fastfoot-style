@@ -14,41 +14,25 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 
-<header class="site-header">
+<header class="glass-effect fixed top-0 left-0 right-0 z-50 shadow-lg">
     <div class="container mx-auto flex justify-between items-center py-4 px-6">
         <!-- Logo -->
-        <a href="<?php echo esc_url(home_url('/')); ?>" class="flex items-center">
-            <img src="<?php echo get_template_directory_uri(); ?>/images/image copy 2.png" alt="Fast Foot Style" class="h-22 md:h-20 w-auto ">
-        </a>
-        
-        <!-- Main Navigation -->
-        <nav class="hidden md:flex space-x-8">
+        <div class="flex items-center">
+            <a href="<?php echo home_url(); ?>" class="text-white text-2xl font-bold">
+                <?php bloginfo('name'); ?>
+            </a>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="flex items-center">
             <?php
             wp_nav_menu(array(
                 'theme_location' => 'primary-menu',
                 'container' => false,
-                'menu_class' => 'flex space-x-8',
-                'fallback_cb' => 'default_menu_fallback',
-                'items_wrap' => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+                'menu_class' => 'flex items-center space-x-6',
                 'add_li_class' => 'text-white'
             ));
             ?>
-            <div class="flex items-center space-x-6">
-                <button class="text-white bg-[#333d33] hover:text-gray-300 rounded-xl p-2 px-3">
-                    <i class="fas fa-search text-xl"></i>
-                </button>
-                <button class="text-white bg-[#333d33] hover:text-gray-300 rounded-xl p-2 px-3">
-                    <i class="fas fa-user text-xl"></i>
-                </button>
-                <button class="text-white bg-[#333d33] hover:text-gray-300 rounded-xl p-2 px-3">
-                    <i class="fas fa-shopping-bag text-xl"></i>
-                </button>
-            </div>
         </nav>
-
-        <!-- Mobile Menu Button -->
-        <button class="md:hidden text-white">
-            <i class="fas fa-bars text-xl"></i>
-        </button>
     </div>
 </header>
