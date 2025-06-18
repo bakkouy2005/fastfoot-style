@@ -60,9 +60,10 @@ $search_group = !empty($hero_group['search_group']) ? $hero_group['search_group'
         
         <!-- Wave animation elements -->
         <div class="absolute inset-0 opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 overflow-hidden">
-          <div class="absolute inset-0 bg-gradient-to-r from-white/20 via-white/10 to-transparent animate-wave-1 rounded-full scale-y-[2.0] -skew-x-12"></div>
-          <div class="absolute inset-0 bg-gradient-to-r from-white/20 via-white/10 to-transparent animate-wave-2 rounded-full scale-y-[1.8] -skew-x-6"></div>
-          <div class="absolute inset-0 bg-gradient-to-r from-white/20 via-white/10 to-transparent animate-wave-3 rounded-full scale-y-[2.2] -skew-x-3"></div>
+          <div class="absolute inset-0 bg-gradient-to-r from-white/30 via-white/20 via-sky-100/10 to-transparent animate-wave-1 rounded-full scale-y-[2.0] -skew-x-12"></div>
+          <div class="absolute inset-0 bg-gradient-to-r from-sky-50/25 via-white/15 via-sky-50/10 to-transparent animate-wave-2 rounded-full scale-y-[1.8] -skew-x-6"></div>
+          <div class="absolute inset-0 bg-gradient-to-r from-white/20 via-sky-100/15 via-white/10 to-transparent animate-wave-3 rounded-full scale-y-[2.2] -skew-x-3"></div>
+          <div class="absolute inset-0 bg-gradient-to-r from-sky-50/20 via-white/20 via-sky-100/5 to-transparent animate-wave-4 rounded-full scale-y-[1.9] -skew-x-9"></div>
         </div>
       </form>
       <?php endif; ?>
