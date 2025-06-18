@@ -1,1 +1,10 @@
- 
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="mesh" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M0 20h40M20 0v40" stroke="#333" stroke-width="1" fill="none"/>
+      <path d="M0 0l40 40M40 0L0 40" stroke="#333" stroke-width="0.5" fill="none"/>
+    </pattern>
+  </defs>
+  <rect width="40" height="40" fill="url(#mesh)"/>
+</svg> 
