@@ -28,16 +28,16 @@
             <a href="#" class="text-white hover:text-gray-300">Sale</a>
             <a href="#" class="text-white hover:text-gray-300">Contact</a>
             <div class="flex items-center space-x-6">
-                <button class="text-[#1f241f] hover:text-white">
-                    <i class="fas fa-search text-xl"></i>
-                </button>
-                <button class="text-[#1f241f] hover:text-white">
-                    <i class="fas fa-user text-xl"></i>
-                </button>
-                <button class="text-[#1f241f] hover:text-white">
-                    <i class="fas fa-shopping-bag text-xl"></i>
-                </button>
-            </div>
+            <button class="text-white hover:text-gray-300">
+                <i class="fas fa-search text-xl"></i>
+            </button>
+            <button class="text-white hover:text-gray-300">
+                <i class="fas fa-user text-xl"></i>
+            </button>
+            <button class="text-white hover:text-gray-300">
+                <i class="fas fa-shopping-bag text-xl"></i>
+            </button>
+        </div>
         </nav>
 
         <!-- Icons -->
