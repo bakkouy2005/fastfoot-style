@@ -51,7 +51,7 @@ $search_group = !empty($hero_group['search_group']) ? $hero_group['search_group'
         </div>
         <button 
           type="submit"
-          class="px-8 py-3 bg-green-600 hover:bg-[#12A112] text-white font-medium rounded-md transition-all duration-200"
+          class="px-8 py-3 bg-[#12A112] hover:bg-green-700 text-white font-medium rounded-md transition-all duration-200"
         >
           <?php echo $search_group['search_button_text']; ?>
         </button>
