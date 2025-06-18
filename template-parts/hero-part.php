@@ -60,9 +60,9 @@ $search_group = !empty($hero_group['search_group']) ? $hero_group['search_group'
         
         <!-- Wave animation elements -->
         <div class="absolute inset-0 opacity-0 group-focus-within:opacity-100 transition-opacity duration-300">
-          <div class="absolute inset-0 bg-gradient-to-r from-white/5 to-transparent animate-wave-1"></div>
-          <div class="absolute inset-0 bg-gradient-to-r from-white/5 to-transparent animate-wave-2 delay-100"></div>
-          <div class="absolute inset-0 bg-gradient-to-r from-white/5 to-transparent animate-wave-3 delay-200"></div>
+          <div class="absolute inset-0 bg-gradient-to-r from-white/20 via-white/10 to-transparent animate-wave-1"></div>
+          <div class="absolute inset-0 bg-gradient-to-r from-white/20 via-white/10 to-transparent animate-wave-2"></div>
+          <div class="absolute inset-0 bg-gradient-to-r from-white/20 via-white/10 to-transparent animate-wave-3"></div>
         </div>
       </form>
       <?php endif; ?>
