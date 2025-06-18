@@ -49,10 +49,10 @@ function fastfoot_style_scripts() {
     wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css', array(), '5.15.4');
     
     // Global styles
-    wp_enqueue_style('fastfoot-style-global', get_template_directory_uri() . '/global.css', array(), '1.0.0');
+    wp_enqueue_style('fastfoot-style-global', get_template_directory_uri() . '/global.css', array(), time());
     
     // Theme stylesheet
-    wp_enqueue_style('fastfoot-style', get_stylesheet_uri(), array('fastfoot-style-global'), '1.0.0');
+    wp_enqueue_style('fastfoot-style', get_stylesheet_uri(), array('fastfoot-style-global'), time());
 
     // Tailwind Config
     wp_add_inline_script('tailwindcss', "
