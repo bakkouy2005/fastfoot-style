@@ -21,10 +21,10 @@ function fastfoot_style_setup() {
 add_action('after_setup_theme', 'fastfoot_style_setup');
 
 // Enqueue scripts and styles
-function fastfoot_style_scripts() {
-    wp_enqueue_style('fastfoot-style-style', get_stylesheet_uri(), array(), '1.0.0');
+function registreer_mijn_menu() {
+    register_nav_menu('menu', __('menu'));
 }
-add_action('wp_enqueue_scripts', 'fastfoot_style_scripts');
+add_action('after_setup_theme', 'registreer_mijn_menu');
 
 // Add custom classes to menu items
 
