@@ -4,12 +4,13 @@ $search_group = !empty($hero_group['search_group']) ? $hero_group['search_group'
 ?>
 
 <?php if (!empty($hero_group['hero_heading']) || !empty($hero_group['hero_subtext']) || !empty($hero_group['hero_background_image'])): ?>
-<section class="p-8"
-  class="relative w-full min-h-screen bg-cover bg-center rounded-lg" 
+<section 
+  class="relative w-full min-h-screen bg-cover bg-center rounded-lg p-8 md:p-12" 
   style="background-image: url('<?php echo !empty($hero_group['hero_background_image']) ? $hero_group['hero_background_image'] : ''; ?>');"
 >
+  <div class="absolute inset-0 bg-black/60 rounded-lg"></div> <!-- darker overlay -->
 
-  <div class="relative z-10 container mx-auto h-full px-4 py-16 flex flex-col justify-center">
+  <div class="relative z-10 h-full flex flex-col justify-center max-w-7xl mx-auto px-8">
     
     <!-- Logo -->
     <div class="mb-12">
