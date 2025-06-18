@@ -34,7 +34,7 @@
             <button class="text-white hover:text-gray-300">
                 <i class="fas fa-user text-xl"></i>
             </button>
-            <button class="text-white hover:text-gray-300">
+            <button class="text-white bg-[#293129] hover:text-gray-300">
                 <i class="fas fa-shopping-bag text-xl"></i>
             </button>
         </div>
