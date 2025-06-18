@@ -8,7 +8,7 @@ $search_group = !empty($hero_group['search_group']) ? $hero_group['search_group'
   class="relative w-full h-[85vh] bg-cover bg-center rounded-xl p-8  my-8" 
   style="background-image: url('<?php echo !empty($hero_group['hero_background_image']) ? $hero_group['hero_background_image'] : ''; ?>');"
 >
-<div>
+<div class="max-w-7xl mx-auto">
   
   <!-- Logo at the top -->
   <div class="relative z-10 mx-auto pt-4">
