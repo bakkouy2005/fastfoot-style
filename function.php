@@ -1,4 +1,8 @@
 <?php 
+/** 
+ * Theme Functions
+ * 
+ */
 
 // Theme setup function
 function fastfoot_style_setup() {
