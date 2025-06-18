@@ -16,3 +16,42 @@ button:focus-visible {
 a {
   text-decoration: none;
 }
+
+@keyframes wave-1 {
+  0% {
+    transform: translateX(-100%);
+  }
+  50%, 100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes wave-2 {
+  0% {
+    transform: translateX(-100%);
+  }
+  60%, 100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes wave-3 {
+  0% {
+    transform: translateX(-100%);
+  }
+  70%, 100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-wave-1 {
+  animation: wave-1 3s infinite;
+}
+
+.animate-wave-2 {
+  animation: wave-2 3s infinite;
+}
+
+.animate-wave-3 {
+  animation: wave-3 3s infinite;
+}
