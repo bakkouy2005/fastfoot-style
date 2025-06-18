@@ -16,8 +16,18 @@ body {
 }
 /* Test style to verify CSS loading */
 .site-header {
-  border-bottom: 3px solid #12A212;
-  animation: testColor 2s infinite;
+  background: linear-gradient(
+    45deg,
+    rgba(24, 29, 24, 0.9) 0%,
+    rgba(51, 61, 51, 0.9) 25%,
+    rgba(24, 29, 24, 0.9) 50%,
+    rgba(51, 61, 51, 0.9) 75%,
+    rgba(24, 29, 24, 0.9) 100%
+  );
+  background-size: 400% 400%;
+  animation: headerWave 15s ease infinite;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 /* a blue color as a generic focus style */
 button:focus-visible {
@@ -109,4 +119,20 @@ a {
   animation: wave-4 5.8s ease-in-out infinite;
   animation-delay: 0.5s;
   transform-origin: center;
+}
+
+/* Header animation */
+@keyframes headerWave {
+  0% {
+    background-position: 0% 50%;
+    filter: brightness(1);
+  }
+  50% {
+    background-position: 100% 50%;
+    filter: brightness(1.2);
+  }
+  100% {
+    background-position: 0% 50%;
+    filter: brightness(1);
+  }
 }
