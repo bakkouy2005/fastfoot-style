@@ -45,7 +45,7 @@ $search_group = !empty($hero_group['search_group']) ? $hero_group['search_group'
           <input 
             type="text" 
             name="s"
-            class="w-full px-4 py-3 bg-[#1C261C] text-white placeholder-white/60 text-base focus:outline-none"
+            class="w-full px-4 py-3 bg-[#1C261C] text-white text-base focus:outline-none"
             placeholder="<?php echo $search_group['search_placeholder']; ?>"
           >
         </div>
