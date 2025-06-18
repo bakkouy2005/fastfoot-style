@@ -10,16 +10,16 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 
-<header class="site-header">
-    <div class="container mx-auto flex justify-between items-center py-2 px-0">
+<header class="site-header fixed w-full top-0 z-50">
+    <div class="container mx-auto flex justify-between items-center py-4 px-4">
         <!-- Logo -->
-        <a href="<?php echo esc_url(home_url('/')); ?>" class="flex items-center">
-            <img src="<?php echo get_template_directory_uri(); ?>/images/image copy 2.png" alt="Fast Foot Style" class="h-22 md:h-20 w-auto ">
+        <a href="<?php echo esc_url(home_url('/')); ?>" class="flex items-center relative z-10">
+            <img src="<?php echo get_template_directory_uri(); ?>/images/image copy 2.png" alt="Fast Foot Style" class="h-22 md:h-20 w-auto">
         </a>
         
         <!-- Main Navigation -->
-        <nav class="hidden md:flex space-x-8">
-        <?php
+        <nav class="hidden md:flex space-x-8 relative z-10">
+            <?php
             wp_nav_menu(array(
                 'theme_location' => 'primary-menu',
                 'container' => false,
@@ -28,21 +28,24 @@
             ));
             ?>
             <div class="flex items-center space-x-6">
-                <button class="text-white bg-[#333d33] hover:text-gray-300 rounded-xl p-2 px-3">
+                <button class="text-white bg-[#333d33]/80 hover:bg-[#333d33] rounded-xl p-2 px-3 transition-all duration-300">
                     <i class="fas fa-search text-xl"></i>
                 </button>
-                <button class="text-white bg-[#333d33] hover:text-gray-300 rounded-xl p-2 px-3">
+                <button class="text-white bg-[#333d33]/80 hover:bg-[#333d33] rounded-xl p-2 px-3 transition-all duration-300">
                     <i class="fas fa-user text-xl"></i>
                 </button>
-                <button class="text-white bg-[#333d33] hover:text-gray-300 rounded-xl p-2 px-3">
+                <button class="text-white bg-[#333d33]/80 hover:bg-[#333d33] rounded-xl p-2 px-3 transition-all duration-300">
                     <i class="fas fa-shopping-bag text-xl"></i>
                 </button>
             </div>
         </nav>
 
         <!-- Mobile Menu Button -->
-        <button class="md:hidden text-white">
+        <button class="md:hidden text-white relative z-10">
             <i class="fas fa-bars text-xl"></i>
         </button>
     </div>
 </header>
+
+<!-- Spacer to prevent content from going under fixed header -->
+<div class="h-32"></div>
