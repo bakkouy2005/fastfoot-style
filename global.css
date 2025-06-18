@@ -38,89 +38,6 @@ a {
   text-decoration: none;
 }
 
-@keyframes wave-1 {
-  0% {
-    transform: translateX(-100%) translateY(10%) rotate(-2deg);
-    opacity: 0.3;
-  }
-  50% {
-    transform: translateX(0%) translateY(-5%) rotate(1deg);
-    opacity: 0.6;
-  }
-  100% {
-    transform: translateX(100%) translateY(10%) rotate(-1deg);
-    opacity: 0.3;
-  }
-}
-
-@keyframes wave-2 {
-  0% {
-    transform: translateX(-100%) translateY(-5%) rotate(1deg);
-    opacity: 0.3;
-  }
-  50% {
-    transform: translateX(0%) translateY(8%) rotate(-2deg);
-    opacity: 0.6;
-  }
-  100% {
-    transform: translateX(100%) translateY(-5%) rotate(2deg);
-    opacity: 0.3;
-  }
-}
-
-@keyframes wave-3 {
-  0% {
-    transform: translateX(-100%) translateY(5%) rotate(-1deg);
-    opacity: 0.3;
-  }
-  50% {
-    transform: translateX(0%) translateY(-8%) rotate(2deg);
-    opacity: 0.6;
-  }
-  100% {
-    transform: translateX(100%) translateY(5%) rotate(-2deg);
-    opacity: 0.3;
-  }
-}
-
-@keyframes wave-4 {
-  0% {
-    transform: translateX(-100%) translateY(-8%) rotate(2deg);
-    opacity: 0.3;
-  }
-  50% {
-    transform: translateX(0%) translateY(6%) rotate(-1deg);
-    opacity: 0.6;
-  }
-  100% {
-    transform: translateX(100%) translateY(-8%) rotate(1deg);
-    opacity: 0.3;
-  }
-}
-
-.animate-wave-1 {
-  animation: wave-1 5s ease-in-out infinite;
-  transform-origin: center;
-}
-
-.animate-wave-2 {
-  animation: wave-2 5.5s ease-in-out infinite;
-  animation-delay: 0.3s;
-  transform-origin: center;
-}
-
-.animate-wave-3 {
-  animation: wave-3 6s ease-in-out infinite;
-  animation-delay: 0.7s;
-  transform-origin: center;
-}
-
-.animate-wave-4 {
-  animation: wave-4 5.8s ease-in-out infinite;
-  animation-delay: 0.5s;
-  transform-origin: center;
-}
-
 /* Header animation */
 @keyframes headerWave {
   0% {
@@ -135,4 +52,29 @@ a {
     background-position: 0% 50%;
     filter: brightness(1);
   }
+}
+
+/* Search bar gradient */
+.bg-gradient-search {
+  background: linear-gradient(
+    45deg,
+    rgba(24, 29, 24, 0.7) 0%,
+    rgba(51, 61, 51, 0.7) 25%,
+    rgba(24, 29, 24, 0.7) 50%,
+    rgba(51, 61, 51, 0.7) 75%,
+    rgba(24, 29, 24, 0.7) 100%
+  );
+  background-size: 400% 400%;
+  animation: headerWave 15s ease infinite;
+}
+
+.bg-gradient-search:focus-within {
+  background: linear-gradient(
+    45deg,
+    rgba(24, 29, 24, 0.8) 0%,
+    rgba(51, 61, 51, 0.8) 25%,
+    rgba(24, 29, 24, 0.8) 50%,
+    rgba(51, 61, 51, 0.8) 75%,
+    rgba(24, 29, 24, 0.8) 100%
+  );
 }
