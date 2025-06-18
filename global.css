@@ -73,6 +73,21 @@ a {
   }
 }
 
+@keyframes wave-4 {
+  0% {
+    transform: translateX(-100%) translateY(-8%) rotate(2deg);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateX(0%) translateY(6%) rotate(-1deg);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateX(100%) translateY(-8%) rotate(1deg);
+    opacity: 0.3;
+  }
+}
+
 .animate-wave-1 {
   animation: wave-1 5s ease-in-out infinite;
   transform-origin: center;
@@ -80,12 +95,18 @@ a {
 
 .animate-wave-2 {
   animation: wave-2 5.5s ease-in-out infinite;
-  animation-delay: 0.5s;
+  animation-delay: 0.3s;
   transform-origin: center;
 }
 
 .animate-wave-3 {
   animation: wave-3 6s ease-in-out infinite;
-  animation-delay: 1s;
+  animation-delay: 0.7s;
+  transform-origin: center;
+}
+
+.animate-wave-4 {
+  animation: wave-4 5.8s ease-in-out infinite;
+  animation-delay: 0.5s;
   transform-origin: center;
 }
