@@ -27,7 +27,7 @@
                 'theme_location' => 'primary-menu',
                 'container' => false,
                 'menu_class' => 'flex space-x-8',
-                'fallback_cb' => false,
+                'fallback_cb' => 'default_menu_fallback',
                 'items_wrap' => '<ul id="%1$s" class="%2$s">%3$s</ul>',
                 'add_li_class' => 'text-white hover:text-gray-300'
             ));
