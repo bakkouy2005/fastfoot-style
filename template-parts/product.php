@@ -17,7 +17,7 @@ $args = [
 $query = new WP_Query($args);
 ?>
 
-<section class="bg-black text-white py-12">
+<section class=" text-white py-12">
   <div class="max-w-7xl mx-auto px-4">
     <h2 class="text-4xl font-bold mb-10"><?php echo esc_html($title); ?></h2>
     
