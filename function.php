@@ -50,3 +50,12 @@ function add_menu_link_class($atts, $item, $args) {
     return $atts;
 }
 add_filter('nav_menu_link_attributes', 'add_menu_link_class', 1, 3);
+
+1
+2
+3
+4
+function register_my_menu() {
+register_nav_menu('new-menu',__( 'New Menu' ));
+}
+add_action( 'init', 'register_my_menu' );
