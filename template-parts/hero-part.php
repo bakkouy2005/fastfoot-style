@@ -11,10 +11,7 @@ $search_group = !empty($hero_group['search_group']) ? $hero_group['search_group'
   
   <!-- Logo at the top -->
   <div class="relative z-10 max-w-7xl mx-auto px-8 pt-4">
-    <h1 class="text-5xl md:text-6xl font-bold text-start">
-      <span class="text-white block">Fast Foot</span>
-      <span class="text-white/90 block">Style</span>
-    </h1>
+    <img src="<?php echo get_template_directory_uri(); ?>/images/image copy.png" alt="Fast Foot Style" class="h-16 w-auto">
   </div>
 
   <!-- Content at the absolute bottom -->
