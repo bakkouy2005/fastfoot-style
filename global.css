@@ -30,59 +30,62 @@ a {
 
 @keyframes wave-1 {
   0% {
-    transform: translateX(-100%);
+    transform: translateX(-100%) translateY(10%) rotate(-2deg);
     opacity: 0.3;
   }
   50% {
-    transform: translateX(0%);
+    transform: translateX(0%) translateY(-5%) rotate(1deg);
     opacity: 0.6;
   }
   100% {
-    transform: translateX(100%);
+    transform: translateX(100%) translateY(10%) rotate(-1deg);
     opacity: 0.3;
   }
 }
 
 @keyframes wave-2 {
   0% {
-    transform: translateX(-100%);
+    transform: translateX(-100%) translateY(-5%) rotate(1deg);
     opacity: 0.3;
   }
   50% {
-    transform: translateX(0%);
+    transform: translateX(0%) translateY(8%) rotate(-2deg);
     opacity: 0.6;
   }
   100% {
-    transform: translateX(100%);
+    transform: translateX(100%) translateY(-5%) rotate(2deg);
     opacity: 0.3;
   }
 }
 
 @keyframes wave-3 {
   0% {
-    transform: translateX(-100%);
+    transform: translateX(-100%) translateY(5%) rotate(-1deg);
     opacity: 0.3;
   }
   50% {
-    transform: translateX(0%);
+    transform: translateX(0%) translateY(-8%) rotate(2deg);
     opacity: 0.6;
   }
   100% {
-    transform: translateX(100%);
+    transform: translateX(100%) translateY(5%) rotate(-2deg);
     opacity: 0.3;
   }
 }
 
 .animate-wave-1 {
-  animation: wave-1 4s ease-in-out infinite;
+  animation: wave-1 5s ease-in-out infinite;
+  transform-origin: center;
 }
 
 .animate-wave-2 {
-  animation: wave-2 4s ease-in-out infinite;
+  animation: wave-2 5.5s ease-in-out infinite;
   animation-delay: 0.5s;
+  transform-origin: center;
 }
 
 .animate-wave-3 {
-  animation: wave-3 4s ease-in-out infinite;
+  animation: wave-3 6s ease-in-out infinite;
   animation-delay: 1s;
+  transform-origin: center;
 }
