@@ -34,7 +34,7 @@
             ));
             ?>
             <div class="flex items-center space-x-6">
-                <button class="text-white bg-[#333d33] hover:text-gray-300 rounded-xl p-2">
+                <button class="text-white bg-[#333d33] hover:text-gray-300 rounded-xl p-2 px-4">
                     <i class="fas fa-search text-xl"></i>
                 </button>
                 <button class="text-white hover:text-gray-300">
