@@ -12,8 +12,7 @@ Text Domain: fastfoot-style
 
 /* Custom styles */
 body{
-    background-color: red;
-}
+    background-color: #181d18;
 
 .header {
     position: fixed;
