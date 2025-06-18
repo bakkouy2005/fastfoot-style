@@ -22,26 +22,28 @@
         
         <!-- Main Navigation -->
         <nav class="hidden md:flex space-x-8">
-            <a href="#" class="text-white hover:text-gray-300">Men</a>
-            <a href="#" class="text-white hover:text-gray-300">Women</a>
-            <a href="#" class="text-white hover:text-gray-300">Kids</a>
-            <a href="#" class="text-white hover:text-gray-300">Sale</a>
-            <a href="#" class="text-white hover:text-gray-300">Contact</a>
+            <?php
+            wp_nav_menu(array(
+                'theme_location' => 'primary-menu',
+                'container' => false,
+                'menu_class' => 'flex space-x-8',
+                'fallback_cb' => 'default_menu_fallback',
+                'items_wrap' => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+                'add_li_class' => 'text-white hover:text-gray-300'
+            ));
+            ?>
             <div class="flex items-center space-x-6">
-            <button class="text-white bg-green-800 hover:text-gray-300">
-                <i class="fas fa-search text-xl"></i>
-            </button>
-            <button class="text-white hover:text-gray-300">
-                <i class="fas fa-user text-xl"></i>
-            </button>
-            <button class="text-white hover:text-gray-300">
-                <i class="fas fa-shopping-bag text-xl"></i>
-            </button>
-        </div>
+                <button class="text-white bg-green-800 hover:text-gray-300">
+                    <i class="fas fa-search text-xl"></i>
+                </button>
+                <button class="text-white hover:text-gray-300">
+                    <i class="fas fa-user text-xl"></i>
+                </button>
+                <button class="text-white hover:text-gray-300">
+                    <i class="fas fa-shopping-bag text-xl"></i>
+                </button>
+            </div>
         </nav>
-
-        <!-- Icons -->
-        
 
         <!-- Mobile Menu Button -->
         <button class="md:hidden text-white">
