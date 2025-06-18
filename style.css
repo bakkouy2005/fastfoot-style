@@ -14,15 +14,7 @@ Text Domain: fastfoot-style
 body{
     background-color: #212821;}
 
-.header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 50;
-    background-color: transparent;
-    transition: background-color 0.3s ease;
-}
+
 
 .header.scrolled {
     background-color: rgba(24, 29, 24, 0.9);
