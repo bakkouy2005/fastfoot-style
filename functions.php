@@ -60,31 +60,3 @@ function fastfoot_style_scripts() {
 }
 add_action('wp_enqueue_scripts', 'fastfoot_style_scripts');
 
-// Add custom class to <li> elements in menu
-function add_additional_class_on_li($classes, $item, $args) {
-    if(isset($args->add_li_class)) {
-        $classes[] = $args->add_li_class;
-    }
-    return $classes;
-}
-add_filter('nav_menu_css_class', 'add_additional_class_on_li', 1, 3);
-
-// Add custom class to <a> elements in menu
-function add_menu_link_class($atts, $item, $args) {
-    if (property_exists($args, 'link_class')) {
-        $atts['class'] = $args->link_class;
-    }
-    return $atts;
-}
-add_filter('nav_menu_link_attributes', 'add_menu_link_class', 1, 3);
-
-// Default menu fallback
-function default_menu_fallback() {
-    echo '<ul class="flex space-x-8">';
-    echo '<li class="text-white hover:text-gray-300"><a href="#">Men</a></li>';
-    echo '<li class="text-white hover:text-gray-300"><a href="#">Women</a></li>';
-    echo '<li class="text-white hover:text-gray-300"><a href="#">Kids</a></li>';
-    echo '<li class="text-white hover:text-gray-300"><a href="#">Sale</a></li>';
-    echo '<li class="text-white hover:text-gray-300"><a href="#">Contact</a></li>';
-    echo '</ul>';
-}
