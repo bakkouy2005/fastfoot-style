@@ -8,9 +8,16 @@ body {
   margin: 0px;
   height: 100%;
 }
+/* Test animation */
+@keyframes testBlink {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
 /* Test style to verify CSS loading */
 .site-header {
   border-bottom: 3px solid #12A212;
+  animation: testBlink 2s infinite;
 }
 /* a blue color as a generic focus style */
 button:focus-visible {
