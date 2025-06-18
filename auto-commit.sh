@@ -4,15 +4,15 @@
 # Gebruik: ./auto-commit.sh
 
 echo "🚀 Automatische commit en push gestart..."
-echo "Watching voor bestandswijzigingen..."
+echo "Watching voor bestandswijzigingen en nieuwe bestanden..."
 
 # Oneindige loop om bestanden te monitoren
 while true; do
-    # Check voor wijzigingen
-    if ! git diff-index --quiet HEAD --; then
-        echo "📝 Wijzigingen gedetecteerd, committen..."
+    # Check voor wijzigingen (inclusief nieuwe bestanden)
+    if ! git diff-index --quiet HEAD -- || [ -n "$(git ls-files --others --exclude-standard)" ]; then
+        echo "📝 Wijzigingen of nieuwe bestanden gedetecteerd, committen..."
         
-        # Voeg alle wijzigingen toe
+        # Voeg alle wijzigingen toe (inclusief nieuwe bestanden)
         git add .
         
         # Commit met timestamp
