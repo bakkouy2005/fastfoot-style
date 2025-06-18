@@ -22,14 +22,16 @@
         
         <!-- Main Navigation -->
         <nav class="hidden md:flex space-x-8">
-        <?php wp_nav_menu(array(
-                    'theme_location' => 'menu',
-                    'menu_class'     => 'navbar-nav gap-5 mb-2 mb-lg-0',
-                    'container'      => false,
-                    'link_before'    => '<span class="nav-link text-white">',
-                    'link_after'     => '</span>',
-                    'add_li_class'   => 'nav-item' // Voor custom li classes
-                )); ?>
+            <?php
+            wp_nav_menu(array(
+                'theme_location' => 'primary-menu',
+                'container' => false,
+                'menu_class' => 'flex space-x-8',
+                'fallback_cb' => 'default_menu_fallback',
+                'items_wrap' => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+                'add_li_class' => 'text-white hover:text-gray-300'
+            ));
+            ?>
             <div class="flex items-center space-x-6">
                 <button class="text-white bg-green-800 hover:text-gray-300">
                     <i class="fas fa-search text-xl"></i>
