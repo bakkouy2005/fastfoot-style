@@ -45,12 +45,3 @@ function add_menu_link_class($atts, $item, $args) {
 add_filter('nav_menu_link_attributes', 'add_menu_link_class', 1, 3);
 
 // Default menu fallback
-function default_menu_fallback() {
-    echo '<ul class="flex space-x-8">';
-    echo '<li class="text-white hover:text-gray-300"><a href="#">Men</a></li>';
-    echo '<li class="text-white hover:text-gray-300"><a href="#">Women</a></li>';
-    echo '<li class="text-white hover:text-gray-300"><a href="#">Kids</a></li>';
-    echo '<li class="text-white hover:text-gray-300"><a href="#">Sale</a></li>';
-    echo '<li class="text-white hover:text-gray-300"><a href="#">Contact</a></li>';
-    echo '</ul>';
-}
