@@ -17,8 +17,6 @@ body {
 /* Test style to verify CSS loading */
 .site-header {
   background-color: rgba(24, 29, 24, 0.9);
-  position: relative;
-  overflow: hidden;
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -29,48 +27,6 @@ button:focus-visible {
 }
 a {
   text-decoration: none;
-}
-
-/* Header sparkle animation */
-@keyframes sparkle {
-  0%, 100% {
-    background-image: 
-      radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.2) 0%, transparent 1%),
-      radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.2) 0%, transparent 1%),
-      radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.2) 0%, transparent 1%);
-  }
-  25% {
-    background-image: 
-      radial-gradient(circle at 75% 25%, rgba(255, 255, 255, 0.2) 0%, transparent 1%),
-      radial-gradient(circle at 25% 75%, rgba(255, 255, 255, 0.2) 0%, transparent 1%),
-      radial-gradient(circle at 50% 25%, rgba(255, 255, 255, 0.2) 0%, transparent 1%);
-  }
-  50% {
-    background-image: 
-      radial-gradient(circle at 50% 75%, rgba(255, 255, 255, 0.2) 0%, transparent 1%),
-      radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.2) 0%, transparent 1%),
-      radial-gradient(circle at 75% 50%, rgba(255, 255, 255, 0.2) 0%, transparent 1%);
-  }
-  75% {
-    background-image: 
-      radial-gradient(circle at 75% 50%, rgba(255, 255, 255, 0.2) 0%, transparent 1%),
-      radial-gradient(circle at 50% 25%, rgba(255, 255, 255, 0.2) 0%, transparent 1%),
-      radial-gradient(circle at 25% 75%, rgba(255, 255, 255, 0.2) 0%, transparent 1%);
-  }
-}
-
-.site-header::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-size: 200% 200%;
-  animation: sparkle 8s linear infinite;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.site-header:hover::before {
-  opacity: 1;
 }
 
 /* Search bar gradient animation */
