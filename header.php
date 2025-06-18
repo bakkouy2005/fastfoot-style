@@ -27,10 +27,7 @@
             <a href="#" class="text-white hover:text-gray-300">Kids</a>
             <a href="#" class="text-white hover:text-gray-300">Sale</a>
             <a href="#" class="text-white hover:text-gray-300">Contact</a>
-        </nav>
-
-        <!-- Icons -->
-        <div class="flex items-center space-x-6">
+            <div class="flex items-center space-x-6">
             <button class="text-white hover:text-gray-300">
                 <i class="fas fa-search text-xl"></i>
             </button>
@@ -41,6 +38,10 @@
                 <i class="fas fa-shopping-bag text-xl"></i>
             </button>
         </div>
+        </nav>
+
+        <!-- Icons -->
+        
 
         <!-- Mobile Menu Button -->
         <button class="md:hidden text-white">
