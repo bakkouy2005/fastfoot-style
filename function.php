@@ -4,9 +4,23 @@
  * 
  */
 
- function fastfoot_style_enqueue_assets() {
-    // Material Design Bootstrap
-    wp_enqueue_style('mdbootstrap', 'https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/8.2.0/mdb.min.css', array(), '8.2.0', 'all');
+function fastfoot_style_enqueue_assets() {
+    // Tailwind CSS
+    wp_enqueue_script('tailwindcss', 'https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio', array(), '3.4.1', false);
+    
+    // Tailwind Config
+    wp_add_inline_script('tailwindcss', "
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand': '#181d18',
+                        'brand-light': '#1f241f'
+                    }
+                }
+            }
+        }
+    ");
 
     // Custom styles
     wp_enqueue_style('unique-style', get_template_directory_uri() . '/css/unique.style.css', array(), '1.0', 'all');
@@ -16,6 +30,8 @@
     // Custom scripts
     wp_enqueue_script('unique-script', get_template_directory_uri() . '/js/unique.script.js', array('jquery'), '1.0', true);
 }
+
+add_action('wp_enqueue_scripts', 'fastfoot_style_enqueue_assets');
 
 // Add custom classes to menu items
 
