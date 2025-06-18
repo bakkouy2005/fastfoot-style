@@ -9,15 +9,15 @@ body {
   height: 100%;
 }
 /* Test animation */
-@keyframes testBlink {
-  0% { opacity: 1; }
-  50% { opacity: 0; }
-  100% { opacity: 1; }
+@keyframes testColor {
+  0% { background-color: transparent; }
+  50% { background-color: rgba(255, 0, 0, 0.3); }
+  100% { background-color: transparent; }
 }
 /* Test style to verify CSS loading */
 .site-header {
   border-bottom: 3px solid #12A212;
-  animation: testBlink 2s infinite;
+  animation: testColor 2s infinite;
 }
 /* a blue color as a generic focus style */
 button:focus-visible {
