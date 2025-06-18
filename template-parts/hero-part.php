@@ -8,56 +8,56 @@ $search_group = !empty($hero_group['search_group']) ? $hero_group['search_group'
   class="relative w-full min-h-screen bg-cover bg-center rounded-lg p-8 md:p-12" 
   style="background-image: url('<?php echo !empty($hero_group['hero_background_image']) ? $hero_group['hero_background_image'] : ''; ?>');"
 >
- 
-
-  <div class="relative z-10 h-full flex flex-col justify-center max-w-7xl mx-auto px-8">
-    
-    <!-- Logo -->
-    <div class="mb-12">
+  
+  <div class="relative z-10 h-full flex flex-col justify-between max-w-7xl mx-auto px-8">
+    <!-- Logo at the top -->
+    <div class="pt-4">
       <h1 class="text-5xl md:text-6xl font-bold text-start">
         <span class="text-white block">Fast Foot</span>
         <span class="text-white/90 block">Style</span>
       </h1>
     </div>
 
-    <!-- Heading + subheading -->
-    <div class="max-w-2xl">
-      <?php if (!empty($hero_group['hero_heading'])): ?>
-      <h2 class="text-4xl md:text-5xl font-bold mb-4 leading-tight text-white text-start">
-        <?php echo $hero_group['hero_heading']; ?>
-      </h2>
-      <?php endif; ?>
-      
-      <?php if (!empty($hero_group['hero_subtext'])): ?>
-      <p class="text-xl md:text-2xl text-white/90 mb-12 text-start">
-        <?php echo $hero_group['hero_subtext']; ?>
-      </p>
+    <!-- Content at the bottom -->
+    <div class="mb-8">
+      <!-- Heading + subheading -->
+      <div class="max-w-2xl mb-8">
+        <?php if (!empty($hero_group['hero_heading'])): ?>
+        <h2 class="text-4xl md:text-5xl font-bold mb-4 leading-tight text-white text-start">
+          <?php echo $hero_group['hero_heading']; ?>
+        </h2>
+        <?php endif; ?>
+        
+        <?php if (!empty($hero_group['hero_subtext'])): ?>
+        <p class="text-xl md:text-2xl text-white/90 mb-8 text-start">
+          <?php echo $hero_group['hero_subtext']; ?>
+        </p>
+        <?php endif; ?>
+      </div>
+
+      <!-- Search form -->
+      <?php if (!empty($search_group['search_placeholder']) && !empty($search_group['search_button_text'])): ?>
+      <form action="/search" method="get" class="w-full max-w-2xl flex items-center bg-black/30 rounded-lg p-1">
+        <div class="flex-grow flex items-center">
+          <svg class="w-5 h-5 text-white/60 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+          <input 
+            type="text" 
+            name="s"
+            class="w-full px-4 py-3 bg-transparent text-white placeholder-white/60 text-base focus:outline-none"
+            placeholder="<?php echo $search_group['search_placeholder']; ?>"
+          >
+        </div>
+        <button 
+          type="submit"
+          class="px-8 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-md transition-all duration-200"
+        >
+          <?php echo $search_group['search_button_text']; ?>
+        </button>
+      </form>
       <?php endif; ?>
     </div>
-
-    <!-- Search form -->
-    <?php if (!empty($search_group['search_placeholder']) && !empty($search_group['search_button_text'])): ?>
-    <form action="/search" method="get" class="w-full max-w-2xl flex items-center bg-black/30 rounded-lg p-1">
-      <div class="flex-grow flex items-center">
-        <svg class="w-5 h-5 text-white/60 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-        </svg>
-        <input 
-          type="text" 
-          name="s"
-          class="w-full px-4 py-3 bg-transparent text-white placeholder-white/60 text-base focus:outline-none"
-          placeholder="<?php echo $search_group['search_placeholder']; ?>"
-        >
-      </div>
-      <button 
-        type="submit"
-        class="px-8 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-md transition-all duration-200"
-      >
-        <?php echo $search_group['search_button_text']; ?>
-      </button>
-    </form>
-    <?php endif; ?>
-
   </div>
 </section>
 <?php endif; ?>
