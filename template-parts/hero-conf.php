@@ -71,7 +71,6 @@ if (have_rows('hero_sections')) :
 </section>
 
       <?php
-      break;
     endif;
     $current_index++;
   endwhile;
