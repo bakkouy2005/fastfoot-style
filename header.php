@@ -32,10 +32,18 @@
                 'add_li_class' => 'text-white hover:text-gray-300'
             ));
             ?>
+            <div class="flex items-center space-x-6">
+                <button class="text-white bg-green-800 hover:text-gray-300">
+                    <i class="fas fa-search text-xl"></i>
+                </button>
+                <button class="text-white hover:text-gray-300">
+                    <i class="fas fa-user text-xl"></i>
+                </button>
+                <button class="text-white hover:text-gray-300">
+                    <i class="fas fa-shopping-bag text-xl"></i>
+                </button>
+            </div>
         </nav>
-
-        <!-- Icons -->
-        
 
         <!-- Mobile Menu Button -->
         <button class="md:hidden text-white">
