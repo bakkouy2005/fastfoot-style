@@ -14,25 +14,42 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 
-<header class="glass-effect fixed top-0 left-0 right-0 z-50 shadow-lg">
+<header class="site-header">
     <div class="container mx-auto flex justify-between items-center py-4 px-6">
         <!-- Logo -->
-        <div class="flex items-center">
-            <a href="<?php echo home_url(); ?>" class="text-white text-2xl font-bold">
-                <?php bloginfo('name'); ?>
-            </a>
-        </div>
-
-        <!-- Navigation -->
-        <nav>
+        <a href="<?php echo esc_url(home_url('/')); ?>" class="flex items-center">
+            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.svg" alt="FastFoot Style" class="h-8">
+            <span class="text-white text-xl font-bold ml-2">Fast Foot Style</span>
+        </a>
+        
+        <!-- Main Navigation -->
+        <nav class="hidden md:flex space-x-8">
             <?php
             wp_nav_menu(array(
                 'theme_location' => 'primary-menu',
                 'container' => false,
-                'menu_class' => 'flex space-x-6',
+                'menu_class' => 'flex space-x-8',
+                'fallback_cb' => 'default_menu_fallback',
+                'items_wrap' => '<ul id="%1$s" class="%2$s">%3$s</ul>',
                 'add_li_class' => 'text-white'
             ));
             ?>
+            <div class="flex items-center space-x-6">
+                <button class="text-white bg-green-800 hover:text-gray-300">
+                    <i class="fas fa-search text-xl"></i>
+                </button>
+                <button class="text-white hover:text-gray-300">
+                    <i class="fas fa-user text-xl"></i>
+                </button>
+                <button class="text-white hover:text-gray-300">
+                    <i class="fas fa-shopping-bag text-xl"></i>
+                </button>
+            </div>
         </nav>
+
+        <!-- Mobile Menu Button -->
+        <button class="md:hidden text-white">
+            <i class="fas fa-bars text-xl"></i>
+        </button>
     </div>
 </header>
