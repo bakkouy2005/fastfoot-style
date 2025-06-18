@@ -14,7 +14,7 @@ $search_group = !empty($hero_group['search_group']) ? $hero_group['search_group'
     <div class="pt-4">
       <h1 class="text-5xl md:text-6xl font-bold text-start">
         <span class="text-white block">Fast Foot</span>
-        <span class="text-white/90 block">Style</span>
+        <span class="text-white/90 block"><br>Style</span>
       </h1>
     </div>
 
