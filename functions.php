@@ -14,15 +14,7 @@ function fastfoot_style_setup() {
     add_theme_support('post-thumbnails'); 
     add_theme_support('block-templates'); 
     add_theme_support('menus');
-    add_theme_support('custom-logo');
-    add_theme_support('automatic-feed-links');
-    add_theme_support('html5', array(
-        'search-form',
-        'comment-form',
-        'comment-list',
-        'gallery',
-        'caption',
-    ));
+    
 
     // Navigation menus
     register_nav_menus(array(
