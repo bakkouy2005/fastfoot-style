@@ -9,6 +9,16 @@ function fastfoot_style_setup() {
     add_theme_support('title-tag'); 
     add_theme_support('post-thumbnails'); 
     add_theme_support('block-templates'); 
+    add_theme_support('menus');
+    add_theme_support('custom-logo');
+    add_theme_support('custom-background');
+    add_theme_support('custom-header');
+    add_theme_support('custom-footer');
+    add_theme_support('custom-sidebar');
+    add_theme_support('custom-post-type');
+    add_theme_support('custom-taxonomy');
+    add_theme_support('custom-meta-box');
+    add_theme_support('custom-shortcode');
     
     // Register navigation menus
     register_nav_menus(
