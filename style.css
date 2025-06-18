@@ -1,0 +1,21 @@
+/*
+Theme Name: FastFoot Style
+Description: Een modern en snel WordPress thema
+Version: 1.0
+Author: FastFoot
+Text Domain: fastfoot-style
+*/
+
+/* Hier komt je CSS styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+} 
+
