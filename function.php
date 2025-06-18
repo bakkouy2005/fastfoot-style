@@ -7,20 +7,6 @@
 function fastfoot_style_enqueue_assets() {
     // Tailwind CSS
     wp_enqueue_script('tailwindcss', 'https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio', array(), '3.4.1', false);
-    
-    // Tailwind Config
-    wp_add_inline_script('tailwindcss', "
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'brand': '#181d18',
-                        'brand-light': '#1f241f'
-                    }
-                }
-            }
-        }
-    ");
 
     // Custom styles
     wp_enqueue_style('unique-style', get_template_directory_uri() . '/css/unique.style.css', array(), '1.0', 'all');
