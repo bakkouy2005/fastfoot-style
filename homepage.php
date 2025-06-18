@@ -5,8 +5,9 @@ get_header();
 
 <div class="">
     <div class="container mx-auto ">
-        <?php get_template_part('template-parts/hero-part'); ?>
-        <?php get_template_part('template-parts/retro-hero-part'); ?>
+    <?php get_template_part('template-parts/hero-conf', null, ['hero_index' => 1]); ?>
+    <?php get_template_part('template-parts/hero-conf', null, ['hero_index' => 2]); ?>
+
     </div>
 </div>
 
