@@ -8,6 +8,10 @@ body {
   margin: 0px;
   height: 100%;
 }
+/* Test style to verify CSS loading */
+.site-header {
+  border-bottom: 3px solid #12A212;
+}
 /* a blue color as a generic focus style */
 button:focus-visible {
   outline: 2px solid #4a90e2 !important;
