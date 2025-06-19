@@ -49,7 +49,7 @@ $query = new WP_Query($args);
         <a href="<?php the_permalink(); ?>" class="block w-full h-full rounded-[12px] overflow-hidden relative">
           <?php 
             echo $product->get_image('large', [
-              'class' => 'w-full h-[440px] object-contain rounded-[12px] transition duration-300 group-hover:opacity-0'
+              'class' => 'w-full h-[460px] object-contain rounded-[12px] transition duration-300 group-hover:opacity-0'
             ]);
             if ($back_image) echo $back_image;
           ?>
