@@ -179,22 +179,28 @@ function load_more_products() {
         ]] : [],
     ]);
 
+    $exclude_ids = is_array($loaded_products->posts) ? $loaded_products->posts : [];
+
     $args = [
         'post_type' => 'product',
         'posts_per_page' => $per_page,
-        'offset' => $offset,
-        'post__not_in' => $loaded_products->posts, // Exclude already loaded products
+        'post__not_in' => $exclude_ids,
         'tax_query' => $category ? [[
             'taxonomy' => 'product_cat',
             'field' => 'slug',
             'terms' => $category,
         ]] : [],
-        'no_found_rows' => true,
+        'no_found_rows' => false, // Changed to true to get total count
         'update_post_meta_cache' => false,
         'update_post_term_cache' => false,
     ];
 
+    error_log('WP_Query args: ' . print_r($args, true));
+    
     $query = new WP_Query($args);
+    
+    error_log('Found posts: ' . $query->found_posts);
+    error_log('Post count: ' . $query->post_count);
     
     if (!$query->have_posts()) {
         wp_send_json_error(['message' => 'No more products found']);
@@ -261,7 +267,14 @@ function load_more_products() {
 
     wp_send_json_success([
         'html' => $html,
-        'loaded' => $counter - $current_count
+        'loaded' => $counter - $current_count,
+        'debug' => [
+            'query_args' => $args,
+            'found_posts' => $query->found_posts,
+            'post_count' => $query->post_count,
+            'current_count' => $current_count,
+            'exclude_ids' => $exclude_ids
+        ]
     ]);
 }
 
