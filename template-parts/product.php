@@ -21,7 +21,7 @@ $initial_load = 3; // Number of products shown initially
 
 <h2 class="text-4xl font-bold mb-10 text-white"><?php echo esc_html($title); ?></h2>
 
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 place-items-center">
   <?php 
   $counter = 0;
   while ($query->have_posts() && $counter < $initial_load) : $query->the_post(); global $product;
@@ -38,15 +38,8 @@ $initial_load = 3; // Number of products shown initially
         break;
       }
     }
-
-    // Bepaal uitlijning (optioneel, voor variatie)
-    $alignment_class = match($counter % 3) {
-      0 => 'justify-self-start',
-      1 => 'justify-self-center',
-      default => 'justify-self-end',
-    };
   ?>
-    <div class="group relative <?php echo $alignment_class; ?>">
+    <div class="group relative w-full max-w-[343px]">
       <div class="relative w-full h-[461px] overflow-hidden bg-[url('/wp-content/themes/fastfoot-style/assets/images/mesh-pattern.png')] bg-cover rounded-[12px]">
         <a href="<?php the_permalink(); ?>" class="block w-full h-full rounded-[12px] overflow-hidden relative">
           <?php 
