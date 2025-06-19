@@ -91,6 +91,71 @@ add_filter('big_image_size_threshold', '__return_false');
 add_action('wp_ajax_load_more_products', 'load_more_products');
 add_action('wp_ajax_nopriv_load_more_products', 'load_more_products');
 
+// Add image preloading function
+add_action('wp_ajax_get_next_product_images', 'get_next_product_images');
+add_action('wp_ajax_nopriv_get_next_product_images', 'get_next_product_images');
+
+function get_next_product_images() {
+    if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'get_next_product_images')) {
+        wp_send_json_error(['message' => 'Invalid security token']);
+        return;
+    }
+
+    $category = $_POST['category'] ?? '';
+    $offset = intval($_POST['offset']) ?? 3;
+    $per_page = intval($_POST['per_page']) ?? 2;
+
+    $args = [
+        'post_type' => 'product',
+        'posts_per_page' => $per_page,
+        'offset' => $offset,
+        'tax_query' => $category ? [[
+            'taxonomy' => 'product_cat',
+            'field' => 'slug',
+            'terms' => $category,
+        ]] : [],
+    ];
+
+    $query = new WP_Query($args);
+    $images = [];
+
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post();
+            global $product;
+            if ($product) {
+                // Get main product image
+                $image_id = $product->get_image_id();
+                if ($image_id) {
+                    $image_url = wp_get_attachment_image_url($image_id, 'full');
+                    if ($image_url) {
+                        $images[] = $image_url;
+                    }
+                }
+
+                // Get back image if exists
+                $gallery_images = $product->get_gallery_image_ids();
+                foreach ($gallery_images as $gallery_image_id) {
+                    $image_title = strtolower(get_the_title($gallery_image_id));
+                    if (strpos($image_title, 'achterkant') !== false) {
+                        $back_image_url = wp_get_attachment_image_url($gallery_image_id, 'full');
+                        if ($back_image_url) {
+                            $images[] = $back_image_url;
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    wp_reset_postdata();
+
+    wp_send_json_success([
+        'images' => array_values(array_unique($images))
+    ]);
+}
+
+// Optimize the existing load_more_products function
 function load_more_products() {
     if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'load_more_products')) {
         wp_send_json_error(['message' => 'Invalid security token']);
@@ -110,6 +175,9 @@ function load_more_products() {
             'field' => 'slug',
             'terms' => $category,
         ]] : [],
+        'no_found_rows' => true, // Performance optimization
+        'update_post_meta_cache' => false, // Performance optimization
+        'update_post_term_cache' => false, // Performance optimization
     ];
 
     $query = new WP_Query($args);
@@ -135,7 +203,8 @@ function load_more_products() {
             $image_title = strtolower(get_the_title($image_id));
             if (strpos($image_title, 'achterkant') !== false) {
                 $back_image = wp_get_attachment_image($image_id, 'full', false, [
-                    'class' => 'w-full h-[490px] object-contain rounded-[12px] absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 transform-gpu will-change-transform'
+                    'class' => 'w-full h-[490px] object-contain rounded-[12px] absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 transform-gpu will-change-transform',
+                    'loading' => 'eager' // Force immediate loading
                 ]);
                 break;
             }
@@ -152,7 +221,8 @@ function load_more_products() {
                 <a href="<?php the_permalink(); ?>" class="block w-full h-full rounded-[12px] overflow-hidden relative">
                     <?php 
                         echo $product->get_image('full', [
-                            'class' => 'w-full h-[490px] object-contain rounded-[12px] transition duration-300 group-hover:opacity-0 transform-gpu will-change-transform'
+                            'class' => 'w-full h-[490px] object-contain rounded-[12px] transition duration-300 group-hover:opacity-0 transform-gpu will-change-transform',
+                            'loading' => 'eager' // Force immediate loading
                         ]);
                         if ($back_image) echo $back_image;
                     ?>
