@@ -20,11 +20,28 @@ $query = new WP_Query($args);
 <h2 class="text-4xl font-bold mb-10"><?php echo esc_html($title); ?></h2>
 
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-  <?php while ($query->have_posts()) : $query->the_post(); global $product; ?>
+  <?php while ($query->have_posts()) : $query->the_post(); global $product; 
+    $gallery_images = $product->get_gallery_image_ids();
+    $back_image = '';
+    
+    // Look for an image with 'achterkant' in the name
+    foreach ($gallery_images as $image_id) {
+      $image_title = strtolower(get_the_title($image_id));
+      if (strpos($image_title, 'achterkant') !== false) {
+        $back_image = wp_get_attachment_image($image_id, 'woocommerce_thumbnail', false, ['class' => 'w-full h-full object-contain rounded-xl absolute inset-0 opacity-0 group-hover:opacity-100']);
+        break;
+      }
+    }
+  ?>
     <div class="group relative">
       <div class="relative aspect-[3/4] overflow-hidden bg-[url('/wp-content/themes/fastfoot-style/assets/images/mesh-pattern.png')] bg-cover rounded-xl">
         <a href="<?php the_permalink(); ?>" class="block w-full h-full rounded-xl overflow-hidden">
-          <?php echo $product->get_image('woocommerce_thumbnail', ['class' => 'w-full h-full object-contain transition-transform duration-300 group-hover:scale-105 rounded-xl']); ?>
+          <?php 
+            echo $product->get_image('woocommerce_thumbnail', ['class' => 'w-full h-full object-contain rounded-xl group-hover:opacity-0']); 
+            if ($back_image) {
+              echo $back_image;
+            }
+          ?>
         </a>
       </div>
       <div>
