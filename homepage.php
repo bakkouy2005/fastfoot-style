@@ -9,7 +9,7 @@ get_header();
     <?php get_template_part('template-parts/product', null, [
   'term' => 'new-collection', // <-- dit is de slug van de categorie
   'taxonomy' => 'product_cat',
-  'title' => 'Nieuwsste Collectie',
+  'title' => 'Nieuwste Collectie',
   'limit' => 3
 ]); ?>
     <?php get_template_part('template-parts/hero-conf', null, ['hero_index' => 2]); ?>
