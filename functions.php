@@ -92,9 +92,21 @@ add_action('wp_ajax_load_more_products', 'load_more_products');
 add_action('wp_ajax_nopriv_load_more_products', 'load_more_products');
 
 function load_more_products() {
+    // Verify nonce for security
+    if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'load_more_products')) {
+        wp_send_json_error(['message' => 'Invalid security token']);
+        return;
+    }
+
     $category = $_POST['category'] ?? '';
     $page = intval($_POST['page']) ?? 1;
     $per_page = intval($_POST['per_page']) ?? 6;
+
+    error_log("Loading more products: " . print_r([
+        'category' => $category,
+        'page' => $page,
+        'per_page' => $per_page
+    ], true));
 
     $args = [
         'post_type' => 'product',
@@ -108,8 +120,10 @@ function load_more_products() {
     ];
 
     $query = new WP_Query($args);
+    error_log("Query found {$query->post_count} products");
     
     if (!$query->have_posts()) {
+        error_log("No posts found in query");
         wp_send_json_error(['message' => 'No more products found']);
         return;
     }
@@ -119,6 +133,10 @@ function load_more_products() {
 
     while ($query->have_posts()) : $query->the_post(); 
         global $product;
+        if (!$product) {
+            error_log("Product object not found for post " . get_the_ID());
+            continue;
+        }
 
         $gallery_images = $product->get_gallery_image_ids();
         $back_image = '';
@@ -133,7 +151,6 @@ function load_more_products() {
             }
         }
 
-        // Bepaal uitlijning (optioneel, voor variatie)
         $alignment_class = match($counter % 3) {
             0 => 'justify-self-start',
             1 => 'justify-self-center',
@@ -162,12 +179,20 @@ function load_more_products() {
     wp_reset_postdata();
 
     $html = ob_get_clean();
+    error_log("Generated HTML for {$counter} products, length: " . strlen($html));
 
     wp_send_json_success([
         'html' => $html,
         'page' => $page,
         'found' => $query->found_posts,
-        'loaded' => $counter
+        'loaded' => $counter,
+        'debug' => [
+            'category' => $category,
+            'page' => $page,
+            'per_page' => $per_page,
+            'total_found' => $query->found_posts,
+            'loaded_this_page' => $counter
+        ]
     ]);
 }
 
