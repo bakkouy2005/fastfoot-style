@@ -15,6 +15,8 @@ $args = [
 ];
 
 $query = new WP_Query($args);
+$total_products = $query->found_posts;
+$initial_load = 3; // Number of products shown initially
 ?>
 
 <h2 class="text-4xl font-bold mb-10 text-white"><?php echo esc_html($title); ?></h2>
@@ -22,7 +24,7 @@ $query = new WP_Query($args);
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1">
   <?php 
   $counter = 0;
-  while ($query->have_posts()) : $query->the_post(); global $product;
+  while ($query->have_posts() && $counter < $initial_load) : $query->the_post(); global $product;
 
     $gallery_images = $product->get_gallery_image_ids();
     $back_image = '';
@@ -67,14 +69,15 @@ $query = new WP_Query($args);
   ?>
 </div>
 
-<?php if ($query->found_posts > $per_page): ?>
+<?php if ($total_products > $initial_load): ?>
   <div class="text-center mt-12" id="load-more-container">
     <button 
       class="view-more-btn inline-flex items-center justify-center px-8 py-3 border border-white text-base bg-[#324132] rounded-[12px] border-none text-white font-medium hover:bg-white hover:text-black transition-colors"
       data-category="<?php echo esc_attr($term); ?>"
       data-current-page="1"
-      data-products-per-load="6"
-      data-total-products="<?php echo esc_attr($query->found_posts); ?>"
+      data-products-per-load="<?php echo $total_products - $initial_load; ?>"
+      data-total-products="<?php echo esc_attr($total_products); ?>"
+      data-initial-load="<?php echo $initial_load; ?>"
     >
       View more
     </button>
@@ -85,33 +88,19 @@ $query = new WP_Query($args);
 document.addEventListener('DOMContentLoaded', function() {
   const viewMoreBtn = document.querySelector('.view-more-btn');
   if (!viewMoreBtn) {
-    console.log('View more button not found');
     return;
   }
 
   viewMoreBtn.addEventListener('click', async function() {
-    // Add loading state to button
     this.innerHTML = 'Loading...';
     this.disabled = true;
 
     const category = this.dataset.category;
-    const currentPage = parseInt(this.dataset.currentPage) + 1;
+    const initialLoad = parseInt(this.dataset.initialLoad);
     const productsPerLoad = parseInt(this.dataset.productsPerLoad);
-    const totalProducts = parseInt(this.dataset.totalProducts);
-
-    console.log('Starting AJAX request with:', {
-      category,
-      currentPage,
-      productsPerLoad,
-      totalProducts
-    });
-
-    const ajaxUrl = '<?php echo admin_url('admin-ajax.php'); ?>';
-    console.log('AJAX URL:', ajaxUrl);
 
     try {
-      console.log('Sending request...');
-      const response = await fetch(ajaxUrl, {
+      const response = await fetch(`<?php echo admin_url('admin-ajax.php'); ?>`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -119,63 +108,37 @@ document.addEventListener('DOMContentLoaded', function() {
         body: new URLSearchParams({
           action: 'load_more_products',
           category: category,
-          page: currentPage,
+          offset: initialLoad,
           per_page: productsPerLoad,
           nonce: '<?php echo wp_create_nonce('load_more_products'); ?>'
         })
       });
 
-      console.log('Response received:', response);
       const data = await response.json();
-      console.log('Parsed data:', data);
       
       if (data.success && data.data.html) {
-        console.log('HTML content length:', data.data.html.length);
-        
-        // Find the products grid
         const productsGrid = document.querySelector('.grid');
         if (!productsGrid) {
           console.error('Products grid not found');
           return;
         }
-        console.log('Found products grid:', productsGrid);
 
-        // Create a temporary container to hold the new HTML
         const temp = document.createElement('div');
         temp.innerHTML = data.data.html;
-        console.log('Number of new products:', temp.children.length);
 
-        // Add each new product to the grid
         while (temp.firstChild) {
           productsGrid.appendChild(temp.firstChild);
         }
 
-        // Update current page
-        this.dataset.currentPage = currentPage;
-        console.log('Updated current page to:', currentPage);
-
-        // Calculate if we should hide the button
-        const loadedProducts = currentPage * productsPerLoad;
-        console.log('Total loaded products:', loadedProducts, 'of', totalProducts);
-        
-        if (loadedProducts >= totalProducts) {
-          document.getElementById('load-more-container').style.display = 'none';
-          console.log('All products loaded, hiding button');
-        } else {
-          // Reset button state
-          this.innerHTML = 'View more';
-          this.disabled = false;
-          console.log('More products available, button reset');
-        }
+        // Hide the button after loading all remaining products
+        document.getElementById('load-more-container').style.display = 'none';
       } else {
         console.error('Error in response:', data.data?.message || 'Unknown error');
-        // Reset button state
         this.innerHTML = 'View more';
         this.disabled = false;
       }
     } catch (error) {
       console.error('Error loading more products:', error);
-      // Reset button state
       this.innerHTML = 'View more';
       this.disabled = false;
     }
