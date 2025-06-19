@@ -47,9 +47,11 @@ $query = new WP_Query($args);
     <div class="group relative <?php echo $alignment_class; ?>">
       <div class="relative w-full h-[461px] overflow-hidden bg-[url('/wp-content/themes/fastfoot-style/assets/images/mesh-pattern.png')] bg-cover rounded-[12px]">
         <a href="<?php the_permalink(); ?>" class="block w-full h-full rounded-[12px] overflow-hidden relative">
+          <!-- Dark overlay -->
+          <div class="absolute inset-0 bg-black/30 z-10 rounded-[12px] transition-opacity duration-300 group-hover:opacity-0"></div>
           <?php 
             echo $product->get_image('full', [
-              'class' => 'w-full h-[460px] object-contain rounded-[12px] transition duration-300 group-hover:opacity-0 transform-gpu will-change-transform'
+              'class' => 'w-full h-[460px] object-contain rounded-[12px] transition duration-300 group-hover:opacity-0 transform-gpu will-change-transform relative z-0'
             ]);
             if ($back_image) echo $back_image;
           ?>
