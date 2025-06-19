@@ -145,6 +145,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const currentCount = parseInt(this.dataset.currentCount);
 
     try {
+      console.log('Sending request with:', {
+        category,
+        offset: currentCount,
+        per_page: productsPerLoad,
+        current_count: currentCount
+      });
+      
       const response = await fetch(`<?php echo admin_url('admin-ajax.php'); ?>`, {
         method: 'POST',
         headers: {
@@ -161,6 +168,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
 
       const data = await response.json();
+      console.log('Response data:', data);
       
       if (data.success && data.data.html) {
         const productsGrid = document.querySelector('.grid');
