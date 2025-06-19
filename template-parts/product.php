@@ -12,11 +12,13 @@ $args = [
     'field' => 'slug',
     'terms' => $term,
   ]] : [],
+  'no_found_rows' => false,
 ];
 
 $query = new WP_Query($args);
 $total_products = $query->found_posts;
-$initial_load = 3; // Number of products shown initially
+$initial_load = $per_page;
+$remaining_products = $total_products - $initial_load;
 ?>
 
 <h2 class="text-4xl font-bold mb-10 text-white"><?php echo esc_html($title); ?></h2>
@@ -75,7 +77,7 @@ $initial_load = 3; // Number of products shown initially
       class="view-more-btn inline-flex items-center justify-center px-8 py-3 border border-white text-base bg-[#324132] rounded-[12px] border-none text-white font-medium hover:bg-white hover:text-black transition-colors gap-2"
       data-category="<?php echo esc_attr($term); ?>"
       data-current-page="1"
-      data-products-per-load="<?php echo $total_products - $initial_load; ?>"
+      data-products-per-load="<?php echo $remaining_products; ?>"
       data-total-products="<?php echo esc_attr($total_products); ?>"
       data-initial-load="<?php echo $initial_load; ?>"
       data-current-count="<?php echo $counter; ?>"
