@@ -19,7 +19,7 @@ $query = new WP_Query($args);
 
 <h2 class="text-4xl font-bold mb-10"><?php echo esc_html($title); ?></h2>
 
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
   <?php while ($query->have_posts()) : $query->the_post(); global $product; 
     $gallery_images = $product->get_gallery_image_ids();
     $back_image = '';
