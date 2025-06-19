@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', function() {
           console.log('More products available, button reset');
         }
       } else {
-        console.error('No HTML content in response:', data);
+        console.error('Error in response:', data.data?.message || 'Unknown error');
         // Reset button state
         this.innerHTML = 'View more';
         this.disabled = false;
