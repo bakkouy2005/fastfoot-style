@@ -92,14 +92,9 @@ add_action('wp_ajax_load_more_products', 'load_more_products');
 add_action('wp_ajax_nopriv_load_more_products', 'load_more_products');
 
 function load_more_products() {
-    error_log('AJAX request received for load_more_products');
-    error_log('POST data: ' . print_r($_POST, true));
-
     $category = $_POST['category'] ?? '';
     $page = intval($_POST['page']) ?? 1;
     $per_page = intval($_POST['per_page']) ?? 6;
-
-    error_log("Loading products: category={$category}, page={$page}, per_page={$per_page}");
 
     $args = [
         'post_type' => 'product',
@@ -113,9 +108,14 @@ function load_more_products() {
     ];
 
     $query = new WP_Query($args);
-    error_log("Found {$query->post_count} products");
+    
+    if (!$query->have_posts()) {
+        wp_send_json_error(['message' => 'No more products found']);
+        return;
+    }
 
     ob_start();
+    $counter = 0;
 
     while ($query->have_posts()) : $query->the_post(); 
         global $product;
@@ -132,8 +132,15 @@ function load_more_products() {
                 break;
             }
         }
+
+        // Bepaal uitlijning (optioneel, voor variatie)
+        $alignment_class = match($counter % 3) {
+            0 => 'justify-self-start',
+            1 => 'justify-self-center',
+            default => 'justify-self-end',
+        };
         ?>
-        <div class="group relative">
+        <div class="group relative <?php echo $alignment_class; ?>">
             <div class="relative w-full h-[461px] overflow-hidden bg-[url('/wp-content/themes/fastfoot-style/assets/images/mesh-pattern.png')] bg-cover rounded-[12px]">
                 <a href="<?php the_permalink(); ?>" class="block w-full h-full rounded-[12px] overflow-hidden relative">
                     <?php 
@@ -150,16 +157,17 @@ function load_more_products() {
             </div>
         </div>
         <?php
+        $counter++;
     endwhile;
     wp_reset_postdata();
 
     $html = ob_get_clean();
-    error_log("Generated HTML length: " . strlen($html));
 
     wp_send_json_success([
         'html' => $html,
         'page' => $page,
-        'found' => $query->found_posts
+        'found' => $query->found_posts,
+        'loaded' => $counter
     ]);
 }
 
