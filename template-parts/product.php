@@ -31,7 +31,7 @@ $query = new WP_Query($args);
       $image_title = strtolower(get_the_title($image_id));
       if (strpos($image_title, 'achterkant') !== false) {
         $back_image = wp_get_attachment_image($image_id, 'full', false, [
-          'class' => 'w-full h-[460px] w-full object-contain rounded-[12px] absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 transform-gpu will-change-transform'
+          'class' => 'w-[460px] h-[460px] object-contain rounded-[12px] absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 transform-gpu will-change-transform'
         ]);
         break;
       }
