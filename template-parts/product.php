@@ -78,6 +78,7 @@ $initial_load = 3; // Number of products shown initially
       data-products-per-load="<?php echo $total_products - $initial_load; ?>"
       data-total-products="<?php echo esc_attr($total_products); ?>"
       data-initial-load="<?php echo $initial_load; ?>"
+      data-current-count="<?php echo $counter; ?>"
     >
       <span>View more</span>
       <svg class="w-5 h-5 animate-spin hidden" viewBox="0 0 24 24" fill="none" id="loading-spinner">
@@ -141,6 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const category = this.dataset.category;
     const initialLoad = parseInt(this.dataset.initialLoad);
     const productsPerLoad = parseInt(this.dataset.productsPerLoad);
+    const currentCount = parseInt(this.dataset.currentCount);
 
     try {
       const response = await fetch(`<?php echo admin_url('admin-ajax.php'); ?>`, {
@@ -153,6 +155,7 @@ document.addEventListener('DOMContentLoaded', function() {
           category: category,
           offset: initialLoad,
           per_page: productsPerLoad,
+          current_count: currentCount,
           nonce: '<?php echo wp_create_nonce('load_more_products'); ?>'
         })
       });
@@ -187,7 +190,7 @@ document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
               product.style.opacity = '1';
               product.style.transform = 'translateY(0)';
-            }, index * 100); // Stagger the animations
+            }, index * 100);
           });
         });
 
