@@ -92,18 +92,14 @@ add_action('wp_ajax_load_more_products', 'load_more_products');
 add_action('wp_ajax_nopriv_load_more_products', 'load_more_products');
 
 function load_more_products() {
-    // Verify nonce for security
     if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'load_more_products')) {
         wp_send_json_error(['message' => 'Invalid security token']);
         return;
     }
 
     $category = $_POST['category'] ?? '';
-    $page = intval($_POST['page']) ?? 1;
-    $per_page = intval($_POST['per_page']) ?? 6;
-
-    // Calculate offset instead of using paged parameter
-    $offset = ($page - 1) * $per_page;
+    $offset = intval($_POST['offset']) ?? 3;
+    $per_page = intval($_POST['per_page']) ?? 2;
 
     $args = [
         'post_type' => 'product',
@@ -181,8 +177,6 @@ function load_more_products() {
 
     wp_send_json_success([
         'html' => $html,
-        'page' => $page,
-        'found' => $query->found_posts,
         'loaded' => $counter
     ]);
 }
