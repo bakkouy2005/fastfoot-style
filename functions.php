@@ -75,3 +75,15 @@ function enqueue_theme_styles() {
 }
 add_action('wp_enqueue_scripts', 'enqueue_theme_styles');
 
+// Add image quality improvements
+add_filter('jpeg_quality', function($quality) {
+    return 100;
+});
+
+add_filter('wp_editor_set_quality', function($quality) {
+    return 100;
+});
+
+// Enable big image size threshold
+add_filter('big_image_size_threshold', '__return_false');
+
