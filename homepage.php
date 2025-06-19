@@ -13,6 +13,13 @@ get_header();
   'limit' => 3
 ]); ?>
     <?php get_template_part('template-parts/hero-conf', null, ['hero_index' => 2]); ?>
+    <?php get_template_part('template-parts/product', null, [
+  'term' => 'Retro', // <-- dit is de slug van de categorie
+  'taxonomy' => 'product_cat',
+  'title' => 'Nieuwste Collectie',
+  'limit' => 3
+]); ?>
+
     <?php get_template_part('template-parts/hero-conf', null, ['hero_index' => 3]); ?>
 
     </div>
