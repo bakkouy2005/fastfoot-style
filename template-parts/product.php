@@ -23,8 +23,8 @@ $query = new WP_Query($args);
   <?php while ($query->have_posts()) : $query->the_post(); global $product; ?>
     <div class="group relative">
       <div class="relative aspect-[3/4] overflow-hidden bg-[url('/wp-content/themes/fastfoot-style/assets/images/mesh-pattern.png')] bg-cover rounded-xl">
-        <a href="<?php the_permalink(); ?>" class="block w-full h-full">
-          <?php echo $product->get_image('woocommerce_thumbnail', ['class' => 'w-full h-full object-contain transition-transform duration-300 group-hover:scale-105']); ?>
+        <a href="<?php the_permalink(); ?>" class="block w-full h-full rounded-xl overflow-hidden">
+          <?php echo $product->get_image('woocommerce_thumbnail', ['class' => 'w-full h-full object-contain transition-transform duration-300 group-hover:scale-105 rounded-xl']); ?>
         </a>
       </div>
       <div>
