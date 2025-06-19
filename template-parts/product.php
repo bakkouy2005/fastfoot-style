@@ -38,8 +38,15 @@ $initial_load = 3; // Number of products shown initially
         break;
       }
     }
+
+    // Bepaal uitlijning (optioneel, voor variatie)
+    $alignment_class = match($counter % 3) {
+      0 => 'justify-self-start',
+      1 => 'justify-self-center',
+      default => 'justify-self-end',
+    };
   ?>
-    <div class="group relative w-full max-w-[343px]">
+    <div class="group relative <?php echo $alignment_class; ?>">
       <div class="relative w-full h-[461px] overflow-hidden bg-[url('/wp-content/themes/fastfoot-style/assets/images/mesh-pattern.png')] bg-cover rounded-[12px]">
         <a href="<?php the_permalink(); ?>" class="block w-full h-full rounded-[12px] overflow-hidden relative">
           <?php 
