@@ -74,7 +74,7 @@ $query = new WP_Query($args);
       data-category="<?php echo esc_attr($term); ?>"
       data-limit="<?php echo esc_attr($per_page); ?>"
     >
-      View all
+      View More
     </button>
   </div>
 <?php endif; ?>
