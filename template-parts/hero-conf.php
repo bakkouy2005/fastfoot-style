@@ -20,13 +20,7 @@ if (have_rows('hero_sections')) :
   <div class="max-w-7xl mx-auto">
 
     <!-- Logo -->
-    <div class="relative z-10 mx-auto pt-4">
-      <img 
-        src="<?php echo get_template_directory_uri(); ?>/images/image copy 2.png" 
-        alt="Fast Foot Style" 
-        class="h-24 sm:h-28 md:h-32 lg:h-36 xl:h-40 w-auto object-contain"
-      >
-    </div>
+    
 
     <!-- Content -->
     <div class="absolute bottom-0 left-0 right-0 z-10 md:p-12">
