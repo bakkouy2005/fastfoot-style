@@ -72,9 +72,53 @@ $query = new WP_Query($args);
     <button 
       class="view-more-btn inline-flex items-center justify-center px-8 py-3 border border-white text-base bg-[#324132] rounded-[12px] border-none text-white font-medium hover:bg-white hover:text-black transition-colors"
       data-category="<?php echo esc_attr($term); ?>"
-      data-limit="<?php echo esc_attr($per_page); ?>"
+      data-current-page="1"
+      data-products-per-load="6"
+      data-total-products="<?php echo esc_attr($query->found_posts); ?>"
     >
       View more
     </button>
   </div>
 <?php endif; ?>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const viewMoreBtn = document.querySelector('.view-more-btn');
+  if (!viewMoreBtn) return;
+
+  viewMoreBtn.addEventListener('click', async function() {
+    const category = this.dataset.category;
+    const currentPage = parseInt(this.dataset.currentPage) + 1;
+    const productsPerLoad = parseInt(this.dataset.productsPerLoad);
+    const totalProducts = parseInt(this.dataset.totalProducts);
+
+    try {
+      const response = await fetch(`/wp-admin/admin-ajax.php`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `action=load_more_products&category=${category}&page=${currentPage}&per_page=${productsPerLoad}`
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        // Insert new products before the text-center div
+        const productsGrid = document.querySelector('.grid');
+        productsGrid.insertAdjacentHTML('beforeend', data.data.html);
+
+        // Update current page
+        this.dataset.currentPage = currentPage;
+
+        // Hide button if we've loaded all products
+        const loadedProducts = currentPage * productsPerLoad;
+        if (loadedProducts >= totalProducts) {
+          this.style.display = 'none';
+        }
+      }
+    } catch (error) {
+      console.error('Error loading more products:', error);
+    }
+  });
+});
+</script>
