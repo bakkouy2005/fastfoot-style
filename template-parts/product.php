@@ -84,24 +84,42 @@ $query = new WP_Query($args);
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   const viewMoreBtn = document.querySelector('.view-more-btn');
-  if (!viewMoreBtn) return;
+  if (!viewMoreBtn) {
+    console.log('View more button not found');
+    return;
+  }
+
+  console.log('View more button found:', viewMoreBtn);
 
   viewMoreBtn.addEventListener('click', async function() {
+    console.log('Button clicked');
     const category = this.dataset.category;
     const currentPage = parseInt(this.dataset.currentPage) + 1;
     const productsPerLoad = parseInt(this.dataset.productsPerLoad);
     const totalProducts = parseInt(this.dataset.totalProducts);
 
+    console.log('Loading page:', currentPage);
+    console.log('Products per load:', productsPerLoad);
+    console.log('Total products:', totalProducts);
+
     try {
-      const response = await fetch(`/wp-admin/admin-ajax.php`, {
+      const response = await fetch(`<?php echo admin_url('admin-ajax.php'); ?>`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: `action=load_more_products&category=${category}&page=${currentPage}&per_page=${productsPerLoad}`
+        body: new URLSearchParams({
+          action: 'load_more_products',
+          category: category,
+          page: currentPage,
+          per_page: productsPerLoad
+        })
       });
 
+      console.log('Response received');
       const data = await response.json();
+      console.log('Data:', data);
+
       if (data.success) {
         // Insert new products before the text-center div
         const productsGrid = document.querySelector('.grid');
