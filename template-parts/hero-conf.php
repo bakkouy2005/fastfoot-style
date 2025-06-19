@@ -14,6 +14,9 @@ if (have_rows('hero_sections')) :
   style="background-image: url('<?php echo esc_url($hero_group['hero_background_image']); ?>');"
   id="hero-<?php echo $hero_index; ?>"
 >
+  <!-- Dark overlay -->
+  <div class="absolute inset-0 bg-black/50 rounded-xl"></div>
+  
   <div class="max-w-7xl mx-auto">
 
     <!-- Logo -->
