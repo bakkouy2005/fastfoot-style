@@ -19,51 +19,51 @@ $query = new WP_Query($args);
 
 <h2 class="text-4xl font-bold mb-10"><?php echo esc_html($title); ?></h2>
 
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
   <?php 
   $counter = 0;
-  while ($query->have_posts()) : $query->the_post(); global $product; 
+  while ($query->have_posts()) : $query->the_post(); global $product;
+
     $gallery_images = $product->get_gallery_image_ids();
     $back_image = '';
-    
+
     foreach ($gallery_images as $image_id) {
       $image_title = strtolower(get_the_title($image_id));
       if (strpos($image_title, 'achterkant') !== false) {
-        $back_image = wp_get_attachment_image($image_id, 'woocommerce_thumbnail', false, ['class' => 'w-full h-full object-contain rounded-xl absolute inset-0 opacity-0 group-hover:opacity-100']);
+        $back_image = wp_get_attachment_image($image_id, 'large', false, [
+          'class' => 'w-full h-[400px] object-contain rounded-[12px] absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300'
+        ]);
         break;
       }
     }
-    
-    // Determine alignment based on column position
-    $alignment_class = '';
-    if ($counter % 3 === 0) {
-      $alignment_class = 'justify-self-start';
-    } elseif ($counter % 3 === 1) {
-      $alignment_class = 'justify-self-center';
-    } else {
-      $alignment_class = 'justify-self-end';
-    }
+
+    // Bepaal uitlijning (optioneel, voor variatie)
+    $alignment_class = match($counter % 3) {
+      0 => 'justify-self-start',
+      1 => 'justify-self-center',
+      default => 'justify-self-end',
+    };
   ?>
     <div class="group relative <?php echo $alignment_class; ?>">
-      <div class="relative w-[343.12px] h-[301px] overflow-hidden bg-[url('/wp-content/themes/fastfoot-style/assets/images/mesh-pattern.png')] bg-cover rounded-xl">
-        <a href="<?php the_permalink(); ?>" class="block w-full h-full rounded-xl overflow-hidden">
+      <div class="relative w-full h-[400px] overflow-hidden bg-[url('/wp-content/themes/fastfoot-style/assets/images/mesh-pattern.png')] bg-cover rounded-[12px]">
+        <a href="<?php the_permalink(); ?>" class="block w-full h-full rounded-[12px] overflow-hidden relative">
           <?php 
-            echo $product->get_image('woocommerce_thumbnail', ['class' => 'w-full h-full object-contain rounded-xl group-hover:opacity-0']); 
-            if ($back_image) {
-              echo $back_image;
-            }
+            echo $product->get_image('large', [
+              'class' => 'w-full h-[400px] object-contain rounded-[12px] transition duration-300 group-hover:opacity-0'
+            ]);
+            if ($back_image) echo $back_image;
           ?>
         </a>
       </div>
-      <div>
+      <div class="mt-4">
         <h3 class="text-xl font-bold text-white"><?php the_title(); ?></h3>
-        <p class="text-xl text-[#9EB89E]"><?php echo '€' . $product->get_price(); ?></p>
+        <p class="text-xl text-[#9EB89E]">€<?php echo $product->get_price(); ?></p>
       </div>
     </div>
   <?php 
     $counter++;
-    endwhile; 
-    wp_reset_postdata(); 
+  endwhile; 
+  wp_reset_postdata(); 
   ?>
 </div>
 
