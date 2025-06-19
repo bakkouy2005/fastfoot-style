@@ -70,3 +70,8 @@ function fastfoot_style_scripts() {
 }
 add_action('wp_enqueue_scripts', 'fastfoot_style_scripts');
 
+function enqueue_theme_styles() {
+    wp_enqueue_style('theme-styles', get_template_directory_uri() . '/src/style.css', array(), '1.0.0');
+}
+add_action('wp_enqueue_scripts', 'enqueue_theme_styles');
+
