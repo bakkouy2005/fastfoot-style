@@ -165,12 +165,25 @@ function load_more_products() {
     $category = $_POST['category'] ?? '';
     $offset = intval($_POST['offset']) ?? 3;
     $per_page = intval($_POST['per_page']) ?? 2;
-    $current_count = intval($_POST['current_count']) ?? 0; // Get the current count from previous loads
+    $current_count = intval($_POST['current_count']) ?? 0;
+
+    // Get IDs of already loaded products
+    $loaded_products = new WP_Query([
+        'post_type' => 'product',
+        'posts_per_page' => $current_count,
+        'fields' => 'ids',
+        'tax_query' => $category ? [[
+            'taxonomy' => 'product_cat',
+            'field' => 'slug',
+            'terms' => $category,
+        ]] : [],
+    ]);
 
     $args = [
         'post_type' => 'product',
         'posts_per_page' => $per_page,
         'offset' => $offset,
+        'post__not_in' => $loaded_products->posts, // Exclude already loaded products
         'tax_query' => $category ? [[
             'taxonomy' => 'product_cat',
             'field' => 'slug',
