@@ -165,6 +165,7 @@ function load_more_products() {
     $category = $_POST['category'] ?? '';
     $offset = intval($_POST['offset']) ?? 3;
     $per_page = intval($_POST['per_page']) ?? 2;
+    $current_count = intval($_POST['current_count']) ?? 0; // Get the current count from previous loads
 
     $args = [
         'post_type' => 'product',
@@ -175,9 +176,9 @@ function load_more_products() {
             'field' => 'slug',
             'terms' => $category,
         ]] : [],
-        'no_found_rows' => true, // Performance optimization
-        'update_post_meta_cache' => false, // Performance optimization
-        'update_post_term_cache' => false, // Performance optimization
+        'no_found_rows' => true,
+        'update_post_meta_cache' => false,
+        'update_post_term_cache' => false,
     ];
 
     $query = new WP_Query($args);
@@ -188,7 +189,7 @@ function load_more_products() {
     }
 
     ob_start();
-    $counter = 0;
+    $counter = $current_count; // Start counting from where we left off
 
     while ($query->have_posts()) : $query->the_post(); 
         global $product;
@@ -204,7 +205,7 @@ function load_more_products() {
             if (strpos($image_title, 'achterkant') !== false) {
                 $back_image = wp_get_attachment_image($image_id, 'full', false, [
                     'class' => 'w-full h-[490px] object-contain rounded-[12px] absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 transform-gpu will-change-transform',
-                    'loading' => 'eager' // Force immediate loading
+                    'loading' => 'eager'
                 ]);
                 break;
             }
@@ -222,7 +223,7 @@ function load_more_products() {
                     <?php 
                         echo $product->get_image('full', [
                             'class' => 'w-full h-[490px] object-contain rounded-[12px] transition duration-300 group-hover:opacity-0 transform-gpu will-change-transform',
-                            'loading' => 'eager' // Force immediate loading
+                            'loading' => 'eager'
                         ]);
                         if ($back_image) echo $back_image;
                     ?>
@@ -240,14 +241,14 @@ function load_more_products() {
 
     $html = ob_get_clean();
 
-    if ($counter === 0) {
+    if ($counter === $current_count) {
         wp_send_json_error(['message' => 'No products found for this page']);
         return;
     }
 
     wp_send_json_success([
         'html' => $html,
-        'loaded' => $counter
+        'loaded' => $counter - $current_count
     ]);
 }
 
