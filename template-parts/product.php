@@ -20,11 +20,12 @@ $query = new WP_Query($args);
 <h2 class="text-4xl font-bold mb-10"><?php echo esc_html($title); ?></h2>
 
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
-  <?php while ($query->have_posts()) : $query->the_post(); global $product; 
+  <?php 
+  $counter = 0;
+  while ($query->have_posts()) : $query->the_post(); global $product; 
     $gallery_images = $product->get_gallery_image_ids();
     $back_image = '';
     
-    // Look for an image with 'achterkant' in the name
     foreach ($gallery_images as $image_id) {
       $image_title = strtolower(get_the_title($image_id));
       if (strpos($image_title, 'achterkant') !== false) {
@@ -32,8 +33,18 @@ $query = new WP_Query($args);
         break;
       }
     }
+    
+    // Determine alignment based on column position
+    $alignment_class = '';
+    if ($counter % 3 === 0) {
+      $alignment_class = 'justify-self-start';
+    } elseif ($counter % 3 === 1) {
+      $alignment_class = 'justify-self-center';
+    } else {
+      $alignment_class = 'justify-self-end';
+    }
   ?>
-    <div class="group relative">
+    <div class="group relative <?php echo $alignment_class; ?>">
       <div class="relative w-[343.12px] h-[301px] overflow-hidden bg-[url('/wp-content/themes/fastfoot-style/assets/images/mesh-pattern.png')] bg-cover rounded-xl">
         <a href="<?php the_permalink(); ?>" class="block w-full h-full rounded-xl overflow-hidden">
           <?php 
@@ -49,7 +60,11 @@ $query = new WP_Query($args);
         <p class="text-xl text-[#9EB89E]"><?php echo '€' . $product->get_price(); ?></p>
       </div>
     </div>
-  <?php endwhile; wp_reset_postdata(); ?>
+  <?php 
+    $counter++;
+    endwhile; 
+    wp_reset_postdata(); 
+  ?>
 </div>
 
 <?php if ($query->found_posts > $per_page): ?>
