@@ -70,7 +70,7 @@ $query = new WP_Query($args);
 <?php if ($query->found_posts > $per_page): ?>
   <div class="text-center mt-12">
     <button 
-      class="view-more-btn inline-flex items-center justify-center px-8 py-3 border border-white text-base bg-[#293629] rounded-[12px] text-white font-medium hover:bg-white hover:text-black transition-colors"
+      class="view-more-btn inline-flex items-center justify-center px-8 py-3 border border-white text-base bg-[#243324] rounded-[12px] text-white font-medium hover:bg-white hover:text-black transition-colors"
       data-category="<?php echo esc_attr($term); ?>"
       data-limit="<?php echo esc_attr($per_page); ?>"
     >
