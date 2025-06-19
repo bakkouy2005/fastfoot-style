@@ -68,7 +68,7 @@ $query = new WP_Query($args);
 </div>
 
 <?php if ($query->found_posts > $per_page): ?>
-  <div class="text-center mt-12">
+  <div class="text-center mt-12" id="load-more-container">
     <button 
       class="view-more-btn inline-flex items-center justify-center px-8 py-3 border border-white text-base bg-[#324132] rounded-[12px] border-none text-white font-medium hover:bg-white hover:text-black transition-colors"
       data-category="<?php echo esc_attr($term); ?>"
@@ -89,18 +89,15 @@ document.addEventListener('DOMContentLoaded', function() {
     return;
   }
 
-  console.log('View more button found:', viewMoreBtn);
-
   viewMoreBtn.addEventListener('click', async function() {
-    console.log('Button clicked');
+    // Add loading state to button
+    this.innerHTML = 'Loading...';
+    this.disabled = true;
+
     const category = this.dataset.category;
     const currentPage = parseInt(this.dataset.currentPage) + 1;
     const productsPerLoad = parseInt(this.dataset.productsPerLoad);
     const totalProducts = parseInt(this.dataset.totalProducts);
-
-    console.log('Loading page:', currentPage);
-    console.log('Products per load:', productsPerLoad);
-    console.log('Total products:', totalProducts);
 
     try {
       const response = await fetch(`<?php echo admin_url('admin-ajax.php'); ?>`, {
@@ -116,26 +113,48 @@ document.addEventListener('DOMContentLoaded', function() {
         })
       });
 
-      console.log('Response received');
       const data = await response.json();
-      console.log('Data:', data);
-
-      if (data.success) {
-        // Insert new products before the text-center div
+      
+      if (data.success && data.data.html) {
+        // Find the products grid
         const productsGrid = document.querySelector('.grid');
-        productsGrid.insertAdjacentHTML('beforeend', data.data.html);
+        if (!productsGrid) {
+          console.error('Products grid not found');
+          return;
+        }
+
+        // Create a temporary container to hold the new HTML
+        const temp = document.createElement('div');
+        temp.innerHTML = data.data.html;
+
+        // Add each new product to the grid
+        while (temp.firstChild) {
+          productsGrid.appendChild(temp.firstChild);
+        }
 
         // Update current page
         this.dataset.currentPage = currentPage;
 
-        // Hide button if we've loaded all products
+        // Calculate if we should hide the button
         const loadedProducts = currentPage * productsPerLoad;
         if (loadedProducts >= totalProducts) {
-          this.style.display = 'none';
+          document.getElementById('load-more-container').style.display = 'none';
+        } else {
+          // Reset button state
+          this.innerHTML = 'View more';
+          this.disabled = false;
         }
+      } else {
+        console.error('No HTML content in response:', data);
+        // Reset button state
+        this.innerHTML = 'View more';
+        this.disabled = false;
       }
     } catch (error) {
       console.error('Error loading more products:', error);
+      // Reset button state
+      this.innerHTML = 'View more';
+      this.disabled = false;
     }
   });
 });
