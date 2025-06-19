@@ -99,8 +99,19 @@ document.addEventListener('DOMContentLoaded', function() {
     const productsPerLoad = parseInt(this.dataset.productsPerLoad);
     const totalProducts = parseInt(this.dataset.totalProducts);
 
+    console.log('Starting AJAX request with:', {
+      category,
+      currentPage,
+      productsPerLoad,
+      totalProducts
+    });
+
+    const ajaxUrl = '<?php echo admin_url('admin-ajax.php'); ?>';
+    console.log('AJAX URL:', ajaxUrl);
+
     try {
-      const response = await fetch(`<?php echo admin_url('admin-ajax.php'); ?>`, {
+      console.log('Sending request...');
+      const response = await fetch(ajaxUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -109,23 +120,30 @@ document.addEventListener('DOMContentLoaded', function() {
           action: 'load_more_products',
           category: category,
           page: currentPage,
-          per_page: productsPerLoad
+          per_page: productsPerLoad,
+          nonce: '<?php echo wp_create_nonce('load_more_products'); ?>'
         })
       });
 
+      console.log('Response received:', response);
       const data = await response.json();
+      console.log('Parsed data:', data);
       
       if (data.success && data.data.html) {
+        console.log('HTML content length:', data.data.html.length);
+        
         // Find the products grid
         const productsGrid = document.querySelector('.grid');
         if (!productsGrid) {
           console.error('Products grid not found');
           return;
         }
+        console.log('Found products grid:', productsGrid);
 
         // Create a temporary container to hold the new HTML
         const temp = document.createElement('div');
         temp.innerHTML = data.data.html;
+        console.log('Number of new products:', temp.children.length);
 
         // Add each new product to the grid
         while (temp.firstChild) {
@@ -134,15 +152,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Update current page
         this.dataset.currentPage = currentPage;
+        console.log('Updated current page to:', currentPage);
 
         // Calculate if we should hide the button
         const loadedProducts = currentPage * productsPerLoad;
+        console.log('Total loaded products:', loadedProducts, 'of', totalProducts);
+        
         if (loadedProducts >= totalProducts) {
           document.getElementById('load-more-container').style.display = 'none';
+          console.log('All products loaded, hiding button');
         } else {
           // Reset button state
           this.innerHTML = 'View more';
           this.disabled = false;
+          console.log('More products available, button reset');
         }
       } else {
         console.error('No HTML content in response:', data);
