@@ -45,11 +45,11 @@ $query = new WP_Query($args);
     };
   ?>
     <div class="group relative <?php echo $alignment_class; ?>">
-      <div class="relative w-full h-[461px] overflow-hidden bg-[url('/wp-content/themes/fastfoot-style/assets/images/mesh-pattern.png')] bg-cover rounded-[12px] transition-all duration-500 transform preserve-3d group-hover:rotate-y-180">
+      <div class="relative w-full h-[461px] overflow-hidden bg-[url('/wp-content/themes/fastfoot-style/assets/images/mesh-pattern.png')] bg-cover rounded-[12px]">
         <a href="<?php the_permalink(); ?>" class="block w-full h-full rounded-[12px] overflow-hidden relative">
           <?php 
             echo $product->get_image('large', [
-              'class' => 'w-full h-[460px] object-contain rounded-[12px] transition-all duration-500 transform backface-hidden'
+              'class' => 'w-full h-[460px] object-contain rounded-[12px] transition duration-300 group-hover:opacity-0'
             ]);
             if ($back_image) echo $back_image;
           ?>
