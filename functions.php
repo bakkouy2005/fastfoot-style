@@ -102,16 +102,13 @@ function load_more_products() {
     $page = intval($_POST['page']) ?? 1;
     $per_page = intval($_POST['per_page']) ?? 6;
 
-    error_log("Loading more products: " . print_r([
-        'category' => $category,
-        'page' => $page,
-        'per_page' => $per_page
-    ], true));
+    // Calculate offset instead of using paged parameter
+    $offset = ($page - 1) * $per_page;
 
     $args = [
         'post_type' => 'product',
         'posts_per_page' => $per_page,
-        'paged' => $page,
+        'offset' => $offset,
         'tax_query' => $category ? [[
             'taxonomy' => 'product_cat',
             'field' => 'slug',
@@ -120,10 +117,8 @@ function load_more_products() {
     ];
 
     $query = new WP_Query($args);
-    error_log("Query found {$query->post_count} products");
     
     if (!$query->have_posts()) {
-        error_log("No posts found in query");
         wp_send_json_error(['message' => 'No more products found']);
         return;
     }
@@ -134,7 +129,6 @@ function load_more_products() {
     while ($query->have_posts()) : $query->the_post(); 
         global $product;
         if (!$product) {
-            error_log("Product object not found for post " . get_the_ID());
             continue;
         }
 
@@ -179,20 +173,17 @@ function load_more_products() {
     wp_reset_postdata();
 
     $html = ob_get_clean();
-    error_log("Generated HTML for {$counter} products, length: " . strlen($html));
+
+    if ($counter === 0) {
+        wp_send_json_error(['message' => 'No products found for this page']);
+        return;
+    }
 
     wp_send_json_success([
         'html' => $html,
         'page' => $page,
         'found' => $query->found_posts,
-        'loaded' => $counter,
-        'debug' => [
-            'category' => $category,
-            'page' => $page,
-            'per_page' => $per_page,
-            'total_found' => $query->found_posts,
-            'loaded_this_page' => $counter
-        ]
+        'loaded' => $counter
     ]);
 }
 
