@@ -45,7 +45,7 @@ $query = new WP_Query($args);
     };
   ?>
     <div class="group relative <?php echo $alignment_class; ?>">
-      <div class="relative w-full h-[400px] overflow-hidden bg-[url('/wp-content/themes/fastfoot-style/assets/images/mesh-pattern.png')] bg-cover rounded-[12px]">
+      <div class="relative w-full h-[460px] overflow-hidden bg-[url('/wp-content/themes/fastfoot-style/assets/images/mesh-pattern.png')] bg-cover rounded-[12px]">
         <a href="<?php the_permalink(); ?>" class="block w-full h-full rounded-[12px] overflow-hidden relative">
           <?php 
             echo $product->get_image('large', [
