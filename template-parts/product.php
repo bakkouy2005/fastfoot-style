@@ -29,7 +29,7 @@ $query = new WP_Query($args);
       </div>
       <div>
         <h3 class="text-xl font-medium"><?php the_title(); ?></h3>
-        <p class="text-xl"><?php echo $product->get_price(); ?></p>
+        <p class="text-xl text-white"><?php echo $product->get_price(); ?></p>
       </div>
     </div>
   <?php endwhile; wp_reset_postdata(); ?>
