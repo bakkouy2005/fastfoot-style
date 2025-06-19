@@ -87,3 +87,69 @@ add_filter('wp_editor_set_quality', function($quality) {
 // Enable big image size threshold
 add_filter('big_image_size_threshold', '__return_false');
 
+// Add AJAX handler for loading more products
+add_action('wp_ajax_load_more_products', 'load_more_products');
+add_action('wp_ajax_nopriv_load_more_products', 'load_more_products');
+
+function load_more_products() {
+    $category = $_POST['category'] ?? '';
+    $page = $_POST['page'] ?? 1;
+    $per_page = $_POST['per_page'] ?? 6;
+
+    $args = [
+        'post_type' => 'product',
+        'posts_per_page' => $per_page,
+        'paged' => $page,
+        'tax_query' => $category ? [[
+            'taxonomy' => 'product_cat',
+            'field' => 'slug',
+            'terms' => $category,
+        ]] : [],
+    ];
+
+    $query = new WP_Query($args);
+    ob_start();
+
+    while ($query->have_posts()) : $query->the_post(); 
+        global $product;
+
+        $gallery_images = $product->get_gallery_image_ids();
+        $back_image = '';
+
+        foreach ($gallery_images as $image_id) {
+            $image_title = strtolower(get_the_title($image_id));
+            if (strpos($image_title, 'achterkant') !== false) {
+                $back_image = wp_get_attachment_image($image_id, 'full', false, [
+                    'class' => 'w-full h-[490px] object-contain rounded-[12px] absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 transform-gpu will-change-transform'
+                ]);
+                break;
+            }
+        }
+        ?>
+        <div class="group relative">
+            <div class="relative w-full h-[461px] overflow-hidden bg-[url('/wp-content/themes/fastfoot-style/assets/images/mesh-pattern.png')] bg-cover rounded-[12px]">
+                <a href="<?php the_permalink(); ?>" class="block w-full h-full rounded-[12px] overflow-hidden relative">
+                    <?php 
+                        echo $product->get_image('full', [
+                            'class' => 'w-full h-[490px] object-contain rounded-[12px] transition duration-300 group-hover:opacity-0 transform-gpu will-change-transform'
+                        ]);
+                        if ($back_image) echo $back_image;
+                    ?>
+                </a>
+            </div>
+            <div class="mt-4">
+                <h3 class="text-xl font-bold text-white"><?php the_title(); ?></h3>
+                <p class="text-xl text-[#9EB89E]">€<?php echo $product->get_price(); ?></p>
+            </div>
+        </div>
+        <?php
+    endwhile;
+    wp_reset_postdata();
+
+    $html = ob_get_clean();
+
+    wp_send_json_success([
+        'html' => $html,
+    ]);
+}
+
