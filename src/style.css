@@ -1,0 +1,16 @@
+/* Import Be Vietnam Pro font */
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap');
+
+/* Apply Be Vietnam Pro to the entire site */
+:root {
+  --font-be-vietnam: 'Be Vietnam Pro', sans-serif;
+}
+
+body {
+  font-family: var(--font-be-vietnam);
+}
+
+/* Apply the font to headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-be-vietnam);
+}
