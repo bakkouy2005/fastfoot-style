@@ -34,13 +34,13 @@ if (have_rows('hero_sections')) :
         <!-- Heading -->
         <div class="max-w-5xl mb-8">
           <?php if (!empty($hero_group['hero_heading'])): ?>
-            <h2 class="text-5xl md:text-7xl font-bold mb-4 leading-tight text-white text-start">
+            <h2 class="text-5xl md:text-7xl font-bold mb-4 leading-tight text-white/80 text-start">
               <?php echo esc_html($hero_group['hero_heading']); ?>
             </h2>
           <?php endif; ?>
 
           <?php if (!empty($hero_group['hero_subtext'])): ?>
-            <p class="text-3xl md:text-6xl font-bold text-white/90 mb-8 text-start leading-tight">
+            <p class="text-3xl md:text-6xl font-bold text-white/60 mb-8 text-start leading-tight">
               <?php echo esc_html($hero_group['hero_subtext']); ?>
             </p>
           <?php endif; ?>
