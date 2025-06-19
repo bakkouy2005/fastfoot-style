@@ -92,9 +92,14 @@ add_action('wp_ajax_load_more_products', 'load_more_products');
 add_action('wp_ajax_nopriv_load_more_products', 'load_more_products');
 
 function load_more_products() {
+    error_log('AJAX request received for load_more_products');
+    error_log('POST data: ' . print_r($_POST, true));
+
     $category = $_POST['category'] ?? '';
-    $page = $_POST['page'] ?? 1;
-    $per_page = $_POST['per_page'] ?? 6;
+    $page = intval($_POST['page']) ?? 1;
+    $per_page = intval($_POST['per_page']) ?? 6;
+
+    error_log("Loading products: category={$category}, page={$page}, per_page={$per_page}");
 
     $args = [
         'post_type' => 'product',
@@ -108,6 +113,8 @@ function load_more_products() {
     ];
 
     $query = new WP_Query($args);
+    error_log("Found {$query->post_count} products");
+
     ob_start();
 
     while ($query->have_posts()) : $query->the_post(); 
@@ -147,9 +154,18 @@ function load_more_products() {
     wp_reset_postdata();
 
     $html = ob_get_clean();
+    error_log("Generated HTML length: " . strlen($html));
 
     wp_send_json_success([
         'html' => $html,
+        'page' => $page,
+        'found' => $query->found_posts
     ]);
 }
+
+// Ensure jQuery is loaded
+function enqueue_jquery() {
+    wp_enqueue_script('jquery');
+}
+add_action('wp_enqueue_scripts', 'enqueue_jquery');
 
