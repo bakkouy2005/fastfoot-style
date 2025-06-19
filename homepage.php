@@ -16,7 +16,7 @@ get_header();
     <?php get_template_part('template-parts/product', null, [
   'term' => 'Retro', // <-- dit is de slug van de categorie
   'taxonomy' => 'product_cat',
-  'title' => 'Nieuwste Collectie',
+  'title' => 'Retro',
   'limit' => 3
 ]); ?>
 
