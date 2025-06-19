@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function() {
         body: new URLSearchParams({
           action: 'load_more_products',
           category: category,
-          offset: initialLoad,
+          offset: currentCount,
           per_page: productsPerLoad,
           current_count: currentCount,
           nonce: '<?php echo wp_create_nonce('load_more_products'); ?>'
