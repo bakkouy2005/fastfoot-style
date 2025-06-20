@@ -138,9 +138,9 @@ while (have_posts()) :
                     echo '<!-- Debug Start -->';
                     echo '<pre style="color: white;">';
                     echo 'Product ID: ' . get_the_ID() . "\n";
-                    echo 'Has product_dropdowns field: ' . (has_field('product_dropdowns') ? 'Yes' : 'No') . "\n";
+                    $dropdowns = get_field('product_dropdowns');
                     echo 'Field value: ';
-                    var_dump(get_field('product_dropdowns'));
+                    var_dump($dropdowns);
                     echo '</pre>';
                     echo '<!-- Debug End -->';
 
