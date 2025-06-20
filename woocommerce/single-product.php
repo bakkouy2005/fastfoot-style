@@ -18,17 +18,20 @@ while (have_posts()) :
                 ?>
                 <img src="<?php echo esc_url($main_image[0]); ?>" 
                      alt="<?php echo esc_attr($product->get_name()); ?>"
-                     class="w-full h-auto object-contain rounded-lg">
+                     class="w-full h-auto object-contain rounded-lg main-product-image">
             </div>
 
             <!-- Thumbnail Gallery -->
-            <div class="grid grid-cols-3 gap-4">
+            <div class="grid grid-cols-3 gap-4 product-gallery">
                 <?php
                 $attachment_ids = $product->get_gallery_image_ids();
+                array_unshift($attachment_ids, $main_image_id); // Add main image to gallery
                 foreach ($attachment_ids as $attachment_id) {
                     $image_url = wp_get_attachment_image_src($attachment_id, 'thumbnail')[0];
+                    $full_image_url = wp_get_attachment_image_src($attachment_id, 'full')[0];
                     ?>
-                    <div class="bg-[#1a1f1a] p-2 rounded-xl cursor-pointer hover:opacity-75 transition-opacity">
+                    <div class="bg-[#1a1f1a] p-2 rounded-xl cursor-pointer hover:opacity-75 transition-opacity gallery-thumbnail"
+                         data-full-image="<?php echo esc_url($full_image_url); ?>">
                         <img src="<?php echo esc_url($image_url); ?>" 
                              alt="Product thumbnail" 
                              class="w-full h-auto object-contain rounded-lg">
@@ -55,7 +58,7 @@ while (have_posts()) :
 
             <!-- Price -->
             <div class="text-2xl font-bold mb-6">
-                €<?php echo $product->get_price(); ?>
+                <?php echo $product->get_price_html(); ?>
             </div>
 
             <form class="cart" method="post" enctype="multipart/form-data">
@@ -67,8 +70,8 @@ while (have_posts()) :
                         foreach ($sizes as $size) {
                             ?>
                             <label class="relative">
-                                <input type="radio" name="size" value="<?php echo esc_attr($size); ?>" class="absolute opacity-0">
-                                <span class="block text-center py-2 px-3 bg-[#324132] rounded-lg cursor-pointer hover:bg-[#425142] transition-colors">
+                                <input type="radio" name="size" value="<?php echo esc_attr($size); ?>" class="absolute opacity-0" required>
+                                <span class="block text-center py-2 px-3 bg-[#324132] rounded-lg cursor-pointer hover:bg-[#425142] transition-colors size-option">
                                     <?php echo esc_html($size); ?>
                                 </span>
                             </label>
@@ -84,7 +87,7 @@ while (have_posts()) :
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm mb-1">Name</label>
-                            <input type="text" name="custom_name" placeholder="Your Name" 
+                            <input type="text" name="custom_name" placeholder="Your Name" maxlength="20"
                                    class="w-full px-3 py-2 bg-[#324132] rounded-lg border border-[#425142] focus:outline-none focus:border-white">
                         </div>
                         <div>
@@ -96,10 +99,10 @@ while (have_posts()) :
                 </div>
 
                 <!-- Badge Options -->
-                <div class="mb-6">
+                <div class="mb-6 badge-options">
                     <div class="flex gap-3">
                         <label class="flex items-center">
-                            <input type="radio" name="badge" value="none" class="mr-2">
+                            <input type="radio" name="badge" value="none" class="mr-2" checked>
                             <span>No badge</span>
                         </label>
                         <label class="flex items-center">
@@ -114,7 +117,7 @@ while (have_posts()) :
                 </div>
 
                 <!-- Product Care -->
-                <div class="mb-6">
+                <div class="mb-6 product-care">
                     <button type="button" class="w-full py-3 px-4 bg-[#324132] rounded-lg text-left flex justify-between items-center">
                         <span>Product Care</span>
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -138,6 +141,8 @@ while (have_posts()) :
                         class="w-full py-3 bg-[#12A212] hover:bg-[#0E800E] rounded-lg text-white font-semibold transition-colors">
                     Add to Cart
                 </button>
+
+                <?php do_action('woocommerce_after_add_to_cart_button'); ?>
             </form>
         </div>
     </div>
@@ -161,12 +166,50 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Product care accordion
-    const careButton = document.querySelector('button[type="button"]');
+    const careButton = document.querySelector('.product-care button');
     const careContent = careButton.nextElementSibling;
     careButton.addEventListener('click', function() {
         careContent.classList.toggle('hidden');
         const svg = this.querySelector('svg');
         svg.style.transform = careContent.classList.contains('hidden') ? '' : 'rotate(180deg)';
+    });
+
+    // Gallery functionality
+    const mainImage = document.querySelector('.main-product-image');
+    const thumbnails = document.querySelectorAll('.gallery-thumbnail');
+    
+    thumbnails.forEach(thumbnail => {
+        thumbnail.addEventListener('click', function() {
+            const fullImageUrl = this.dataset.fullImage;
+            mainImage.src = fullImageUrl;
+            
+            // Add active state to clicked thumbnail
+            thumbnails.forEach(thumb => thumb.classList.remove('ring-2', 'ring-[#12A212]'));
+            this.classList.add('ring-2', 'ring-[#12A212]');
+        });
+    });
+
+    // Set first thumbnail as active by default
+    if (thumbnails.length > 0) {
+        thumbnails[0].classList.add('ring-2', 'ring-[#12A212]');
+    }
+
+    // Form validation
+    const form = document.querySelector('form.cart');
+    form.addEventListener('submit', function(e) {
+        const selectedSize = document.querySelector('input[name="size"]:checked');
+        if (!selectedSize) {
+            e.preventDefault();
+            alert('Please select a size');
+        }
+    });
+
+    // Number input validation
+    const numberInput = document.querySelector('input[name="custom_number"]');
+    numberInput.addEventListener('input', function() {
+        const value = parseInt(this.value);
+        if (value < 0) this.value = 0;
+        if (value > 99) this.value = 99;
     });
 });
 </script>
