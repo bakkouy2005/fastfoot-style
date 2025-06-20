@@ -135,25 +135,26 @@ while (have_posts()) :
                     <!-- Dropdown Repeater -->
                     <?php 
                     // Debug output
-                    echo '<!-- Debug: ';
-                    var_dump(get_field('product_dropdowns'));
-                    echo ' -->';
-                    
-                    if(have_rows('product_dropdowns')): ?>
-                        <?php while(have_rows('product_dropdowns')): the_row(); ?>
+                    if(get_field('product_dropdowns')):
+                        while(have_rows('product_dropdowns')): the_row(); 
+                            $title = get_sub_field('dropdown_title');
+                            $content = get_sub_field('dropdown_content');
+                    ?>
                             <div class="mb-4 dropdown-item">
                                 <button type="button" class="w-full py-3 px-4 bg-[#1a1f1a] rounded-2xl text-left flex justify-between items-center hover:bg-[#2a2f2a] transition toggle-dropdown">
-                                    <span class="text-white font-medium"><?php echo esc_html(get_sub_field('dropdown_title')); ?></span>
+                                    <span class="text-white font-medium"><?php echo esc_html($title); ?></span>
                                     <svg class="w-4 h-4 transition-transform arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                                     </svg>
                                 </button>
                                 <div class="dropdown-content hidden mt-2 bg-[#374437] text-[#CFCFCF] text-sm p-4 rounded-xl">
-                                    <?php echo wp_kses_post(get_sub_field('dropdown_content')); ?>
+                                    <?php echo wpautop(wp_kses_post($content)); ?>
                                 </div>
                             </div>
-                        <?php endwhile; ?>
-                    <?php endif; ?>
+                    <?php 
+                        endwhile;
+                    endif; 
+                    ?>
 
                     <?php do_action('woocommerce_after_add_to_cart_button'); ?>
                 </form>
