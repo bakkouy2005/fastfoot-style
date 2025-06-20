@@ -114,3 +114,10 @@ add_action('after_switch_theme', 'theme_activation');
 // TEMPORARY: Remove this after refreshing once
 flush_rewrite_rules();
 
+// Add product_cat as a valid query var
+function add_product_cat_query_var($vars) {
+    $vars[] = 'product_cat';
+    return $vars;
+}
+add_filter('query_vars', 'add_product_cat_query_var');
+
