@@ -133,51 +133,24 @@ while (have_posts()) :
                     </div>
 
                     <!-- Dropdown Repeater -->
-                    <?php 
-                    // Debug output
-                    echo '<!-- Debug Start -->';
-                    echo '<pre style="color: white;">';
-                    echo 'Product ID: ' . get_the_ID() . "\n";
-                    echo 'Post Type: ' . get_post_type() . "\n";
-                    echo 'Is ACF Active: ' . (function_exists('get_field') ? 'Yes' : 'No') . "\n";
-                    
-                    // Get all ACF fields for this post
-                    $fields = get_fields();
-                    echo 'All ACF Fields: ';
-                    var_dump($fields);
-                    
-                    echo 'Specific Field value: ';
-                    var_dump(get_field('product_dropdowns'));
-                    echo '</pre>';
-                    echo '<!-- Debug End -->';
-
-                    if(have_rows('product_dropdowns')):
-                        while(have_rows('product_dropdowns')): the_row(); 
-                            $title = get_sub_field('dropdown_title');
-                            $content = get_sub_field('dropdown_content');
-                            
-                            // Debug each row
-                            echo '<pre style="color: white;">';
-                            echo "Row data:\n";
-                            echo "Title: " . $title . "\n";
-                            echo "Content: " . $content . "\n";
-                            echo '</pre>';
-                    ?>
-                            <div class="mb-4 dropdown-item">
-                                <button type="button" class="w-full py-3 px-4 bg-[#1a1f1a] rounded-2xl text-left flex justify-between items-center hover:bg-[#2a2f2a] transition toggle-dropdown">
-                                    <span class="text-white font-medium"><?php echo esc_html($title); ?></span>
-                                    <svg class="w-4 h-4 transition-transform arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                                    </svg>
-                                </button>
-                                <div class="dropdown-content hidden mt-2 bg-[#374437] text-[#CFCFCF] text-sm p-4 rounded-xl">
-                                    <?php echo wpautop(wp_kses_post($content)); ?>
-                                </div>
-                            </div>
-                    <?php 
-                        endwhile;
-                    endif; 
-                    ?>
+                    <?php if (have_rows('product_dropdowns')): ?>
+    <?php while (have_rows('product_dropdowns')): the_row(); 
+        $title = get_sub_field('dropdown_title');
+        $content = get_sub_field('dropdown_content');
+    ?>
+    <div class="mb-4 dropdown-item">
+        <button type="button" class="w-full py-3 px-4 bg-[#1a1f1a] rounded-2xl text-left flex justify-between items-center hover:bg-[#2a2f2a] transition toggle-dropdown">
+            <span class="text-white font-medium"><?php echo esc_html($title); ?></span>
+            <svg class="w-4 h-4 transition-transform arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+        </button>
+        <div class="dropdown-content hidden mt-2 bg-[#374437] text-[#CFCFCF] text-sm p-4 rounded-xl">
+            <?php echo wp_kses_post($content); ?>
+        </div>
+    </div>
+    <?php endwhile; ?>
+<?php endif; ?>
 
                     <?php do_action('woocommerce_after_add_to_cart_button'); ?>
                 </form>
