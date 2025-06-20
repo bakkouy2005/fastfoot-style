@@ -132,25 +132,38 @@ while (have_posts()) :
                         </div>
                     </div>
 
-                    <!-- Product care accordion -->
-                    <div class="mb-8 product-care">
+                    <!-- Dropdown Repeater -->
+                    <?php 
+                    if(have_rows('dropdown_items')): 
+                        while(have_rows('dropdown_items')): the_row();
+                            $title = get_sub_field('dropdown_title');
+                    ?>
+                    <div class="mb-8 dropdown-item">
                         <button type="button" class="w-full py-3 px-4 bg-[#1a1f1a] rounded-2xl text-left flex justify-between items-center hover:bg-[#2a2f2a] transition">
-                            <span>Product Care</span>
+                            <span><?php echo esc_html($title); ?></span>
                             <svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
                         </button>
                         <div class="mt-3 p-4 bg-[#1a1f1a] rounded-xl hidden text-sm text-[#CFCFCF]">
                             <ul class="list-disc list-inside space-y-1">
-                                <li>Cool wash</li>
-                                <li>Do not bleach</li>
-                                <li>Do not tumble dry</li>
-                                <li>Do not use fabric softener</li>
-                                <li>Wash inside out</li>
-                                <li>Use a cool iron</li>
+                                <?php 
+                                if(have_rows('dropdown_list_items')):
+                                    while(have_rows('dropdown_list_items')): the_row();
+                                        $item = get_sub_field('list_item');
+                                ?>
+                                    <li><?php echo esc_html($item); ?></li>
+                                <?php 
+                                    endwhile;
+                                endif;
+                                ?>
                             </ul>
                         </div>
                     </div>
+                    <?php 
+                        endwhile;
+                    endif; 
+                    ?>
 
                     <?php do_action('woocommerce_after_add_to_cart_button'); ?>
                 </form>
@@ -189,17 +202,16 @@ document.addEventListener('DOMContentLoaded', function() {
         thumbnails[0].classList.add('ring-2', 'ring-[#12A212]');
     }
 
-    // Product care accordion (only initialize if it exists)
-    const careButton = document.querySelector('.product-care button');
-    const careContent = careButton?.nextElementSibling;
-    
-    if (careButton && careContent) {
-        careButton.addEventListener('click', function() {
-            careContent.classList.toggle('hidden');
+    // Dropdown functionality
+    const dropdownButtons = document.querySelectorAll('.dropdown-item button');
+    dropdownButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const content = this.nextElementSibling;
+            content.classList.toggle('hidden');
             const svg = this.querySelector('svg');
-            svg.style.transform = careContent.classList.contains('hidden') ? '' : 'rotate(180deg)';
+            svg.style.transform = content.classList.contains('hidden') ? '' : 'rotate(180deg)';
         });
-    }
+    });
 
     // Validation
     const form = document.querySelector('form.cart');
