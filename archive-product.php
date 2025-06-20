@@ -3,24 +3,39 @@
 
 get_header();
 
-// Get current category
-$current_category = get_queried_object();
+// Get the current category from the URL
+$category_slug = get_query_var('product_cat');
+$category = get_term_by('slug', $category_slug, 'product_cat');
+
+// Set up the query for products in this category
+$args = array(
+    'post_type' => 'product',
+    'posts_per_page' => -1, // Show all products
+    'tax_query' => array(
+        array(
+            'taxonomy' => 'product_cat',
+            'field' => 'slug',
+            'terms' => $category_slug
+        )
+    )
+);
+$products = new WP_Query($args);
 ?>
 
 <div class="container mx-auto px-4 py-8">
     <div class="mb-12">
-        <h1 class="text-5xl font-bold text-white mb-4"><?php echo esc_html($current_category->name); ?></h1>
-        <?php if ($current_category->description): ?>
-            <p class="text-xl text-[#9EB89E]"><?php echo esc_html($current_category->description); ?></p>
+        <h1 class="text-5xl font-bold text-white mb-4">
+            <?php echo $category ? esc_html($category->name) : 'All Products'; ?>
+        </h1>
+        <?php if ($category && $category->description): ?>
+            <p class="text-xl text-[#9EB89E]"><?php echo esc_html($category->description); ?></p>
         <?php endif; ?>
     </div>
 
-    <?php
-    if (woocommerce_product_loop()) {
-        ?>
+    <?php if ($products->have_posts()): ?>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             <?php
-            while (have_posts()) : the_post();
+            while ($products->have_posts()) : $products->the_post();
                 global $product;
                 
                 $gallery_images = $product->get_gallery_image_ids();
@@ -54,41 +69,14 @@ $current_category = get_queried_object();
                 </div>
                 <?php
             endwhile;
+            wp_reset_postdata();
             ?>
         </div>
-
-        <?php
-        // Pagination
-        $total_pages = wc_get_loop_prop('total_pages');
-        if ($total_pages > 1) {
-            ?>
-            <div class="mt-12 flex justify-center">
-                <?php
-                $current_page = max(1, get_query_var('paged'));
-                
-                echo paginate_links(array(
-                    'base' => str_replace(999999999, '%#%', esc_url(get_pagenum_link(999999999))),
-                    'format' => '?paged=%#%',
-                    'current' => $current_page,
-                    'total' => $total_pages,
-                    'prev_text' => '&larr; Previous',
-                    'next_text' => 'Next &rarr;',
-                    'type' => 'list',
-                    'end_size' => 3,
-                    'mid_size' => 3,
-                ));
-                ?>
-            </div>
-            <?php
-        }
-    } else {
-        ?>
+    <?php else: ?>
         <div class="text-center py-12">
             <p class="text-xl text-white">No products found in this category.</p>
         </div>
-        <?php
-    }
-    ?>
+    <?php endif; ?>
 </div>
 
 <?php
