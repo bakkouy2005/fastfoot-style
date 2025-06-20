@@ -19,21 +19,12 @@ $query = new WP_Query($args);
 
 <div class="flex justify-between items-center mb-10">
   <h2 class="text-4xl font-bold text-white"><?php echo esc_html($title); ?></h2>
-  <?php if ($term): 
-    // Get the term object to ensure we have a valid link
-    $term_obj = get_term_by('slug', $term, $taxonomy);
-    if ($term_obj) {
-      $term_link = get_term_link($term_obj);
-      if (!is_wp_error($term_link)) {
-        ?>
-        <a href="<?php echo esc_url($term_link); ?>" 
-           class="inline-flex items-center justify-center px-8 py-3 text-base bg-[#324132] rounded-[12px] text-white font-medium hover:bg-white hover:text-black transition-colors">
-          View All
-        </a>
-        <?php
-      }
-    }
-  endif; ?>
+  <?php if ($term): ?>
+    <a href="<?php echo esc_url(get_term_link($term, $taxonomy)); ?>" 
+       class="inline-flex items-center justify-center px-8 py-3 text-base bg-[#324132] rounded-[12px] text-white font-medium hover:bg-white hover:text-black transition-colors">
+      View All
+    </a>
+  <?php endif; ?>
 </div>
 
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1">
