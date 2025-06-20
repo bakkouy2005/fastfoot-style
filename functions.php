@@ -92,3 +92,12 @@ function enqueue_jquery() {
 }
 add_action('wp_enqueue_scripts', 'enqueue_jquery');
 
+// Use custom template for single products
+function custom_product_template($template) {
+    if (is_singular('product')) {
+        $template = get_template_directory() . '/product-template.php';
+    }
+    return $template;
+}
+add_filter('template_include', 'custom_product_template');
+
