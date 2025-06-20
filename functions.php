@@ -111,3 +111,6 @@ function theme_activation() {
 }
 add_action('after_switch_theme', 'theme_activation');
 
+// TEMPORARY: Remove this after refreshing once
+flush_rewrite_rules();
+
