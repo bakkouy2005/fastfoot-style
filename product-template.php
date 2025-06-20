@@ -133,7 +133,13 @@ while (have_posts()) :
                     </div>
 
                     <!-- Dropdown Repeater -->
-                    <?php if(have_rows('product_dropdowns')): ?>
+                    <?php 
+                    // Debug output
+                    echo '<!-- Debug: ';
+                    var_dump(get_field('product_dropdowns'));
+                    echo ' -->';
+                    
+                    if(have_rows('product_dropdowns')): ?>
                         <?php while(have_rows('product_dropdowns')): the_row(); ?>
                             <div class="mb-4 dropdown-item">
                                 <button type="button" class="w-full py-3 px-4 bg-[#1a1f1a] rounded-2xl text-left flex justify-between items-center hover:bg-[#2a2f2a] transition toggle-dropdown">
