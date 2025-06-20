@@ -68,3 +68,46 @@ a {
     rgba(24, 29, 24, 0.8) 100%
   );
 }
+
+/* Pagination Styling */
+.page-numbers {
+  display: flex;
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+}
+
+.page-numbers li {
+  margin: 0;
+}
+
+.page-numbers a,
+.page-numbers span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.5rem;
+  height: 2.5rem;
+  padding: 0 0.75rem;
+  background-color: rgba(50, 65, 50, 0.8);
+  color: white;
+  border-radius: 0.75rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.page-numbers a:hover {
+  background-color: white;
+  color: black;
+}
+
+.page-numbers .current {
+  background-color: white;
+  color: black;
+}
+
+.page-numbers .prev,
+.page-numbers .next {
+  padding: 0 1rem;
+}
