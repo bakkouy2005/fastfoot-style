@@ -2,7 +2,7 @@
 $term = $args['term'] ?? '';
 $taxonomy = $args['taxonomy'] ?? 'product_cat';
 $title = $args['title'] ?? 'New collection';
-$per_page = $args['limit'] ?? -1; // Changed to -1 to show all products
+$per_page = $args['limit'] ?? 3; // Show limited products on homepage
 
 $args = [
   'post_type' => 'product',
@@ -17,7 +17,15 @@ $args = [
 $query = new WP_Query($args);
 ?>
 
-<h2 class="text-4xl font-bold mb-10 text-white"><?php echo esc_html($title); ?></h2>
+<div class="flex justify-between items-center mb-10">
+  <h2 class="text-4xl font-bold text-white"><?php echo esc_html($title); ?></h2>
+  <?php if ($term): ?>
+    <a href="<?php echo esc_url(get_term_link($term, $taxonomy)); ?>" 
+       class="inline-flex items-center justify-center px-8 py-3 text-base bg-[#324132] rounded-[12px] text-white font-medium hover:bg-white hover:text-black transition-colors">
+      View All
+    </a>
+  <?php endif; ?>
+</div>
 
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1">
   <?php 
