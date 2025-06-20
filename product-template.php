@@ -135,10 +135,26 @@ while (have_posts()) :
                     <!-- Dropdown Repeater -->
                     <?php 
                     // Debug output
-                    if(get_field('product_dropdowns')):
+                    echo '<!-- Debug Start -->';
+                    echo '<pre style="color: white;">';
+                    echo 'Product ID: ' . get_the_ID() . "\n";
+                    echo 'Has product_dropdowns field: ' . (has_field('product_dropdowns') ? 'Yes' : 'No') . "\n";
+                    echo 'Field value: ';
+                    var_dump(get_field('product_dropdowns'));
+                    echo '</pre>';
+                    echo '<!-- Debug End -->';
+
+                    if(have_rows('product_dropdowns')):
                         while(have_rows('product_dropdowns')): the_row(); 
                             $title = get_sub_field('dropdown_title');
                             $content = get_sub_field('dropdown_content');
+                            
+                            // Debug each row
+                            echo '<pre style="color: white;">';
+                            echo "Row data:\n";
+                            echo "Title: " . $title . "\n";
+                            echo "Content: " . $content . "\n";
+                            echo '</pre>';
                     ?>
                             <div class="mb-4 dropdown-item">
                                 <button type="button" class="w-full py-3 px-4 bg-[#1a1f1a] rounded-2xl text-left flex justify-between items-center hover:bg-[#2a2f2a] transition toggle-dropdown">
