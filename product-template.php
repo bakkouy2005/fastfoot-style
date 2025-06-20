@@ -119,7 +119,7 @@ while (have_posts()) :
 
     <label class="cursor-pointer">
       <input type="radio" name="badge" value="UCL badge" class="sr-only peer">
-      <div class="px-4 h-[44px] flex items-center justify-center bg-[#3D543D] text-white text-[14px] leading-[21px] font-medium border border-[#3D543D] rounded-[12px] peer-checked:border-white peer-checked:bg-[#3D543D] transition-all">
+      <div class="px-4 h-[44px] flex items-center justify-center bg-[#1A221A] text-white text-[14px] leading-[21px] font-medium border border-[#3D543D] rounded-[12px] peer-checked:border-white peer-checked:bg-[#3D543D] transition-all">
         UCL badge
       </div>
     </label>
