@@ -97,8 +97,8 @@ add_action('wp_enqueue_scripts', 'enqueue_jquery');
 // Add rewrite rules for product archive
 function add_product_archive_rewrite_rules() {
     add_rewrite_rule(
-        'product-archive/?$',
-        'index.php?post_type=product',
+        'product-archive/([^/]+)/?$',
+        'index.php?post_type=product&product_cat=$matches[1]',
         'top'
     );
 }
