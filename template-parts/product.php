@@ -20,7 +20,7 @@ $query = new WP_Query($args);
 <div class="flex justify-between items-center mb-10">
   <h2 class="text-4xl font-bold text-white"><?php echo esc_html($title); ?></h2>
   <?php if ($term): ?>
-    <a href="<?php echo esc_url(get_term_link($term, $taxonomy)); ?>" 
+    <a href="<?php echo esc_url(home_url('/product-archive/')); ?>" 
        class="inline-flex items-center justify-center px-8 py-3 text-base bg-[#324132] rounded-[12px] text-white font-medium hover:bg-white hover:text-black transition-colors">
       View All
     </a>
