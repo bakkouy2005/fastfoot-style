@@ -94,3 +94,20 @@ function enqueue_jquery() {
 }
 add_action('wp_enqueue_scripts', 'enqueue_jquery');
 
+// Add rewrite rules for product archive
+function add_product_archive_rewrite_rules() {
+    add_rewrite_rule(
+        'product-archive/?$',
+        'index.php?post_type=product',
+        'top'
+    );
+}
+add_action('init', 'add_product_archive_rewrite_rules');
+
+// Flush rewrite rules on theme activation
+function theme_activation() {
+    add_product_archive_rewrite_rules();
+    flush_rewrite_rules();
+}
+add_action('after_switch_theme', 'theme_activation');
+
