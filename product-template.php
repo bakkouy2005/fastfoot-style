@@ -100,22 +100,23 @@ while (have_posts()) :
                     </div>
 
                     <!-- Badge -->
-                    <div class="mb-8">
-                        <div class="flex gap-6 items-center text-sm">
-                            <label class="flex items-center gap-2">
-                                <input type="radio" name="badge" value="none" class="accent-[#12A212]" checked>
-                                No badge
-                            </label>
-                            <label class="flex items-center gap-2">
-                                <input type="radio" name="badge" value="league" class="accent-[#12A212]">
-                                League badge
-                            </label>
-                            <label class="flex items-center gap-2">
-                                <input type="radio" name="badge" value="ucl" class="accent-[#12A212]">
-                                UCL badge
-                            </label>
-                        </div>
-                    </div>
+                    <!-- Badge Selector - Figma-stijl -->
+<div class="mb-8">
+  <h3 class="text-lg font-semibold mb-4">Select badge</h3>
+  <div class="flex flex-wrap gap-3">
+    <?php
+    $badges = ['No badge', 'League badge', 'UCL badge'];
+    foreach ($badges as $badge) {
+    ?>
+      <label>
+        <input type="radio" name="badge" value="<?php echo esc_attr($badge); ?>" class="sr-only peer" required>
+        <div class="px-4 h-[44px] flex items-center justify-center text-white text-[14px] leading-[21px] font-medium border border-[#3D543D] rounded-[12px] peer-checked:border-[#12A212] transition-all cursor-pointer hover:border-white">
+          <?php echo esc_html($badge); ?>
+        </div>
+      </label>
+    <?php } ?>
+  </div>
+</div>
 
                     <!-- Product care accordion -->
                     <div class="mb-8 product-care">
