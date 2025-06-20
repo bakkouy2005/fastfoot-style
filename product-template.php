@@ -133,24 +133,29 @@ while (have_posts()) :
                     </div>
 
                     <!-- Product care accordion -->
+                    <?php 
+                    $care_title = get_field('product_care_title') ?: 'Product Care';
+                    if(have_rows('care_instructions')): 
+                    ?>
                     <div class="mb-8 product-care">
                         <button type="button" class="w-full py-3 px-4 bg-[#1a1f1a] rounded-2xl text-left flex justify-between items-center hover:bg-[#2a2f2a] transition">
-                            <span>Product Care</span>
+                            <span><?php echo esc_html($care_title); ?></span>
                             <svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
                         </button>
                         <div class="mt-3 p-4 bg-[#1a1f1a] rounded-xl hidden text-sm text-[#CFCFCF]">
                             <ul class="list-disc list-inside space-y-1">
-                                <li>Cool wash</li>
-                                <li>Do not bleach</li>
-                                <li>Do not tumble dry</li>
-                                <li>Do not use fabric softener</li>
-                                <li>Wash inside out</li>
-                                <li>Use a cool iron</li>
+                                <?php 
+                                while(have_rows('care_instructions')): the_row();
+                                    $instruction = get_sub_field('instruction');
+                                ?>
+                                    <li><?php echo esc_html($instruction); ?></li>
+                                <?php endwhile; ?>
                             </ul>
                         </div>
                     </div>
+                    <?php endif; ?>
 
                     <?php do_action('woocommerce_after_add_to_cart_button'); ?>
                 </form>
