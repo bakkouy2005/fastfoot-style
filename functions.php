@@ -86,36 +86,9 @@ add_filter('wp_editor_set_quality', function($quality) {
 // Enable big image size threshold
 add_filter('big_image_size_threshold', '__return_false');
 
-
-
 // Ensure jQuery is loaded
 function enqueue_jquery() {
     wp_enqueue_script('jquery');
 }
 add_action('wp_enqueue_scripts', 'enqueue_jquery');
-
-// Remove old rewrite rules
-remove_action('init', 'add_product_archive_rewrite_rules');
-remove_filter('query_vars', 'add_product_cat_query_var');
-remove_action('after_switch_theme', 'theme_activation');
-
-// Add simple rewrite rule for product archive
-function add_custom_rewrite_rules() {
-    add_rewrite_rule(
-        'product-archive/([^/]+)/?$',
-        'index.php?post_type=product&product_cat=$matches[1]',
-        'top'
-    );
-}
-add_action('init', 'add_custom_rewrite_rules');
-
-// Flush rules on theme activation
-function custom_theme_activation() {
-    add_custom_rewrite_rules();
-    flush_rewrite_rules();
-}
-add_action('after_switch_theme', 'custom_theme_activation');
-
-// Force flush rewrite rules - REMOVE AFTER ONE PAGE REFRESH
-flush_rewrite_rules(true);
 
