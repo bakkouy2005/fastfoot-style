@@ -105,7 +105,7 @@ while (have_posts()) :
   <div class="flex flex-wrap gap-3">
     <label class="cursor-pointer">
       <input type="radio" name="badge" value="No badge" class="sr-only peer">
-      <div class="px-4 h-[44px] flex items-center justify-center text-white text-[14px] leading-[21px] font-medium border border-[#3D543D] rounded-[12px] peer-checked:border-[#12A212] peer-checked:bg-[#1f2b1f] transition-all">
+      <div class="px-4 h-[44px] flex items-center justify-center text-white text-[14px] leading-[21px] font-medium border border-white rounded-[12px] peer-checked:border-[#12A212] peer-checked:bg-[#1f2b1f] transition-all">
         No badge
       </div>
     </label>
