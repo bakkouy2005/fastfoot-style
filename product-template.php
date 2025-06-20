@@ -57,30 +57,25 @@ while (have_posts()) :
                     <?php echo wp_kses_post($product->get_categories()); ?>
                 </p>
 
-                <!-- Price -->
-                <div class="text-2xl font-bold mb-8">
-                    <?php echo $product->get_price_html(); ?>
-                </div>
-
                 <!-- Add to cart form -->
                 <form class="cart" method="post" enctype="multipart/form-data">
                     <!-- Size -->
                     <div class="mb-8">
-  <h3 class="text-lg font-semibold mb-4">Select size</h3>
-  <div class="flex flex-wrap gap-3">
-    <?php
-    $sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
-    foreach ($sizes as $size) {
-    ?>
-      <label class="relative">
-        <input type="radio" name="size" value="<?php echo esc_attr($size); ?>" class="sr-only peer" required>
-        <div class="w-12 h-12 bg-[#293829] text-white rounded-[8px] flex items-center justify-center font-medium text-[16px] leading-[24px] peer-checked:border-[2px] peer-checked:border-[#12A212] transition-all cursor-pointer hover:border-white">
-          <?php echo esc_html($size); ?>
-        </div>
-      </label>
-    <?php } ?>
-  </div>
-</div>
+                        <h3 class="text-lg font-semibold mb-4">Select size</h3>
+                        <div class="flex flex-wrap gap-3">
+                            <?php
+                            $sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+                            foreach ($sizes as $size) {
+                            ?>
+                                <label class="relative">
+                                    <input type="radio" name="size" value="<?php echo esc_attr($size); ?>" class="sr-only peer" required>
+                                    <div class="w-12 h-12 bg-[#293829] text-white rounded-[8px] flex items-center justify-center font-medium text-[16px] leading-[24px] peer-checked:border-[2px] peer-checked:border-[#12A212] transition-all cursor-pointer hover:border-white">
+                                        <?php echo esc_html($size); ?>
+                                    </div>
+                                </label>
+                            <?php } ?>
+                        </div>
+                    </div>
 
                     <!-- Personalize -->
                     <div class="mb-8">
@@ -101,30 +96,30 @@ while (have_posts()) :
 
                     <!-- Badge -->
                     <div class="mb-8">
-  <h3 class="text-lg font-semibold mb-4 text-white">Select badge</h3>
-  <div class="flex flex-wrap gap-3">
-    <label class="cursor-pointer">
-      <input type="radio" name="badge" value="No badge" class="sr-only peer">
-      <div class="px-4 h-[44px] flex items-center justify-center bg-[#1A221A] text-white text-[14px] leading-[21px] font-medium border border-[#3D543D] rounded-[12px] peer-checked:border-white peer-checked:bg-[#3D543D] transition-all">
-        No badge
-      </div>
-    </label>
+                        <h3 class="text-lg font-semibold mb-4 text-white">Select badge</h3>
+                        <div class="flex flex-wrap gap-3">
+                            <label class="cursor-pointer">
+                                <input type="radio" name="badge" value="No badge" class="sr-only peer">
+                                <div class="px-4 h-[44px] flex items-center justify-center bg-[#1A221A] text-white text-[14px] leading-[21px] font-medium border border-[#3D543D] rounded-[12px] peer-checked:border-white peer-checked:bg-[#3D543D] transition-all">
+                                    No badge
+                                </div>
+                            </label>
 
-    <label class="cursor-pointer">
-      <input type="radio" name="badge" value="League badge" class="sr-only peer">
-      <div class="px-4 h-[44px] flex items-center justify-center bg-[#1A221A] text-white text-[14px] leading-[21px] font-medium border border-[#3D543D] rounded-[12px] peer-checked:border-white peer-checked:bg-[#3D543D] transition-all">
-        League badge
-      </div>
-    </label>
+                            <label class="cursor-pointer">
+                                <input type="radio" name="badge" value="League badge" class="sr-only peer">
+                                <div class="px-4 h-[44px] flex items-center justify-center bg-[#1A221A] text-white text-[14px] leading-[21px] font-medium border border-[#3D543D] rounded-[12px] peer-checked:border-white peer-checked:bg-[#3D543D] transition-all">
+                                    League badge
+                                </div>
+                            </label>
 
-    <label class="cursor-pointer">
-      <input type="radio" name="badge" value="UCL badge" class="sr-only peer">
-      <div class="px-4 h-[44px] flex items-center justify-center bg-[#1A221A] text-white text-[14px] leading-[21px] font-medium border border-[#3D543D] rounded-[12px] peer-checked:border-white peer-checked:bg-[#3D543D] transition-all">
-        UCL badge
-      </div>
-    </label>
-  </div>
-</div>
+                            <label class="cursor-pointer">
+                                <input type="radio" name="badge" value="UCL badge" class="sr-only peer">
+                                <div class="px-4 h-[44px] flex items-center justify-center bg-[#1A221A] text-white text-[14px] leading-[21px] font-medium border border-[#3D543D] rounded-[12px] peer-checked:border-white peer-checked:bg-[#3D543D] transition-all">
+                                    UCL badge
+                                </div>
+                            </label>
+                        </div>
+                    </div>
 
                     <!-- Product care accordion -->
                     <div class="mb-8 product-care">
@@ -146,9 +141,14 @@ while (have_posts()) :
                         </div>
                     </div>
 
+                    <!-- Price -->
+                    <div class="text-3xl font-bold mb-6">
+                        <?php echo $product->get_price_html(); ?>
+                    </div>
+
                     <!-- Add to cart -->
                     <button type="submit" name="add-to-cart" value="<?php echo esc_attr($product->get_id()); ?>" 
-                            class="w-full py-3 bg-[#12A212] hover:bg-[#0E800E] rounded-2xl text-white font-bold text-lg transition">
+                            class="w-full py-4 bg-[#12A212] hover:bg-[#0E800E] rounded-2xl text-white font-bold text-lg transition">
                         Add to Cart
                     </button>
 
