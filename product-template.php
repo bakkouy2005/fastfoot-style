@@ -53,9 +53,20 @@ while (have_posts()) :
                 <h1 class="text-4xl font-bold mb-3"><?php echo esc_html($product->get_name()); ?></h1>
 
                 <!-- Category / Brand -->
-                <p class="text-sm text-[#9EB89E] uppercase tracking-wide mb-6">
+                <p class="text-sm text-[#9EB89E] uppercase tracking-wide mb-4">
                     <?php echo wp_kses_post($product->get_categories()); ?>
                 </p>
+
+                <!-- Price and Add to Cart -->
+                <div class="flex items-center justify-between mb-8">
+                    <div class="text-2xl font-bold">
+                        <?php echo $product->get_price_html(); ?>
+                    </div>
+                    <button type="submit" name="add-to-cart" value="<?php echo esc_attr($product->get_id()); ?>" 
+                            class="px-6 py-2 bg-[#12A212] hover:bg-[#0E800E] rounded-lg text-white font-medium transition">
+                        Add to Cart
+                    </button>
+                </div>
 
                 <!-- Add to cart form -->
                 <form class="cart" method="post" enctype="multipart/form-data">
@@ -67,12 +78,12 @@ while (have_posts()) :
                             $sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
                             foreach ($sizes as $size) {
                             ?>
-                                <label class="relative">
-                                    <input type="radio" name="size" value="<?php echo esc_attr($size); ?>" class="sr-only peer" required>
-                                    <div class="w-12 h-12 bg-[#293829] text-white rounded-[8px] flex items-center justify-center font-medium text-[16px] leading-[24px] peer-checked:border-[2px] peer-checked:border-[#12A212] transition-all cursor-pointer hover:border-white">
-                                        <?php echo esc_html($size); ?>
-                                    </div>
-                                </label>
+                            <label class="relative">
+                                <input type="radio" name="size" value="<?php echo esc_attr($size); ?>" class="sr-only peer" required>
+                                <div class="w-12 h-12 bg-[#293829] text-white rounded-[8px] flex items-center justify-center font-medium text-[16px] leading-[24px] peer-checked:border-[2px] peer-checked:border-[#12A212] transition-all cursor-pointer hover:border-white">
+                                    <?php echo esc_html($size); ?>
+                                </div>
+                            </label>
                             <?php } ?>
                         </div>
                     </div>
@@ -140,17 +151,6 @@ while (have_posts()) :
                             </ul>
                         </div>
                     </div>
-
-                    <!-- Price -->
-                    <div class="text-3xl font-bold mb-6">
-                        <?php echo $product->get_price_html(); ?>
-                    </div>
-
-                    <!-- Add to cart -->
-                    <button type="submit" name="add-to-cart" value="<?php echo esc_attr($product->get_id()); ?>" 
-                            class="w-full py-4 bg-[#12A212] hover:bg-[#0E800E] rounded-2xl text-white font-bold text-lg transition">
-                        Add to Cart
-                    </button>
 
                     <?php do_action('woocommerce_after_add_to_cart_button'); ?>
                 </form>
