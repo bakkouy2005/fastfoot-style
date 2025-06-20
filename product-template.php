@@ -100,21 +100,29 @@ while (have_posts()) :
                     </div>
 
                     <!-- Badge -->
-                    <!-- Badge Selector - Figma-stijl -->
-<div class="mb-8">
-  <h3 class="text-lg font-semibold mb-4">Select badge</h3>
+                    <div class="mb-8">
+  <h3 class="text-lg font-semibold mb-4 text-white">Select badge</h3>
   <div class="flex flex-wrap gap-3">
-    <?php
-    $badges = ['No badge', 'League badge', 'UCL badge'];
-    foreach ($badges as $badge) {
-    ?>
-      <label>
-        <input type="radio" name="badge" value="<?php echo esc_attr($badge); ?>" class="sr-only peer" required>
-        <div class="px-4 h-[44px] flex items-center justify-center text-white text-[14px] leading-[21px] font-medium border border-[#3D543D] rounded-[12px] peer-checked:border-[#12A212] transition-all cursor-pointer hover:border-white">
-          <?php echo esc_html($badge); ?>
-        </div>
-      </label>
-    <?php } ?>
+    <label class="cursor-pointer">
+      <input type="radio" name="badge" value="No badge" class="sr-only peer">
+      <div class="px-4 h-[44px] flex items-center justify-center text-white text-[14px] leading-[21px] font-medium border border-[#3D543D] rounded-[12px] peer-checked:border-[#12A212] peer-checked:bg-[#1f2b1f] transition-all">
+        No badge
+      </div>
+    </label>
+
+    <label class="cursor-pointer">
+      <input type="radio" name="badge" value="League badge" class="sr-only peer">
+      <div class="px-4 h-[44px] flex items-center justify-center text-white text-[14px] leading-[21px] font-medium border border-[#3D543D] rounded-[12px] peer-checked:border-[#12A212] peer-checked:bg-[#1f2b1f] transition-all">
+        League badge
+      </div>
+    </label>
+
+    <label class="cursor-pointer">
+      <input type="radio" name="badge" value="UCL badge" class="sr-only peer">
+      <div class="px-4 h-[44px] flex items-center justify-center text-white text-[14px] leading-[21px] font-medium border border-[#3D543D] rounded-[12px] peer-checked:border-[#12A212] peer-checked:bg-[#1f2b1f] transition-all">
+        UCL badge
+      </div>
+    </label>
   </div>
 </div>
 
