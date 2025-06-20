@@ -17,15 +17,7 @@ $args = [
 $query = new WP_Query($args);
 ?>
 
-<div class="flex justify-between items-center mb-10">
-  <h2 class="text-4xl font-bold text-white"><?php echo esc_html($title); ?></h2>
-  <?php if ($term): ?>
-    <a href="<?php echo esc_url(home_url('/product-archive/' . $term . '/')); ?>" 
-       class="inline-flex items-center justify-center px-8 py-3 text-base bg-[#324132] rounded-[12px] text-white font-medium hover:bg-white hover:text-black transition-colors">
-      View All <?php echo esc_html($title); ?>
-    </a>
-  <?php endif; ?>
-</div>
+<h2 class="text-4xl font-bold mb-10 text-white"><?php echo esc_html($title); ?></h2>
 
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1">
   <?php 
@@ -65,4 +57,10 @@ $query = new WP_Query($args);
   endwhile; 
   wp_reset_postdata(); 
   ?>
+</div>
+
+<div class="text-center mt-12">
+  <button class="inline-flex items-center justify-center px-8 py-3 text-base bg-[#324132] rounded-[12px] text-white font-medium hover:bg-white hover:text-black transition-colors">
+    View All
+  </button>
 </div>
