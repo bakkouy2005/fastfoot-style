@@ -1,4 +1,6 @@
 <?php
+/* Template Name: Product Archive */
+
 get_header();
 
 // Get current category
