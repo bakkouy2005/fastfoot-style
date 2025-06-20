@@ -1,7 +1,5 @@
 <?php
-/**
- * Cart Page 
- */
+/* Template Name: Cart Page */
 
 defined('ABSPATH') || exit;
 
