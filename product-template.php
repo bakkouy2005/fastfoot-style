@@ -188,12 +188,12 @@ document.addEventListener('DOMContentLoaded', function() {
         thumbnail.addEventListener('click', function() {
             const fullImageUrl = this.dataset.fullImage;
             mainImage.src = fullImageUrl;
-            thumbnails.forEach(thumb => thumb.classList.remove('ring-2', 'ring-white'));
-            this.classList.add('ring-2', 'ring-white');
+            thumbnails.forEach(thumb => thumb.classList.remove('ring-2', 'ring-[#12A212]'));
+            this.classList.add('ring-2', 'ring-[#12A212]');
         });
     });
     if (thumbnails.length > 0) {
-        thumbnails[0].classList.add('ring-2', 'ring-white');
+        thumbnails[0].classList.add('ring-2', 'ring-[#12A212]');
     }
 
     // Validation
