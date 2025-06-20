@@ -138,9 +138,16 @@ while (have_posts()) :
                     echo '<!-- Debug Start -->';
                     echo '<pre style="color: white;">';
                     echo 'Product ID: ' . get_the_ID() . "\n";
-                    $dropdowns = get_field('product_dropdowns');
-                    echo 'Field value: ';
-                    var_dump($dropdowns);
+                    echo 'Post Type: ' . get_post_type() . "\n";
+                    echo 'Is ACF Active: ' . (function_exists('get_field') ? 'Yes' : 'No') . "\n";
+                    
+                    // Get all ACF fields for this post
+                    $fields = get_fields();
+                    echo 'All ACF Fields: ';
+                    var_dump($fields);
+                    
+                    echo 'Specific Field value: ';
+                    var_dump(get_field('product_dropdowns'));
                     echo '</pre>';
                     echo '<!-- Debug End -->';
 
