@@ -11,6 +11,15 @@ while (have_posts()) :
 ?>
 
 <div class=" min-h-screen text-white">
+    <!-- Notification container -->
+    <div id="notification" class="fixed top-4 right-4 z-50 transform translate-x-full transition-transform duration-300 bg-[#12A212] text-white px-6 py-4 rounded-lg shadow-lg">
+        <div class="flex items-center">
+            <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            <span>Product succesvol toegevoegd aan winkelwagen!</span>
+        </div>
+    </div>
     <div class="container mx-auto px-4 py-12">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
             <!-- Left Column - Product Images -->
@@ -161,6 +170,15 @@ while (have_posts()) :
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Show notification function
+    function showNotification() {
+        const notification = document.getElementById('notification');
+        notification.style.transform = 'translateX(0)';
+        setTimeout(() => {
+            notification.style.transform = 'translateX(100%)';
+        }, 3000);
+    }
+
     // Active style for sizes
     const sizeInputs = document.querySelectorAll('input[name="size"]');
     sizeInputs.forEach(input => {
@@ -201,12 +219,15 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Validation
+    // Form submission
     const form = document.querySelector('form.cart');
     form.addEventListener('submit', function(e) {
         if (!document.querySelector('input[name="size"]:checked')) {
             e.preventDefault();
             alert('Please select a size');
+        } else {
+            // If size is selected, show notification after a small delay
+            setTimeout(showNotification, 500);
         }
     });
 
