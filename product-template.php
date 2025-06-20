@@ -1,7 +1,6 @@
 <?php
 /**
  * Template Name: Product Page Template
- * Template Post Type: product
  */
 
 get_header();
