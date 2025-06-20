@@ -94,30 +94,28 @@ function enqueue_jquery() {
 }
 add_action('wp_enqueue_scripts', 'enqueue_jquery');
 
-// Add rewrite rules for product archive
-function add_product_archive_rewrite_rules() {
+// Remove old rewrite rules
+remove_action('init', 'add_product_archive_rewrite_rules');
+remove_filter('query_vars', 'add_product_cat_query_var');
+remove_action('after_switch_theme', 'theme_activation');
+
+// Add simple rewrite rule for product archive
+function add_custom_rewrite_rules() {
     add_rewrite_rule(
         'product-archive/([^/]+)/?$',
         'index.php?post_type=product&product_cat=$matches[1]',
         'top'
     );
 }
-add_action('init', 'add_product_archive_rewrite_rules');
+add_action('init', 'add_custom_rewrite_rules');
 
-// Flush rewrite rules on theme activation
-function theme_activation() {
-    add_product_archive_rewrite_rules();
+// Flush rules on theme activation
+function custom_theme_activation() {
+    add_custom_rewrite_rules();
     flush_rewrite_rules();
 }
-add_action('after_switch_theme', 'theme_activation');
+add_action('after_switch_theme', 'custom_theme_activation');
 
-// TEMPORARY: Remove this after refreshing once
-flush_rewrite_rules();
-
-// Add product_cat as a valid query var
-function add_product_cat_query_var($vars) {
-    $vars[] = 'product_cat';
-    return $vars;
-}
-add_filter('query_vars', 'add_product_cat_query_var');
+// Force flush rewrite rules - REMOVE AFTER ONE PAGE REFRESH
+flush_rewrite_rules(true);
 
