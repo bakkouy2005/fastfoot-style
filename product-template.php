@@ -134,39 +134,36 @@ while (have_posts()) :
 
                     <!-- Dropdown Repeater -->
                     <?php 
-if (have_rows('photo_sections')): 
-    while (have_rows('photo_sections')): the_row(); 
-        $title = get_sub_field('section_title');
-?>
-    <div class="mb-8 photo-dropdown">
-        <button type="button" class="w-full py-3 px-4 bg-[#1a1f1a] rounded-2xl text-left flex justify-between items-center hover:bg-[#2a2f2a] transition toggle-photo-section">
-            <span><?php echo esc_html($title); ?></span>
-            <svg class="w-5 h-5 transition-transform arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-        </button>
-
-        <div class="mt-3 p-4 bg-[#1a1f1a] rounded-xl hidden photo-section-content">
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-                <?php 
-                if (have_rows('photos')):
-                    while (have_rows('photos')): the_row();
-                        $image = get_sub_field('photo');
-                        if ($image):
-                ?>
-                    <img src="<?php echo esc_url($image['url']); ?>" alt="<?php echo esc_attr($image['alt']); ?>" class="rounded-xl object-cover w-full h-auto" />
-                <?php 
-                        endif;
-                    endwhile;
-                endif;
-                ?>
-            </div>
-        </div>
-    </div>
-<?php 
-    endwhile;
-endif; 
-?>
+                    if(have_rows('dropdown_items')): 
+                        while(have_rows('dropdown_items')): the_row();
+                            $title = get_sub_field('dropdown_title');
+                    ?>
+                    <div class="mb-8 dropdown-item">
+                        <button type="button" class="w-full py-3 px-4 bg-[#1a1f1a] rounded-2xl text-left flex justify-between items-center hover:bg-[#2a2f2a] transition">
+                            <span><?php echo esc_html($title); ?></span>
+                            <svg class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="mt-3 p-4 bg-[#1a1f1a] rounded-xl hidden text-sm text-[#CFCFCF]">
+                            <ul class="list-disc list-inside space-y-1">
+                                <?php 
+                                if(have_rows('dropdown_list_items')):
+                                    while(have_rows('dropdown_list_items')): the_row();
+                                        $item = get_sub_field('list_item');
+                                ?>
+                                    <li><?php echo esc_html($item); ?></li>
+                                <?php 
+                                    endwhile;
+                                endif;
+                                ?>
+                            </ul>
+                        </div>
+                    </div>
+                    <?php 
+                        endwhile;
+                    endif; 
+                    ?>
 
                     <?php do_action('woocommerce_after_add_to_cart_button'); ?>
                 </form>
