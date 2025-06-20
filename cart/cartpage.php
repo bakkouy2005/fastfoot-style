@@ -123,14 +123,44 @@ get_header();
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Function to update cart quantity via AJAX
+    function updateCartQuantity(cartKey, newQty) {
+        const data = {
+            action: 'update_cart_quantity',
+            cart_item_key: cartKey,
+            quantity: newQty,
+            security: wc_cart_params.update_shipping_method_nonce
+        };
+
+        jQuery.ajax({
+            type: 'POST',
+            url: wc_cart_params.ajax_url,
+            data: data,
+            beforeSend: function() {
+                jQuery('body').addClass('updating-cart');
+            },
+            success: function(response) {
+                jQuery('body').removeClass('updating-cart');
+                if (response && response.fragments) {
+                    jQuery.each(response.fragments, function(key, value) {
+                        jQuery(key).replaceWith(value);
+                    });
+                }
+                jQuery(document.body).trigger('updated_cart_totals');
+            }
+        });
+    }
+
     // Handle quantity decrease
     document.querySelectorAll('.quantity-decrease').forEach(button => {
         button.addEventListener('click', function() {
             const input = this.nextElementSibling;
             const currentValue = parseInt(input.value);
+            const cartKey = this.dataset.cartKey;
             if (currentValue > 1) {
-                input.value = currentValue - 1;
-                document.querySelector('button[name="update_cart"]').click();
+                const newQty = currentValue - 1;
+                input.value = newQty;
+                updateCartQuantity(cartKey, newQty);
             }
         });
     });
@@ -140,9 +170,11 @@ document.addEventListener('DOMContentLoaded', function() {
         button.addEventListener('click', function() {
             const input = this.previousElementSibling;
             const currentValue = parseInt(input.value);
+            const cartKey = this.dataset.cartKey;
             if (currentValue < 99) {
-                input.value = currentValue + 1;
-                document.querySelector('button[name="update_cart"]').click();
+                const newQty = currentValue + 1;
+                input.value = newQty;
+                updateCartQuantity(cartKey, newQty);
             }
         });
     });
@@ -151,12 +183,39 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('input[name^="cart"][name$="[qty]"]').forEach(input => {
         input.addEventListener('change', function() {
             let value = parseInt(this.value);
-            if (value < 1) this.value = 1;
-            if (value > 99) this.value = 99;
-            document.querySelector('button[name="update_cart"]').click();
+            if (value < 1) value = 1;
+            if (value > 99) value = 99;
+            this.value = value;
+            
+            const cartKey = this.name.match(/cart\[(.*?)\]/)[1];
+            updateCartQuantity(cartKey, value);
         });
     });
 });
 </script>
+
+<?php
+// Add the AJAX handler for cart quantity updates
+add_action('wp_ajax_update_cart_quantity', 'handle_update_cart_quantity');
+add_action('wp_ajax_nopriv_update_cart_quantity', 'handle_update_cart_quantity');
+
+function handle_update_cart_quantity() {
+    check_ajax_referer('update-shipping-method', 'security');
+
+    $cart_item_key = sanitize_text_field($_POST['cart_item_key']);
+    $quantity = intval($_POST['quantity']);
+
+    WC()->cart->set_quantity($cart_item_key, $quantity);
+
+    WC_AJAX::get_refreshed_fragments();
+}
+
+// Ensure WooCommerce cart scripts are loaded
+add_action('wp_enqueue_scripts', function() {
+    if (is_cart()) {
+        wp_enqueue_script('wc-cart');
+    }
+});
+?>
 
 <?php get_footer(); ?>
