@@ -134,29 +134,13 @@ while (have_posts()) :
 
                     <!-- Dropdown Repeater -->
                     <?php 
-                    // Debug output
-                    echo '<!-- Debug Start -->';
-                    echo '<pre style="color: white;">';
-                    echo 'Product ID: ' . get_the_ID() . "\n";
-                    $dropdowns = get_field('product_dropdowns');
-                    echo 'Field value: ';
-                    var_dump($dropdowns);
-                    echo '</pre>';
-                    echo '<!-- Debug End -->';
-
-                    if(have_rows('product_dropdowns')):
-                        while(have_rows('product_dropdowns')): the_row(); 
+                    if(have_rows('product_dropdowns')): ?>
+                        <div class="space-y-4">
+                        <?php while(have_rows('product_dropdowns')): the_row(); 
                             $title = get_sub_field('dropdown_title');
                             $content = get_sub_field('dropdown_content');
-                            
-                            // Debug each row
-                            echo '<pre style="color: white;">';
-                            echo "Row data:\n";
-                            echo "Title: " . $title . "\n";
-                            echo "Content: " . $content . "\n";
-                            echo '</pre>';
-                    ?>
-                            <div class="mb-4 dropdown-item">
+                        ?>
+                            <div class="dropdown-item">
                                 <button type="button" class="w-full py-3 px-4 bg-[#1a1f1a] rounded-2xl text-left flex justify-between items-center hover:bg-[#2a2f2a] transition toggle-dropdown">
                                     <span class="text-white font-medium"><?php echo esc_html($title); ?></span>
                                     <svg class="w-4 h-4 transition-transform arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -167,10 +151,9 @@ while (have_posts()) :
                                     <?php echo wpautop(wp_kses_post($content)); ?>
                                 </div>
                             </div>
-                    <?php 
-                        endwhile;
-                    endif; 
-                    ?>
+                        <?php endwhile; ?>
+                        </div>
+                    <?php endif; ?>
 
                     <?php do_action('woocommerce_after_add_to_cart_button'); ?>
                 </form>
