@@ -59,9 +59,29 @@ get_header();
             <?php endif; ?>
 
             <div class="flex justify-between items-center mt-4">
-                <button type="button" class="text-sm text-[#9EB89E] hover:text-white font-semibold" onclick="window.location.href='<?php echo $product_permalink; ?>'">EDIT</button>
+                <div class="flex items-center gap-2">
+                    <button type="button" 
+                            class="w-8 h-8 flex items-center justify-center bg-[#293829] rounded-lg text-white hover:bg-[#324132] transition-colors quantity-decrease" 
+                            data-cart-key="<?php echo $cart_item_key; ?>">
+                        <span class="text-lg">-</span>
+                    </button>
+                    <input type="number" 
+                           name="cart[<?php echo $cart_item_key; ?>][qty]" 
+                           value="<?php echo $cart_item['quantity']; ?>" 
+                           class="w-12 h-8 bg-[#293829] rounded-lg text-center text-white border-none focus:outline-none focus:ring-1 focus:ring-[#12A212]" 
+                           min="1" 
+                           max="99">
+                    <button type="button" 
+                            class="w-8 h-8 flex items-center justify-center bg-[#293829] rounded-lg text-white hover:bg-[#324132] transition-colors quantity-increase" 
+                            data-cart-key="<?php echo $cart_item_key; ?>">
+                        <span class="text-lg">+</span>
+                    </button>
+                </div>
 
-                <a href="<?php echo esc_url(wc_get_cart_remove_url($cart_item_key)); ?>" class="text-sm text-[#9EB89E] hover:text-white font-semibold">REMOVE</a>
+                <a href="<?php echo esc_url(wc_get_cart_remove_url($cart_item_key)); ?>" 
+                   class="text-sm text-[#9EB89E] hover:text-white font-semibold">
+                    REMOVE
+                </a>
             </div>
         </div>
 
@@ -100,5 +120,43 @@ get_header();
 <?php do_action('woocommerce_after_cart'); ?>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Handle quantity decrease
+    document.querySelectorAll('.quantity-decrease').forEach(button => {
+        button.addEventListener('click', function() {
+            const input = this.nextElementSibling;
+            const currentValue = parseInt(input.value);
+            if (currentValue > 1) {
+                input.value = currentValue - 1;
+                document.querySelector('button[name="update_cart"]').click();
+            }
+        });
+    });
+
+    // Handle quantity increase
+    document.querySelectorAll('.quantity-increase').forEach(button => {
+        button.addEventListener('click', function() {
+            const input = this.previousElementSibling;
+            const currentValue = parseInt(input.value);
+            if (currentValue < 99) {
+                input.value = currentValue + 1;
+                document.querySelector('button[name="update_cart"]').click();
+            }
+        });
+    });
+
+    // Handle direct input changes
+    document.querySelectorAll('input[name^="cart"][name$="[qty]"]').forEach(input => {
+        input.addEventListener('change', function() {
+            let value = parseInt(this.value);
+            if (value < 1) this.value = 1;
+            if (value > 99) this.value = 99;
+            document.querySelector('button[name="update_cart"]').click();
+        });
+    });
+});
+</script>
 
 <?php get_footer(); ?>
