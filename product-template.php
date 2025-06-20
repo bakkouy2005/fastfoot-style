@@ -66,22 +66,21 @@ while (have_posts()) :
                 <form class="cart" method="post" enctype="multipart/form-data">
                     <!-- Size -->
                     <div class="mb-8">
-                        <div class="grid grid-cols-6 gap-2">
-                            <?php
-                            $sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
-                            foreach ($sizes as $size) {
-                                ?>
-                                <label class="relative block">
-                                    <input type="radio" name="size" value="<?php echo esc_attr($size); ?>" class="absolute opacity-0" required>
-                                    <span class="block text-center py-2 px-3 bg-[#1a1f1a] border border-[#324132] rounded-xl cursor-pointer hover:border-white transition size-option">
-                                        <?php echo esc_html($size); ?>
-                                    </span>
-                                </label>
-                                <?php
-                            }
-                            ?>
-                        </div>
-                    </div>
+    <h3 class="text-lg font-semibold mb-4">Select size</h3>
+    <div class="grid grid-cols-3 md:grid-cols-6 gap-3">
+        <?php
+        $sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+        foreach ($sizes as $size) {
+        ?>
+        <label class="relative group">
+            <input type="radio" name="size" value="<?php echo esc_attr($size); ?>" class="sr-only peer" required>
+            <div class="w-full py-2 text-center rounded-xl bg-[#1a1f1a] border border-[#3a3a3a] text-white peer-checked:border-[#12A212] peer-checked:bg-[#1f2d1f] transition cursor-pointer">
+                <?php echo esc_html($size); ?>
+            </div>
+        </label>
+        <?php } ?>
+    </div>
+</div>
 
                     <!-- Personalize -->
                     <div class="mb-8">
