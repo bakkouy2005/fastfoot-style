@@ -57,19 +57,19 @@ while (have_posts()) :
                     <?php echo wp_kses_post($product->get_categories()); ?>
                 </p>
 
-                <!-- Price and Add to Cart -->
-                <div class="flex items-center justify-between mb-8">
-                    <div class="text-2xl font-bold">
-                        <?php echo $product->get_price_html(); ?>
-                    </div>
-                    <button type="submit" name="add-to-cart" value="<?php echo esc_attr($product->get_id()); ?>" 
-                            class="px-6 py-2 bg-[#12A212] hover:bg-[#0E800E] rounded-lg text-white font-medium transition">
-                        Add to Cart
-                    </button>
-                </div>
-
                 <!-- Add to cart form -->
                 <form class="cart" method="post" enctype="multipart/form-data">
+                    <!-- Price and Add to Cart -->
+                    <div class="flex items-center justify-between mb-8">
+                        <div class="text-2xl font-bold">
+                            <?php echo $product->get_price_html(); ?>
+                        </div>
+                        <button type="submit" name="add-to-cart" value="<?php echo esc_attr($product->get_id()); ?>" 
+                                class="px-6 py-2 bg-[#12A212] hover:bg-[#0E800E] rounded-lg text-white font-medium transition">
+                            Add to Cart
+                        </button>
+                    </div>
+
                     <!-- Size -->
                     <div class="mb-8">
                         <h3 class="text-lg font-semibold mb-4">Select size</h3>
