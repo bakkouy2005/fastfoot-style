@@ -105,7 +105,7 @@ while (have_posts()) :
   <div class="flex flex-wrap gap-3">
     <label class="cursor-pointer">
       <input type="radio" name="badge" value="No badge" class="sr-only peer">
-      <div class="px-4 h-[44px] flex items-center justify-center text-white text-[14px] leading-[21px] font-medium border border-white rounded-[12px] peer-checked:border-[#12A212] peer-checked:bg-[#1f2b1f] transition-all">
+      <div class="px-4 h-[44px] flex items-center justify-center text-white text-[14px] leading-[21px] font-medium border border-[#3D543D] rounded-[12px] peer-checked:border-[#12A212] peer-checked:bg-[#1f2b1f] transition-all">
         No badge
       </div>
     </label>
@@ -188,12 +188,12 @@ document.addEventListener('DOMContentLoaded', function() {
         thumbnail.addEventListener('click', function() {
             const fullImageUrl = this.dataset.fullImage;
             mainImage.src = fullImageUrl;
-            thumbnails.forEach(thumb => thumb.classList.remove('ring-2', 'ring-[#12A212]'));
-            this.classList.add('ring-2', 'ring-[#12A212]');
+            thumbnails.forEach(thumb => thumb.classList.remove('ring-2', 'ring-white'));
+            this.classList.add('ring-2', 'ring-white');
         });
     });
     if (thumbnails.length > 0) {
-        thumbnails[0].classList.add('ring-2', 'ring-[#12A212]');
+        thumbnails[0].classList.add('ring-2', 'ring-white');
     }
 
     // Validation
