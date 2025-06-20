@@ -10,7 +10,7 @@ while (have_posts()) :
     global $product;
 ?>
 
-<div class="bg-black min-h-screen text-white">
+<div class=" min-h-screen text-white">
     <div class="container mx-auto px-4 py-12">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
             <!-- Left Column - Product Images -->
