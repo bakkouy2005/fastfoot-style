@@ -118,22 +118,23 @@ function add_personalization_fields() {
         'XXL' => 'XXL'
     );
     
-    // Convert to format needed for select field
-    $formatted_size_options = array();
-    foreach ($size_options as $key => $label) {
-        $formatted_size_options[$key] = $label;
+    // Get saved sizes
+    $saved_sizes = get_post_meta($post->ID, '_available_sizes', true);
+    if (!is_array($saved_sizes)) {
+        $saved_sizes = array();
     }
     
-    woocommerce_wp_select(array(
-        'id' => '_available_sizes',
-        'label' => 'Available Sizes',
-        'description' => 'Select which sizes are available for this product',
-        'options' => $formatted_size_options,
-        'custom_attributes' => array(
-            'multiple' => 'multiple'
-        ),
-        'class' => 'select2'
-    ));
+    echo '<p class="form-field _available_sizes_field">
+        <label for="_available_sizes">Available Sizes</label>
+        <select name="_available_sizes[]" id="_available_sizes" class="select2-field" multiple="multiple" style="width: 50%;">';
+    
+    foreach ($size_options as $key => $label) {
+        echo '<option value="' . esc_attr($key) . '" ' . (in_array($key, $saved_sizes) ? 'selected="selected"' : '') . '>' . esc_html($label) . '</option>';
+    }
+    
+    echo '</select>
+        <span class="description">Select which sizes are available for this product</span>
+    </p>';
 
     // Available Badges
     $badge_options = array(
@@ -142,16 +143,23 @@ function add_personalization_fields() {
         'ucl_badge' => 'UCL badge'
     );
     
-    woocommerce_wp_select(array(
-        'id' => '_available_badges',
-        'label' => 'Available Badges',
-        'description' => 'Select which badges are available for this product',
-        'options' => $badge_options,
-        'custom_attributes' => array(
-            'multiple' => 'multiple'
-        ),
-        'class' => 'select2'
-    ));
+    // Get saved badges
+    $saved_badges = get_post_meta($post->ID, '_available_badges', true);
+    if (!is_array($saved_badges)) {
+        $saved_badges = array();
+    }
+    
+    echo '<p class="form-field _available_badges_field">
+        <label for="_available_badges">Available Badges</label>
+        <select name="_available_badges[]" id="_available_badges" class="select2-field" multiple="multiple" style="width: 50%;">';
+    
+    foreach ($badge_options as $key => $label) {
+        echo '<option value="' . esc_attr($key) . '" ' . (in_array($key, $saved_badges) ? 'selected="selected"' : '') . '>' . esc_html($label) . '</option>';
+    }
+    
+    echo '</select>
+        <span class="description">Select which badges are available for this product</span>
+    </p>';
 
     echo '</div>';
 }
@@ -163,14 +171,35 @@ function personalization_admin_script() {
     ?>
     <script type="text/javascript">
         jQuery(document).ready(function($) {
-            $('#_available_sizes, #_available_badges').select2();
+            $('.select2-field').select2({
+                width: '100%',
+                dropdownAutoWidth: true,
+                placeholder: 'Select options...',
+                allowClear: true
+            });
             
             // Fix for select2 inside WooCommerce tabs
             $('#woocommerce-product-data').on('woocommerce_variations_loaded', function() {
-                $('#_available_sizes, #_available_badges').select2();
+                $('.select2-field').select2({
+                    width: '100%',
+                    dropdownAutoWidth: true,
+                    placeholder: 'Select options...',
+                    allowClear: true
+                });
             });
         });
     </script>
+    <style type="text/css">
+        .select2-container {
+            min-width: 400px !important;
+        }
+        .select2-container--default .select2-selection--multiple {
+            border-color: #8c8f94 !important;
+        }
+        .select2-container--default.select2-container--focus .select2-selection--multiple {
+            border-color: #2271b1 !important;
+        }
+    </style>
     <?php
 }
 
