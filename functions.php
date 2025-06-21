@@ -366,28 +366,3 @@ function add_personalization_to_order_items($item, $cart_item_key, $values, $ord
     }
 }
 
-// Cart AJAX handlers
-add_action('wp_ajax_update_cart_item', 'handle_update_cart_item');
-add_action('wp_ajax_nopriv_update_cart_item', 'handle_update_cart_item');
-add_action('wp_ajax_remove_cart_item', 'handle_remove_cart_item');
-add_action('wp_ajax_nopriv_remove_cart_item', 'handle_remove_cart_item');
-
-function handle_update_cart_item() {
-    $cart_item_key = sanitize_text_field($_POST['cart_item_key']);
-    $quantity = intval($_POST['quantity']);
-
-    if ($quantity > 0) {
-        WC()->cart->set_quantity($cart_item_key, $quantity);
-        wp_send_json_success();
-    } else {
-        WC()->cart->remove_cart_item($cart_item_key);
-        wp_send_json_success();
-    }
-}
-
-function handle_remove_cart_item() {
-    $cart_item_key = sanitize_text_field($_POST['cart_item_key']);
-    WC()->cart->remove_cart_item($cart_item_key);
-    wp_send_json_success();
-}
-
