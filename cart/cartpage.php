@@ -12,7 +12,7 @@ get_header();
 
         <h1 class="text-3xl font-bold mb-8">Your Cart</h1>
 
-        <form class="woocommerce-cart-form" action="<?php echo esc_url(wc_get_cart_url()); ?>" method="post">
+        <form class="woocommerce-cart-form" action="<?php echo esc_url(get_permalink()); ?>" method="post">
 
     <div class="space-y-6">
         <?php foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item):
