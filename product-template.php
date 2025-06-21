@@ -82,10 +82,10 @@ while (have_posts()) :
             <!-- Right Column - Info -->
             <div>
                 <!-- Title -->
-                <h1 class="text-3xl font-bold mb-2"><?php echo esc_html($product->get_name()); ?></h1>
+                <h1 class="text-4xl font-bold mb-3"><?php echo esc_html($product->get_name()); ?></h1>
 
                 <!-- Category / Brand -->
-                <p class="text-xs text-[#9EB89E] uppercase tracking-wide mb-3">
+                <p class="text-sm text-[#9EB89E] uppercase tracking-wide mb-4">
                     <?php echo wp_kses_post($product->get_categories()); ?>
                     <?php 
                     $brands = get_the_terms($product->get_id(), 'product_brand');
@@ -98,22 +98,23 @@ while (have_posts()) :
                 <!-- Add to cart form -->
                 <form class="cart" method="post" enctype="multipart/form-data">
                     <!-- Price and Add to Cart -->
-                    <div class="flex items-center justify-between mb-6">
-                        <div class="text-xl font-bold">
+                    <div class="flex items-center justify-between mb-8">
+                        <div class="text-2xl font-bold">
                             <?php echo $product->get_price_html(); ?>
                         </div>
                         <button type="submit" name="add-to-cart" value="<?php echo esc_attr($product->get_id()); ?>" 
-                                class="px-5 py-2 bg-[#12A212] hover:bg-[#0E800E] rounded-lg text-white text-sm font-medium transition">
+                                class="px-6 py-2 bg-[#12A212] hover:bg-[#0E800E] rounded-lg text-white font-medium transition">
                             Add to Cart
                         </button>
                     </div>
 
                     <!-- Size -->
-                    <div class="mb-6">
-                        <h3 class="text-base font-semibold mb-3">Select size</h3>
-                        <div class="flex flex-wrap gap-2">
+                    <div class="mb-8">
+                        <h3 class="text-lg font-semibold mb-4">Select size</h3>
+                        <div class="flex flex-wrap gap-3">
                             <?php
                             $available_sizes = get_post_meta($product->get_id(), '_available_sizes', true);
+                            // If no sizes are set, show all sizes
                             if (empty($available_sizes)) {
                                 $available_sizes = array('XS', 'S', 'M', 'L', 'XL', 'XXL');
                             }
@@ -126,7 +127,7 @@ while (have_posts()) :
                                        value="<?php echo esc_attr($size); ?>" 
                                        class="sr-only peer" 
                                        required>
-                                <div class="w-10 h-10 bg-[#293829] text-white rounded-[6px] flex items-center justify-center font-medium text-sm leading-[20px] peer-checked:border-[2px] peer-checked:border-[#12A212] transition-all cursor-pointer hover:border-white">
+                                <div class="w-12 h-12 bg-[#293829] text-white rounded-[8px] flex items-center justify-center font-medium text-[16px] leading-[24px] peer-checked:border-[2px] peer-checked:border-[#12A212] transition-all cursor-pointer hover:border-white">
                                     <?php echo esc_html($size); ?>
                                 </div>
                             </label>
@@ -135,49 +136,49 @@ while (have_posts()) :
                     </div>
 
                     <!-- Personalize -->
-                    <div class="mb-6">
-                        <h3 class="text-base font-semibold mb-3">
+                    <div class="mb-8">
+                        <h3 class="text-lg font-semibold mb-4">
                             Personalize
                             <?php 
                             $name_number_price = get_post_meta($product->get_id(), '_name_number_price', true);
                             if (!empty($name_number_price) && $name_number_price > 0) {
-                                echo '<span class="text-xs font-normal text-[#12A212]">(+' . wc_price($name_number_price) . ' for name/number)</span>';
+                                echo '<span class="text-sm font-normal text-[#12A212]">(+' . wc_price($name_number_price) . ' for name/number)</span>';
                             }
                             ?>
                         </h3>
-                        <div class="grid grid-cols-2 gap-3">
+                        <div class="grid grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-xs mb-1">Name</label>
+                                <label class="block text-sm mb-1">Name</label>
                                 <input type="text" 
                                        name="personalization[name]" 
                                        placeholder="Your Name" 
                                        maxlength="20"
-                                       class="w-full px-3 py-1.5 bg-[#1a1f1a] border border-[#425142] rounded-lg focus:outline-none focus:border-white text-sm">
+                                       class="w-full px-3 py-2 bg-[#1a1f1a] border border-[#425142] rounded-lg focus:outline-none focus:border-white">
                             </div>
                             <div>
-                                <label class="block text-xs mb-1">Number</label>
+                                <label class="block text-sm mb-1">Number</label>
                                 <input type="number" 
                                        name="personalization[number]" 
                                        placeholder="0-99" 
                                        min="0" 
                                        max="99"
-                                       class="w-full px-3 py-1.5 bg-[#1a1f1a] border border-[#425142] rounded-lg focus:outline-none focus:border-white text-sm">
+                                       class="w-full px-3 py-2 bg-[#1a1f1a] border border-[#425142] rounded-lg focus:outline-none focus:border-white">
                             </div>
                         </div>
                     </div>
 
                     <!-- Badge -->
-                    <div class="mb-6">
-                        <h3 class="text-base font-semibold mb-3">
+                    <div class="mb-8">
+                        <h3 class="text-lg font-semibold mb-4">
                             Select badge
                             <?php 
                             $league_badge_price = get_post_meta($product->get_id(), '_league_badge_price', true);
                             $ucl_badge_price = get_post_meta($product->get_id(), '_ucl_badge_price', true);
                             if (!empty($league_badge_price) && $league_badge_price > 0) {
-                                echo '<span class="text-xs font-normal text-[#12A212] ml-2">(+' . wc_price($league_badge_price) . ' for League badge)</span>';
+                                echo '<span class="text-sm font-normal text-[#12A212] ml-2">(+' . wc_price($league_badge_price) . ' for League badge)</span>';
                             }
                             if (!empty($ucl_badge_price) && $ucl_badge_price > 0) {
-                                echo '<span class="text-xs font-normal text-[#12A212] ml-2">(+' . wc_price($ucl_badge_price) . ' for UCL badge)</span>';
+                                echo '<span class="text-sm font-normal text-[#12A212] ml-2">(+' . wc_price($ucl_badge_price) . ' for UCL badge)</span>';
                             }
                             ?>
                         </h3>
