@@ -34,9 +34,47 @@
                 <button class="text-white bg-[#333d33]/80 hover:bg-[#333d33] rounded-xl p-2 px-3 transition-all duration-300">
                     <i class="fas fa-user text-xl"></i>
                 </button>
-                <a href="<?php echo site_url('cart'); ?>" class="text-white bg-[#333d33]/80 hover:bg-[#333d33] rounded-xl p-2 px-3 transition-all duration-300 inline-block">
-                    <i class="fas fa-shopping-bag text-xl"></i>
-                </a>
+                <div class="relative group">
+                    <a href="<?php echo site_url('cart'); ?>" class="text-white bg-[#333d33]/80 hover:bg-[#333d33] rounded-xl p-2 px-3 transition-all duration-300 inline-block">
+                        <i class="fas fa-shopping-bag text-xl"></i>
+                    </a>
+                    <!-- Cart Dropdown -->
+                    <div class="absolute right-0 top-full mt-2 w-80 bg-white rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                        <div class="p-4">
+                            <?php if (WC()->cart->is_empty()): ?>
+                                <p class="text-gray-500 text-center py-4">Je winkelwagen is leeg</p>
+                            <?php else: ?>
+                                <div class="max-h-96 overflow-y-auto">
+                                    <?php foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item): 
+                                        $_product = apply_filters('woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key);
+                                        if ($_product && $_product->exists() && $cart_item['quantity'] > 0): ?>
+                                            <div class="flex items-center gap-3 pb-4 mb-4 border-b border-gray-100">
+                                                <div class="w-16 h-16 bg-gray-50 rounded-lg overflow-hidden">
+                                                    <?php echo $_product->get_image('thumbnail'); ?>
+                                                </div>
+                                                <div class="flex-1">
+                                                    <h4 class="text-sm font-medium text-gray-900"><?php echo $_product->get_name(); ?></h4>
+                                                    <p class="text-sm text-gray-500">
+                                                        <?php echo $cart_item['quantity']; ?> × <?php echo WC()->cart->get_product_price($_product); ?>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        <?php endif;
+                                    endforeach; ?>
+                                </div>
+                                <div class="border-t border-gray-100 pt-4 mt-4">
+                                    <div class="flex justify-between mb-4">
+                                        <span class="text-gray-600">Subtotaal:</span>
+                                        <span class="font-medium text-gray-900"><?php echo WC()->cart->get_cart_subtotal(); ?></span>
+                                    </div>
+                                    <a href="<?php echo site_url('cart'); ?>" class="block w-full bg-[#324132] text-white text-center py-2 rounded-lg hover:bg-[#3d4f3d] transition-colors">
+                                        Bekijk winkelwagen
+                                    </a>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
             </div>
         </nav>
 
