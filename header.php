@@ -86,4 +86,4 @@
 </header>
 
 <!-- Spacer to prevent content from going under fixed header -->
-<div class="h-32"></div>
+<div class="h-20"></div>
