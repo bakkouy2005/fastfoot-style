@@ -20,6 +20,11 @@ body {
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
+/* Product page specific styles */
+.single-product .site-header img {
+  height: 56px !important;
+  width: auto;
+}
 /* a blue color as a generic focus style */
 button:focus-visible {
   outline: 2px solid #4a90e2 !important;
