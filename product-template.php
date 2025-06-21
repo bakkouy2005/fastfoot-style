@@ -113,7 +113,11 @@ while (have_posts()) :
                             foreach ($sizes as $size) {
                             ?>
                             <label class="relative">
-                                <input type="radio" name="size" value="<?php echo esc_attr($size); ?>" class="sr-only peer" required>
+                                <input type="radio" 
+                                       name="personalization[size]" 
+                                       value="<?php echo esc_attr($size); ?>" 
+                                       class="sr-only peer" 
+                                       required>
                                 <div class="w-12 h-12 bg-[#293829] text-white rounded-[8px] flex items-center justify-center font-medium text-[16px] leading-[24px] peer-checked:border-[2px] peer-checked:border-[#12A212] transition-all cursor-pointer hover:border-white">
                                     <?php echo esc_html($size); ?>
                                 </div>
@@ -128,12 +132,19 @@ while (have_posts()) :
                         <div class="grid grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-sm mb-1">Name</label>
-                                <input type="text" name="custom_name" placeholder="Your Name" maxlength="20"
+                                <input type="text" 
+                                       name="personalization[name]" 
+                                       placeholder="Your Name" 
+                                       maxlength="20"
                                        class="w-full px-3 py-2 bg-[#1a1f1a] border border-[#425142] rounded-lg focus:outline-none focus:border-white">
                             </div>
                             <div>
                                 <label class="block text-sm mb-1">Number</label>
-                                <input type="number" name="custom_number" placeholder="0-99" min="0" max="99"
+                                <input type="number" 
+                                       name="personalization[number]" 
+                                       placeholder="0-99" 
+                                       min="0" 
+                                       max="99"
                                        class="w-full px-3 py-2 bg-[#1a1f1a] border border-[#425142] rounded-lg focus:outline-none focus:border-white">
                             </div>
                         </div>
@@ -144,21 +155,33 @@ while (have_posts()) :
                         <h3 class="text-lg font-semibold mb-4 text-white">Select badge</h3>
                         <div class="flex flex-wrap gap-3">
                             <label class="cursor-pointer">
-                                <input type="radio" name="badge" value="No badge" class="sr-only peer" required>
+                                <input type="radio" 
+                                       name="personalization[badge]" 
+                                       value="No badge" 
+                                       class="sr-only peer" 
+                                       required>
                                 <div class="px-4 h-[44px] flex items-center justify-center bg-[#293829] text-white text-[14px] leading-[21px] font-medium border border-[#3D543D] rounded-[12px] peer-checked:border-white peer-checked:bg-[#3D543D] transition-all">
                                     No badge
                                 </div>
                             </label>
 
                             <label class="cursor-pointer">
-                                <input type="radio" name="badge" value="League badge" class="sr-only peer" required>
+                                <input type="radio" 
+                                       name="personalization[badge]" 
+                                       value="League badge" 
+                                       class="sr-only peer" 
+                                       required>
                                 <div class="px-4 h-[44px] flex items-center justify-center bg-[#293829] text-white text-[14px] leading-[21px] font-medium border border-[#3D543D] rounded-[12px] peer-checked:border-white peer-checked:bg-[#3D543D] transition-all">
                                     League badge
                                 </div>
                             </label>
 
                             <label class="cursor-pointer">
-                                <input type="radio" name="badge" value="UCL badge" class="sr-only peer" required>
+                                <input type="radio" 
+                                       name="personalization[badge]" 
+                                       value="UCL badge" 
+                                       class="sr-only peer" 
+                                       required>
                                 <div class="px-4 h-[44px] flex items-center justify-center bg-[#293829] text-white text-[14px] leading-[21px] font-medium border border-[#3D543D] rounded-[12px] peer-checked:border-white peer-checked:bg-[#3D543D] transition-all">
                                     UCL badge
                                 </div>
@@ -205,7 +228,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Active style for sizes
-    const sizeInputs = document.querySelectorAll('input[name="size"]');
+    const sizeInputs = document.querySelectorAll('input[name="personalization[size]"]');
     sizeInputs.forEach(input => {
         input.addEventListener('change', function() {
             sizeInputs.forEach(inp => inp.nextElementSibling.classList.remove('bg-white', 'text-black', 'border-white'));
@@ -216,7 +239,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Active style for badges
-    const badgeInputs = document.querySelectorAll('input[name="badge"]');
+    const badgeInputs = document.querySelectorAll('input[name="personalization[badge]"]');
     badgeInputs.forEach(input => {
         input.addEventListener('change', function() {
             badgeInputs.forEach(inp => inp.nextElementSibling.classList.remove('border-white', 'bg-[#3D543D]'));
@@ -258,12 +281,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Form submission
     const form = document.querySelector('form.cart');
     form.addEventListener('submit', function(e) {
-        if (!document.querySelector('input[name="size"]:checked')) {
+        if (!document.querySelector('input[name="personalization[size]"]]:checked')) {
             e.preventDefault();
             alert('Please select a size');
             return;
         }
-        if (!document.querySelector('input[name="badge"]:checked')) {
+        if (!document.querySelector('input[name="personalization[badge]"]]:checked')) {
             e.preventDefault();
             alert('Please select a badge option');
             return;
@@ -274,7 +297,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Number input validation
-    const numberInput = document.querySelector('input[name="custom_number"]');
+    const numberInput = document.querySelector('input[name="personalization[number]"]');
     numberInput.addEventListener('input', function() {
         const value = parseInt(this.value);
         if (value < 0) this.value = 0;
