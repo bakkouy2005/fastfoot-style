@@ -135,7 +135,7 @@ while (have_posts()) :
                             Personalize
                             <?php 
                             $name_number_price = get_post_meta($product->get_id(), '_name_number_price', true);
-                            if ($name_number_price > 0) {
+                            if (!empty($name_number_price) && $name_number_price > 0) {
                                 echo '<span class="text-sm font-normal text-[#12A212]">(+' . wc_price($name_number_price) . ' for name/number)</span>';
                             }
                             ?>
@@ -166,9 +166,13 @@ while (have_posts()) :
                         <h3 class="text-lg font-semibold mb-4">
                             Select badge
                             <?php 
-                            $badge_price = get_post_meta($product->get_id(), '_badge_price', true);
-                            if ($badge_price > 0) {
-                                echo '<span class="text-sm font-normal text-[#12A212]">(+' . wc_price($badge_price) . ' for League/UCL badge)</span>';
+                            $league_badge_price = get_post_meta($product->get_id(), '_league_badge_price', true);
+                            $ucl_badge_price = get_post_meta($product->get_id(), '_ucl_badge_price', true);
+                            if (!empty($league_badge_price) && $league_badge_price > 0) {
+                                echo '<span class="text-sm font-normal text-[#12A212] ml-2">(+' . wc_price($league_badge_price) . ' for League badge)</span>';
+                            }
+                            if (!empty($ucl_badge_price) && $ucl_badge_price > 0) {
+                                echo '<span class="text-sm font-normal text-[#12A212] ml-2">(+' . wc_price($ucl_badge_price) . ' for UCL badge)</span>';
                             }
                             ?>
                         </h3>
