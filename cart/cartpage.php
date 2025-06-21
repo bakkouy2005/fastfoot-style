@@ -3,6 +3,17 @@
 
 defined('ABSPATH') || exit;
 
+// Handle cart updates
+if (isset($_POST['update_cart']) && isset($_POST['cart'])) {
+    foreach ($_POST['cart'] as $cart_item_key => $values) {
+        $quantity = wc_stock_amount($values['qty']);
+        WC()->cart->set_quantity($cart_item_key, $quantity, true);
+    }
+    
+    WC()->cart->calculate_totals();
+    wc_add_notice(__('Cart updated.', 'woocommerce'));
+}
+
 get_header();
 ?>
 
