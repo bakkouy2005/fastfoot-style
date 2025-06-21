@@ -102,12 +102,6 @@ while (have_posts()) :
                         </button>
                     </div>
 
-                    <?php 
-                    // Check if personalization is allowed for this product
-                    $allows_personalization = get_post_meta($product->get_id(), '_allows_personalization', true);
-                    if ($allows_personalization === 'yes'):
-                    ?>
-
                     <!-- Size -->
                     <div class="mb-8">
                         <h3 class="text-lg font-semibold mb-4">Select size</h3>
@@ -192,8 +186,6 @@ while (have_posts()) :
                             </label>
                         </div>
                     </div>
-
-                    <?php endif; ?>
 
                     <!-- Product care accordion -->
                     <div class="mb-8 product-care">
