@@ -101,18 +101,44 @@ function custom_product_template($template) {
 }
 add_filter('template_include', 'custom_product_template');
 
-// Add custom product fields for personalization
+// Add custom product fields for personalization options
 add_action('woocommerce_product_options_general_product_data', 'add_personalization_fields');
 function add_personalization_fields() {
     global $woocommerce, $post;
 
     echo '<div class="options_group">';
     
-    // Enable personalization checkbox
-    woocommerce_wp_checkbox(array(
-        'id' => '_allows_personalization',
-        'label' => 'Allow Personalization',
-        'description' => 'Check this to enable name, number, size and badge options'
+    // Available Sizes
+    $size_options = array(
+        'XS' => 'XS',
+        'S' => 'S',
+        'M' => 'M',
+        'L' => 'L',
+        'XL' => 'XL',
+        'XXL' => 'XXL'
+    );
+    
+    woocommerce_wp_multiselect_field(array(
+        'id' => '_available_sizes',
+        'label' => 'Available Sizes',
+        'description' => 'Select which sizes are available for this product',
+        'options' => $size_options,
+        'value' => get_post_meta($post->ID, '_available_sizes', true)
+    ));
+
+    // Available Badges
+    $badge_options = array(
+        'no_badge' => 'No badge',
+        'league_badge' => 'League badge',
+        'ucl_badge' => 'UCL badge'
+    );
+    
+    woocommerce_wp_multiselect_field(array(
+        'id' => '_available_badges',
+        'label' => 'Available Badges',
+        'description' => 'Select which badges are available for this product',
+        'options' => $badge_options,
+        'value' => get_post_meta($post->ID, '_available_badges', true)
     ));
 
     echo '</div>';
@@ -121,8 +147,13 @@ function add_personalization_fields() {
 // Save the custom fields
 add_action('woocommerce_process_product_meta', 'save_personalization_fields');
 function save_personalization_fields($post_id) {
-    $allows_personalization = isset($_POST['_allows_personalization']) ? 'yes' : 'no';
-    update_post_meta($post_id, '_allows_personalization', $allows_personalization);
+    // Save available sizes
+    $available_sizes = isset($_POST['_available_sizes']) ? (array) $_POST['_available_sizes'] : array();
+    update_post_meta($post_id, '_available_sizes', $available_sizes);
+    
+    // Save available badges
+    $available_badges = isset($_POST['_available_badges']) ? (array) $_POST['_available_badges'] : array();
+    update_post_meta($post_id, '_available_badges', $available_badges);
 }
 
 // Add personalization data to cart item
