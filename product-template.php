@@ -86,8 +86,7 @@ while (have_posts()) :
 
                 <!-- Category / Brand -->
                 <p class="text-sm text-[#9EB89E] uppercase tracking-wide mb-4">
-                    <?php echo wp_kses_post($product->get_categories()); ?>
-                    <br>
+                    <?php echo wp_kses_post($product->get_categories()); ?><p>,</p>
                     <?php 
                     $brands = get_the_terms($product->get_id(), 'product_brand');
                     if ($brands && !is_wp_error($brands)) {
