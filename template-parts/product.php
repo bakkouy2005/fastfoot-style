@@ -2,7 +2,7 @@
 $term = $args['term'] ?? '';
 $taxonomy = $args['taxonomy'] ?? 'product_cat';
 $title = $args['title'] ?? 'New collection';
-$per_page = $args['limit'] ?? -1; // Show all products by default
+$per_page = $args['limit'] ?? 3; // Show all products by default
 
 $args = [
   'post_type' => 'product',
