@@ -14,7 +14,7 @@
     <div class="container mx-auto flex justify-between items-center py-2 px-4">
         <!-- Logo -->
         <a href="<?php echo esc_url(home_url('/')); ?>" class="flex items-center relative z-10">
-            <img src="<?php echo get_template_directory_uri(); ?>/images/image copy 2.png" alt="Fast Foot Style" class="h-16 md:h-16 w-auto">
+            <img src="<?php echo get_template_directory_uri(); ?>/images/image copy 2.png" alt="Fast Foot Style" class="h-12 md:h-12 w-auto">
         </a>
         
         <!-- Main Navigation -->
@@ -86,4 +86,4 @@
 </header>
 
 <!-- Spacer to prevent content from going under fixed header -->
-<div class="h-16"></div>
+<div class="h-14"></div>
