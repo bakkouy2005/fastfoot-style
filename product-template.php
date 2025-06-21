@@ -5,6 +5,31 @@
 
 get_header();
 
+// Add personalization data to cart
+add_filter('woocommerce_add_cart_item_data', function($cart_item_data, $product_id) {
+    if (isset($_POST['size'])) {
+        $cart_item_data['personalization']['size'] = sanitize_text_field($_POST['size']);
+    }
+    if (isset($_POST['custom_name'])) {
+        $cart_item_data['personalization']['name'] = sanitize_text_field($_POST['custom_name']);
+    }
+    if (isset($_POST['custom_number'])) {
+        $cart_item_data['personalization']['number'] = sanitize_text_field($_POST['custom_number']);
+    }
+    if (isset($_POST['badge'])) {
+        $cart_item_data['personalization']['badge'] = sanitize_text_field($_POST['badge']);
+    }
+    
+    return $cart_item_data;
+}, 10, 2);
+
+// Ensure unique cart item when personalization is different
+add_filter('woocommerce_add_cart_item_data', function($cart_item_data, $product_id) {
+    $unique_key = md5(serialize($cart_item_data['personalization'] ?? []));
+    $cart_item_data['unique_key'] = $unique_key;
+    return $cart_item_data;
+}, 11, 2);
+
 while (have_posts()) :
     the_post();
     global $product;
