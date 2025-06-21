@@ -8,6 +8,20 @@ if (isset($_POST['update_cart']) && isset($_POST['cart'])) {
     foreach ($_POST['cart'] as $cart_item_key => $values) {
         $quantity = wc_stock_amount($values['qty']);
         WC()->cart->set_quantity($cart_item_key, $quantity, true);
+
+        // Update personalization data
+        if (isset($values['personalization'])) {
+            $cart_item = WC()->cart->get_cart_item($cart_item_key);
+            if ($cart_item) {
+                $personalization = array(
+                    'name' => sanitize_text_field($values['personalization']['name']),
+                    'number' => sanitize_text_field($values['personalization']['number']),
+                    'size' => sanitize_text_field($values['personalization']['size']),
+                    'badge' => sanitize_text_field($values['personalization']['badge'])
+                );
+                WC()->cart->cart_contents[$cart_item_key]['personalization'] = $personalization;
+            }
+        }
     }
     
     WC()->cart->calculate_totals();
@@ -33,14 +47,26 @@ get_header();
             if ($_product && $_product->exists() && $cart_item['quantity'] > 0 && apply_filters('woocommerce_cart_item_visible', true, $cart_item, $cart_item_key)):
                 $product_permalink = apply_filters('woocommerce_cart_item_permalink', $_product->is_visible() ? $_product->get_permalink($cart_item) : '', $cart_item, $cart_item_key);
                 $thumbnail = $_product->get_image('woocommerce_thumbnail', ['class' => 'object-cover w-full h-full']);
+                
+                // Get personalization data
+                $personalization = isset($cart_item['personalization']) ? $cart_item['personalization'] : array(
+                    'name' => '',
+                    'number' => '',
+                    'size' => '',
+                    'badge' => ''
+                );
         ?>
 
         <div class="bg-[#1a1f1a] rounded-xl p-6 space-y-4 shadow-lg">
             <div class="flex justify-between items-center gap-4">
                 <div class="flex flex-col gap-1">
-                    <div class="text-sm text-gray-400">Quantity: <?php echo $cart_item['quantity']; ?></div>
                     <div class="text-xl font-bold text-white"><?php echo $_product->get_name(); ?></div>
                     <div class="text-sm text-gray-400"><?php echo $_product->get_categories(); ?></div>
+                    <div class="text-lg font-bold text-[#12A212]">
+                        <?php
+                            echo apply_filters('woocommerce_cart_item_price', WC()->cart->get_product_price($_product), $cart_item, $cart_item_key);
+                        ?>
+                    </div>
                 </div>
 
                 <div class="w-28 h-28 rounded-xl overflow-hidden border-2 border-[#2e382e]">
@@ -48,26 +74,62 @@ get_header();
                 </div>
             </div>
 
-            <?php if (!empty($cart_item['personalization'])): ?>
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-4">
-                    <div>
-                        <span class="text-xs text-[#9EB89E] uppercase">Name</span>
-                        <p class="text-sm text-white"><?php echo esc_html($cart_item['personalization']['name'] ?? ''); ?></p>
-                    </div>
-                    <div>
-                        <span class="text-xs text-[#9EB89E] uppercase">Number</span>
-                        <p class="text-sm text-white"><?php echo esc_html($cart_item['personalization']['number'] ?? ''); ?></p>
-                    </div>
-                    <div>
-                        <span class="text-xs text-[#9EB89E] uppercase">Size</span>
-                        <p class="text-sm text-white"><?php echo esc_html($cart_item['personalization']['size'] ?? ''); ?></p>
-                    </div>
-                    <div>
-                        <span class="text-xs text-[#9EB89E] uppercase">Badge</span>
-                        <p class="text-sm text-white"><?php echo esc_html($cart_item['personalization']['badge'] ?? ''); ?></p>
-                    </div>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-4">
+                <div>
+                    <label class="block text-xs text-[#9EB89E] uppercase mb-1">Name</label>
+                    <input type="text" 
+                           name="cart[<?php echo $cart_item_key; ?>][personalization][name]" 
+                           value="<?php echo esc_attr($personalization['name']); ?>"
+                           class="w-full px-3 py-2 bg-[#293829] rounded-lg text-white text-sm border-none focus:outline-none focus:ring-1 focus:ring-[#12A212]">
                 </div>
-            <?php endif; ?>
+                <div>
+                    <label class="block text-xs text-[#9EB89E] uppercase mb-1">Number</label>
+                    <input type="number" 
+                           name="cart[<?php echo $cart_item_key; ?>][personalization][number]" 
+                           value="<?php echo esc_attr($personalization['number']); ?>"
+                           min="0" 
+                           max="99"
+                           class="w-full px-3 py-2 bg-[#293829] rounded-lg text-white text-sm border-none focus:outline-none focus:ring-1 focus:ring-[#12A212]">
+                </div>
+                <div>
+                    <label class="block text-xs text-[#9EB89E] uppercase mb-1">Size</label>
+                    <select name="cart[<?php echo $cart_item_key; ?>][personalization][size]"
+                            class="w-full px-3 py-2 bg-[#293829] rounded-lg text-white text-sm border-none focus:outline-none focus:ring-1 focus:ring-[#12A212]">
+                        <?php
+                        $sizes = array('XS', 'S', 'M', 'L', 'XL', 'XXL');
+                        foreach ($sizes as $size) {
+                            printf(
+                                '<option value="%s" %s>%s</option>',
+                                esc_attr($size),
+                                selected($personalization['size'], $size, false),
+                                esc_html($size)
+                            );
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs text-[#9EB89E] uppercase mb-1">Badge</label>
+                    <select name="cart[<?php echo $cart_item_key; ?>][personalization][badge]"
+                            class="w-full px-3 py-2 bg-[#293829] rounded-lg text-white text-sm border-none focus:outline-none focus:ring-1 focus:ring-[#12A212]">
+                        <?php
+                        $badges = array(
+                            'No badge' => 'No badge',
+                            'League badge' => 'League badge',
+                            'UCL badge' => 'UCL badge'
+                        );
+                        foreach ($badges as $value => $label) {
+                            printf(
+                                '<option value="%s" %s>%s</option>',
+                                esc_attr($value),
+                                selected($personalization['badge'], $value, false),
+                                esc_html($label)
+                            );
+                        }
+                        ?>
+                    </select>
+                </div>
+            </div>
 
             <div class="flex justify-between items-center mt-4">
                 <div class="flex items-center gap-2">
@@ -89,10 +151,17 @@ get_header();
                     </button>
                 </div>
 
-                <a href="<?php echo esc_url(wc_get_cart_remove_url($cart_item_key)); ?>" 
-                   class="text-sm text-[#9EB89E] hover:text-white font-semibold">
-                    REMOVE
-                </a>
+                <div class="flex items-center gap-4">
+                    <div class="text-lg font-bold">
+                        <?php
+                            echo apply_filters('woocommerce_cart_item_subtotal', WC()->cart->get_product_subtotal($_product, $cart_item['quantity']), $cart_item, $cart_item_key);
+                        ?>
+                    </div>
+                    <a href="<?php echo esc_url(wc_get_cart_remove_url($cart_item_key)); ?>" 
+                       class="text-sm text-[#9EB89E] hover:text-white font-semibold">
+                        REMOVE
+                    </a>
+                </div>
             </div>
         </div>
 
@@ -105,28 +174,21 @@ get_header();
             Update latest changes
         </button>
 
-        <a href="<?php echo esc_url(wc_get_checkout_url()); ?>"
-           class="px-6 py-2 bg-[#12A212] rounded-lg text-white hover:bg-[#0E800E] transition-colors">
-            Proceed to Checkout
-        </a>
+        <div class="flex items-center gap-4">
+            <div class="text-lg">
+                Total: <span class="font-bold"><?php echo WC()->cart->get_cart_total(); ?></span>
+            </div>
+            <a href="<?php echo esc_url(wc_get_checkout_url()); ?>"
+               class="px-6 py-2 bg-[#12A212] rounded-lg text-white hover:bg-[#0E800E] transition-colors">
+                Proceed to Checkout
+            </a>
+        </div>
     </div>
 
     <?php do_action('woocommerce_cart_contents'); ?>
     <?php do_action('woocommerce_cart_actions'); ?>
     <?php wp_nonce_field('woocommerce-cart', 'woocommerce-cart-nonce'); ?>
 </form>
-
-<!-- Payment Methods -->
-<div class="mt-10">
-    <h3 class="text-white text-lg font-semibold mb-4">Choose your payment method</h3>
-    <div class="grid grid-cols-3 sm:grid-cols-5 gap-2">
-        <button class="px-4 py-2 bg-[#293829] rounded-lg text-sm font-medium hover:bg-[#324132]">Paypal</button>
-        <button class="px-4 py-2 bg-[#12A212] rounded-lg text-sm font-medium hover:bg-[#0E800E]">iDeal</button>
-        <button class="px-4 py-2 bg-[#293829] rounded-lg text-sm font-medium hover:bg-[#324132]">Giro Pay</button>
-        <button class="px-4 py-2 bg-[#293829] rounded-lg text-sm font-medium hover:bg-[#324132]">Mastercard</button>
-        <button class="px-4 py-2 bg-[#293829] rounded-lg text-sm font-medium hover:bg-[#324132]">Visa Card</button>
-    </div>
-</div>
 
 <?php do_action('woocommerce_after_cart'); ?>
     </div>
