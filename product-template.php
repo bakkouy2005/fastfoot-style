@@ -86,8 +86,8 @@ while (have_posts()) :
 
                 <!-- Category / Brand -->
                 <p class="text-sm text-[#9EB89E] uppercase tracking-wide mb-4">
-                    <?php echo wp_kses_post($product->get_categories()); ?>
-                    <?php echo wp_kses_post($product->get_brand()); ?>
+                  
+                    
                 </p>
 
                 <!-- Add to cart form -->
