@@ -146,6 +146,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         jQuery(key).replaceWith(value);
                     });
                 }
+                if (response && response.redirect) {
+                    window.location.href = response.redirect;
+                }
                 jQuery(document.body).trigger('updated_cart_totals');
             }
         });
@@ -207,7 +210,9 @@ function handle_update_cart_quantity() {
 
     WC()->cart->set_quantity($cart_item_key, $quantity);
 
-    WC_AJAX::get_refreshed_fragments();
+    $response = WC_AJAX::get_refreshed_fragments();
+    $response['redirect'] = wc_get_cart_url();
+    wp_send_json($response);
 }
 
 // Ensure WooCommerce cart scripts are loaded
