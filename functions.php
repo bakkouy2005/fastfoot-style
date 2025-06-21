@@ -112,7 +112,7 @@ function add_personalization_fields() {
     woocommerce_wp_text_input(array(
         'id' => '_name_number_price',
         'label' => 'Name/Number Price',
-        'description' => 'Extra cost for adding a name and/or number',
+        'description' => 'Extra cost for adding a name and/or number (leave empty for no charge)',
         'type' => 'number',
         'custom_attributes' => array(
             'step' => '0.01',
@@ -123,9 +123,22 @@ function add_personalization_fields() {
     ));
 
     woocommerce_wp_text_input(array(
-        'id' => '_badge_price',
-        'label' => 'Badge Price',
-        'description' => 'Extra cost for adding a badge',
+        'id' => '_league_badge_price',
+        'label' => 'League Badge Price',
+        'description' => 'Extra cost for adding a league badge (leave empty for no charge)',
+        'type' => 'number',
+        'custom_attributes' => array(
+            'step' => '0.01',
+            'min' => '0'
+        ),
+        'desc_tip' => true,
+        'placeholder' => '0.00'
+    ));
+
+    woocommerce_wp_text_input(array(
+        'id' => '_ucl_badge_price',
+        'label' => 'UCL Badge Price',
+        'description' => 'Extra cost for adding a UCL badge (leave empty for no charge)',
         'type' => 'number',
         'custom_attributes' => array(
             'step' => '0.01',
@@ -235,7 +248,8 @@ add_action('woocommerce_process_product_meta', 'save_personalization_fields');
 function save_personalization_fields($post_id) {
     // Save prices
     update_post_meta($post_id, '_name_number_price', (float) $_POST['_name_number_price']);
-    update_post_meta($post_id, '_badge_price', (float) $_POST['_badge_price']);
+    update_post_meta($post_id, '_league_badge_price', (float) $_POST['_league_badge_price']);
+    update_post_meta($post_id, '_ucl_badge_price', (float) $_POST['_ucl_badge_price']);
     
     // Save available sizes
     $available_sizes = isset($_POST['_available_sizes']) ? (array) $_POST['_available_sizes'] : array();
@@ -250,13 +264,27 @@ function save_personalization_fields($post_id) {
 function calculate_personalization_costs($product_id, $personalization) {
     $extra_cost = 0;
     
-    // Add name/number cost if either is filled in
+    // Only add name/number cost if either field is actually filled in
     if (!empty($personalization['name']) || !empty($personalization['number'])) {
-        $extra_cost += (float) get_post_meta($product_id, '_name_number_price', true);
+        $name_number_price = get_post_meta($product_id, '_name_number_price', true);
+        if (!empty($name_number_price)) {
+            $extra_cost += (float) $name_number_price;
+        }
     }
     
-    if (!empty($personalization['badge']) && $personalization['badge'] !== 'No badge') {
-        $extra_cost += (float) get_post_meta($product_id, '_badge_price', true);
+    // Only add badge cost if a badge is selected (not "No badge")
+    if (!empty($personalization['badge'])) {
+        if ($personalization['badge'] === 'League badge') {
+            $league_badge_price = get_post_meta($product_id, '_league_badge_price', true);
+            if (!empty($league_badge_price)) {
+                $extra_cost += (float) $league_badge_price;
+            }
+        } elseif ($personalization['badge'] === 'UCL badge') {
+            $ucl_badge_price = get_post_meta($product_id, '_ucl_badge_price', true);
+            if (!empty($ucl_badge_price)) {
+                $extra_cost += (float) $ucl_badge_price;
+            }
+        }
     }
     
     return $extra_cost;
