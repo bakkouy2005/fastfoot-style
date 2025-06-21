@@ -128,17 +128,17 @@ function save_personalization_fields($post_id) {
 // Add personalization data to cart item
 add_filter('woocommerce_add_cart_item_data', 'add_personalization_to_cart_item', 10, 3);
 function add_personalization_to_cart_item($cart_item_data, $product_id, $variation_id) {
-    if (isset($_POST['personalization'])) {
-        $cart_item_data['personalization'] = array(
-            'name' => sanitize_text_field($_POST['personalization']['name'] ?? ''),
-            'number' => sanitize_text_field($_POST['personalization']['number'] ?? ''),
-            'size' => sanitize_text_field($_POST['personalization']['size'] ?? ''),
-            'badge' => sanitize_text_field($_POST['personalization']['badge'] ?? '')
-        );
-        
-        // Make each personalized item unique in cart
-        $cart_item_data['unique_key'] = md5(serialize($cart_item_data['personalization']));
-    }
+    // Always allow personalization by default
+    $cart_item_data['personalization'] = array(
+        'name' => sanitize_text_field($_POST['personalization']['name'] ?? ''),
+        'number' => sanitize_text_field($_POST['personalization']['number'] ?? ''),
+        'size' => sanitize_text_field($_POST['personalization']['size'] ?? ''),
+        'badge' => sanitize_text_field($_POST['personalization']['badge'] ?? '')
+    );
+    
+    // Make each personalized item unique in cart
+    $cart_item_data['unique_key'] = md5(serialize($cart_item_data['personalization']));
+    
     return $cart_item_data;
 }
 
