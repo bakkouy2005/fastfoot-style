@@ -108,6 +108,46 @@ function add_personalization_fields() {
 
     echo '<div class="options_group">';
     
+    // Personalization Costs
+    woocommerce_wp_text_input(array(
+        'id' => '_name_price',
+        'label' => 'Name Price',
+        'description' => 'Extra cost for adding a name',
+        'type' => 'number',
+        'custom_attributes' => array(
+            'step' => '0.01',
+            'min' => '0'
+        ),
+        'desc_tip' => true,
+        'placeholder' => '0.00'
+    ));
+
+    woocommerce_wp_text_input(array(
+        'id' => '_number_price',
+        'label' => 'Number Price',
+        'description' => 'Extra cost for adding a number',
+        'type' => 'number',
+        'custom_attributes' => array(
+            'step' => '0.01',
+            'min' => '0'
+        ),
+        'desc_tip' => true,
+        'placeholder' => '0.00'
+    ));
+
+    woocommerce_wp_text_input(array(
+        'id' => '_badge_price',
+        'label' => 'Badge Price',
+        'description' => 'Extra cost for adding a badge',
+        'type' => 'number',
+        'custom_attributes' => array(
+            'step' => '0.01',
+            'min' => '0'
+        ),
+        'desc_tip' => true,
+        'placeholder' => '0.00'
+    ));
+
     // Available Sizes
     $size_options = array(
         'XS' => 'XS',
@@ -206,6 +246,11 @@ function personalization_admin_script() {
 // Save the custom fields
 add_action('woocommerce_process_product_meta', 'save_personalization_fields');
 function save_personalization_fields($post_id) {
+    // Save prices
+    update_post_meta($post_id, '_name_price', (float) $_POST['_name_price']);
+    update_post_meta($post_id, '_number_price', (float) $_POST['_number_price']);
+    update_post_meta($post_id, '_badge_price', (float) $_POST['_badge_price']);
+    
     // Save available sizes
     $available_sizes = isset($_POST['_available_sizes']) ? (array) $_POST['_available_sizes'] : array();
     update_post_meta($post_id, '_available_sizes', $available_sizes);
@@ -215,24 +260,66 @@ function save_personalization_fields($post_id) {
     update_post_meta($post_id, '_available_badges', $available_badges);
 }
 
-// Add personalization data to cart item
+// Calculate extra costs for personalization
+function calculate_personalization_costs($product_id, $personalization) {
+    $extra_cost = 0;
+    
+    if (!empty($personalization['name'])) {
+        $extra_cost += (float) get_post_meta($product_id, '_name_price', true);
+    }
+    
+    if (!empty($personalization['number'])) {
+        $extra_cost += (float) get_post_meta($product_id, '_number_price', true);
+    }
+    
+    if (!empty($personalization['badge']) && $personalization['badge'] !== 'No badge') {
+        $extra_cost += (float) get_post_meta($product_id, '_badge_price', true);
+    }
+    
+    return $extra_cost;
+}
+
+// Add personalization data and costs to cart item
 add_filter('woocommerce_add_cart_item_data', 'add_personalization_to_cart_item', 10, 3);
 function add_personalization_to_cart_item($cart_item_data, $product_id, $variation_id) {
-    // Always allow personalization by default
-    $cart_item_data['personalization'] = array(
-        'name' => sanitize_text_field($_POST['personalization']['name'] ?? ''),
-        'number' => sanitize_text_field($_POST['personalization']['number'] ?? ''),
-        'size' => sanitize_text_field($_POST['personalization']['size'] ?? ''),
-        'badge' => sanitize_text_field($_POST['personalization']['badge'] ?? '')
-    );
-    
-    // Make each personalized item unique in cart
-    $cart_item_data['unique_key'] = md5(serialize($cart_item_data['personalization']));
+    if (isset($_POST['personalization'])) {
+        $cart_item_data['personalization'] = array(
+            'name' => sanitize_text_field($_POST['personalization']['name'] ?? ''),
+            'number' => sanitize_text_field($_POST['personalization']['number'] ?? ''),
+            'size' => sanitize_text_field($_POST['personalization']['size'] ?? ''),
+            'badge' => sanitize_text_field($_POST['personalization']['badge'] ?? '')
+        );
+        
+        // Calculate extra costs
+        $cart_item_data['personalization_cost'] = calculate_personalization_costs($product_id, $cart_item_data['personalization']);
+        
+        // Make each personalized item unique in cart
+        $cart_item_data['unique_key'] = md5(serialize($cart_item_data['personalization']));
+    }
     
     return $cart_item_data;
 }
 
-// Display personalization data in cart
+// Adjust item price in cart
+add_filter('woocommerce_get_cart_item_from_session', 'add_personalization_cost_from_session', 10, 2);
+function add_personalization_cost_from_session($cart_item, $values) {
+    if (isset($values['personalization_cost'])) {
+        $cart_item['personalization_cost'] = $values['personalization_cost'];
+    }
+    return $cart_item;
+}
+
+add_filter('woocommerce_cart_item_price', 'adjust_cart_item_price', 10, 3);
+function adjust_cart_item_price($price, $cart_item, $cart_item_key) {
+    if (isset($cart_item['personalization_cost']) && $cart_item['personalization_cost'] > 0) {
+        $product = $cart_item['data'];
+        $adjusted_price = $product->get_price() + $cart_item['personalization_cost'];
+        return wc_price($adjusted_price);
+    }
+    return $price;
+}
+
+// Display personalization data and costs in cart
 add_filter('woocommerce_get_item_data', 'display_personalization_cart_data', 10, 2);
 function display_personalization_cart_data($item_data, $cart_item) {
     if (isset($cart_item['personalization'])) {
@@ -243,6 +330,14 @@ function display_personalization_cart_data($item_data, $cart_item) {
                     'value' => wc_clean($value)
                 );
             }
+        }
+        
+        // Add personalization costs if any
+        if (isset($cart_item['personalization_cost']) && $cart_item['personalization_cost'] > 0) {
+            $item_data[] = array(
+                'key' => 'Personalization Cost',
+                'value' => wc_price($cart_item['personalization_cost'])
+            );
         }
     }
     return $item_data;
