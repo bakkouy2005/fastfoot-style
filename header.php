@@ -34,7 +34,7 @@
                 <button class="text-white bg-[#333d33]/80 hover:bg-[#333d33] rounded-xl p-2 px-3 transition-all duration-300">
                     <i class="fas fa-user text-xl"></i>
                 </button>
-                <a href="<?php echo wc_get_cart_url(); ?>" class="text-white bg-[#333d33]/80 hover:bg-[#333d33] rounded-xl p-2 px-3 transition-all duration-300 inline-block">
+                <a href="<?php echo get_template_directory_uri(); ?>/cart/cartpage.php" class="text-white bg-[#333d33]/80 hover:bg-[#333d33] rounded-xl p-2 px-3 transition-all duration-300 inline-block">
                     <i class="fas fa-shopping-bag text-xl"></i>
                 </a>
             </div>
