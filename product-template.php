@@ -131,18 +131,18 @@ while (have_posts()) :
 
                     <!-- Personalize -->
                     <div class="mb-8">
-                        <h3 class="text-lg font-semibold mb-4">Personalize</h3>
+                        <h3 class="text-lg font-semibold mb-4">
+                            Personalize
+                            <?php 
+                            $name_number_price = get_post_meta($product->get_id(), '_name_number_price', true);
+                            if ($name_number_price > 0) {
+                                echo '<span class="text-sm font-normal text-[#12A212]">(+' . wc_price($name_number_price) . ' for name/number)</span>';
+                            }
+                            ?>
+                        </h3>
                         <div class="grid grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-sm mb-1">
-                                    Name 
-                                    <?php 
-                                    $name_price = get_post_meta($product->get_id(), '_name_price', true);
-                                    if ($name_price > 0) {
-                                        echo '<span class="text-[#12A212]">(+' . wc_price($name_price) . ')</span>';
-                                    }
-                                    ?>
-                                </label>
+                                <label class="block text-sm mb-1">Name</label>
                                 <input type="text" 
                                        name="personalization[name]" 
                                        placeholder="Your Name" 
@@ -150,15 +150,7 @@ while (have_posts()) :
                                        class="w-full px-3 py-2 bg-[#1a1f1a] border border-[#425142] rounded-lg focus:outline-none focus:border-white">
                             </div>
                             <div>
-                                <label class="block text-sm mb-1">
-                                    Number
-                                    <?php 
-                                    $number_price = get_post_meta($product->get_id(), '_number_price', true);
-                                    if ($number_price > 0) {
-                                        echo '<span class="text-[#12A212]">(+' . wc_price($number_price) . ')</span>';
-                                    }
-                                    ?>
-                                </label>
+                                <label class="block text-sm mb-1">Number</label>
                                 <input type="number" 
                                        name="personalization[number]" 
                                        placeholder="0-99" 
