@@ -157,6 +157,11 @@ document.addEventListener('DOMContentLoaded', function() {
                         jQuery(key).replaceWith(value);
                     });
                 }
+                // Update the hidden input with the new quantity
+                const qtyInput = document.querySelector(`input[name="cart[${cartKey}][qty]"]`);
+                if (qtyInput) {
+                    qtyInput.value = newQty;
+                }
                 jQuery(document.body).trigger('updated_cart_totals');
             }
         });
@@ -202,6 +207,15 @@ document.addEventListener('DOMContentLoaded', function() {
             updateCartQuantity(cartKey, value);
         });
     });
+
+    // Handle form submission
+    const form = document.querySelector('.woocommerce-cart-form');
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            // Remove updating-cart class if it was left there
+            jQuery('body').removeClass('updating-cart');
+        });
+    }
 });
 </script>
 
