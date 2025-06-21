@@ -110,22 +110,9 @@ function add_personalization_fields() {
     
     // Personalization Costs
     woocommerce_wp_text_input(array(
-        'id' => '_name_price',
-        'label' => 'Name Price',
-        'description' => 'Extra cost for adding a name',
-        'type' => 'number',
-        'custom_attributes' => array(
-            'step' => '0.01',
-            'min' => '0'
-        ),
-        'desc_tip' => true,
-        'placeholder' => '0.00'
-    ));
-
-    woocommerce_wp_text_input(array(
-        'id' => '_number_price',
-        'label' => 'Number Price',
-        'description' => 'Extra cost for adding a number',
+        'id' => '_name_number_price',
+        'label' => 'Name/Number Price',
+        'description' => 'Extra cost for adding a name and/or number',
         'type' => 'number',
         'custom_attributes' => array(
             'step' => '0.01',
@@ -247,8 +234,7 @@ function personalization_admin_script() {
 add_action('woocommerce_process_product_meta', 'save_personalization_fields');
 function save_personalization_fields($post_id) {
     // Save prices
-    update_post_meta($post_id, '_name_price', (float) $_POST['_name_price']);
-    update_post_meta($post_id, '_number_price', (float) $_POST['_number_price']);
+    update_post_meta($post_id, '_name_number_price', (float) $_POST['_name_number_price']);
     update_post_meta($post_id, '_badge_price', (float) $_POST['_badge_price']);
     
     // Save available sizes
@@ -264,12 +250,9 @@ function save_personalization_fields($post_id) {
 function calculate_personalization_costs($product_id, $personalization) {
     $extra_cost = 0;
     
-    if (!empty($personalization['name'])) {
-        $extra_cost += (float) get_post_meta($product_id, '_name_price', true);
-    }
-    
-    if (!empty($personalization['number'])) {
-        $extra_cost += (float) get_post_meta($product_id, '_number_price', true);
+    // Add name/number cost if either is filled in
+    if (!empty($personalization['name']) || !empty($personalization['number'])) {
+        $extra_cost += (float) get_post_meta($product_id, '_name_number_price', true);
     }
     
     if (!empty($personalization['badge']) && $personalization['badge'] !== 'No badge') {
