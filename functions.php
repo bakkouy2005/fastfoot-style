@@ -101,3 +101,72 @@ function custom_product_template($template) {
 }
 add_filter('template_include', 'custom_product_template');
 
+// Add custom product fields for personalization
+add_action('woocommerce_product_options_general_product_data', 'add_personalization_fields');
+function add_personalization_fields() {
+    global $woocommerce, $post;
+
+    echo '<div class="options_group">';
+    
+    // Enable personalization checkbox
+    woocommerce_wp_checkbox(array(
+        'id' => '_allows_personalization',
+        'label' => 'Allow Personalization',
+        'description' => 'Check this to enable name, number, size and badge options'
+    ));
+
+    echo '</div>';
+}
+
+// Save the custom fields
+add_action('woocommerce_process_product_meta', 'save_personalization_fields');
+function save_personalization_fields($post_id) {
+    $allows_personalization = isset($_POST['_allows_personalization']) ? 'yes' : 'no';
+    update_post_meta($post_id, '_allows_personalization', $allows_personalization);
+}
+
+// Add personalization data to cart item
+add_filter('woocommerce_add_cart_item_data', 'add_personalization_to_cart_item', 10, 3);
+function add_personalization_to_cart_item($cart_item_data, $product_id, $variation_id) {
+    if (isset($_POST['personalization'])) {
+        $cart_item_data['personalization'] = array(
+            'name' => sanitize_text_field($_POST['personalization']['name'] ?? ''),
+            'number' => sanitize_text_field($_POST['personalization']['number'] ?? ''),
+            'size' => sanitize_text_field($_POST['personalization']['size'] ?? ''),
+            'badge' => sanitize_text_field($_POST['personalization']['badge'] ?? '')
+        );
+        
+        // Make each personalized item unique in cart
+        $cart_item_data['unique_key'] = md5(serialize($cart_item_data['personalization']));
+    }
+    return $cart_item_data;
+}
+
+// Display personalization data in cart
+add_filter('woocommerce_get_item_data', 'display_personalization_cart_data', 10, 2);
+function display_personalization_cart_data($item_data, $cart_item) {
+    if (isset($cart_item['personalization'])) {
+        foreach ($cart_item['personalization'] as $key => $value) {
+            if (!empty($value)) {
+                $item_data[] = array(
+                    'key' => ucfirst($key),
+                    'value' => wc_clean($value)
+                );
+            }
+        }
+    }
+    return $item_data;
+}
+
+// Save personalization data to order
+add_action('woocommerce_checkout_create_order_line_item', 'add_personalization_to_order_items', 10, 4);
+function add_personalization_to_order_items($item, $cart_item_key, $values, $order) {
+    if (isset($values['personalization'])) {
+        foreach ($values['personalization'] as $key => $value) {
+            if (!empty($value)) {
+                $item->add_meta_data(ucfirst($key), $value);
+            }
+        }
+    }
+}
+
