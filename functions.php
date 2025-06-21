@@ -118,12 +118,21 @@ function add_personalization_fields() {
         'XXL' => 'XXL'
     );
     
-    woocommerce_wp_multiselect_field(array(
+    // Convert to format needed for select field
+    $formatted_size_options = array();
+    foreach ($size_options as $key => $label) {
+        $formatted_size_options[$key] = $label;
+    }
+    
+    woocommerce_wp_select(array(
         'id' => '_available_sizes',
         'label' => 'Available Sizes',
         'description' => 'Select which sizes are available for this product',
-        'options' => $size_options,
-        'value' => get_post_meta($post->ID, '_available_sizes', true)
+        'options' => $formatted_size_options,
+        'custom_attributes' => array(
+            'multiple' => 'multiple'
+        ),
+        'class' => 'select2'
     ));
 
     // Available Badges
@@ -133,15 +142,36 @@ function add_personalization_fields() {
         'ucl_badge' => 'UCL badge'
     );
     
-    woocommerce_wp_multiselect_field(array(
+    woocommerce_wp_select(array(
         'id' => '_available_badges',
         'label' => 'Available Badges',
         'description' => 'Select which badges are available for this product',
         'options' => $badge_options,
-        'value' => get_post_meta($post->ID, '_available_badges', true)
+        'custom_attributes' => array(
+            'multiple' => 'multiple'
+        ),
+        'class' => 'select2'
     ));
 
     echo '</div>';
+}
+
+// Add Select2 for multiple select
+add_action('admin_footer', 'personalization_admin_script');
+function personalization_admin_script() {
+    if (get_post_type() !== 'product') return;
+    ?>
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            $('#_available_sizes, #_available_badges').select2();
+            
+            // Fix for select2 inside WooCommerce tabs
+            $('#woocommerce-product-data').on('woocommerce_variations_loaded', function() {
+                $('#_available_sizes, #_available_badges').select2();
+            });
+        });
+    </script>
+    <?php
 }
 
 // Save the custom fields
