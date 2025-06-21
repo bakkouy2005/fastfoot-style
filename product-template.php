@@ -107,8 +107,13 @@ while (have_posts()) :
                         <h3 class="text-lg font-semibold mb-4">Select size</h3>
                         <div class="flex flex-wrap gap-3">
                             <?php
-                            $sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
-                            foreach ($sizes as $size) {
+                            $available_sizes = get_post_meta($product->get_id(), '_available_sizes', true);
+                            // If no sizes are set, show all sizes
+                            if (empty($available_sizes)) {
+                                $available_sizes = array('XS', 'S', 'M', 'L', 'XL', 'XXL');
+                            }
+                            
+                            foreach ($available_sizes as $size) {
                             ?>
                             <label class="relative">
                                 <input type="radio" 
@@ -152,38 +157,33 @@ while (have_posts()) :
                     <div class="mb-8">
                         <h3 class="text-lg font-semibold mb-4 text-white">Select badge</h3>
                         <div class="flex flex-wrap gap-3">
+                            <?php
+                            $available_badges = get_post_meta($product->get_id(), '_available_badges', true);
+                            $badge_options = array(
+                                'no_badge' => 'No badge',
+                                'league_badge' => 'League badge',
+                                'ucl_badge' => 'UCL badge'
+                            );
+                            
+                            // If no badges are set, show all badges
+                            if (empty($available_badges)) {
+                                $available_badges = array_keys($badge_options);
+                            }
+                            
+                            foreach ($available_badges as $badge_key) {
+                                $badge_label = $badge_options[$badge_key] ?? $badge_key;
+                            ?>
                             <label class="cursor-pointer">
                                 <input type="radio" 
                                        name="personalization[badge]" 
-                                       value="No badge" 
+                                       value="<?php echo esc_attr($badge_label); ?>" 
                                        class="sr-only peer" 
                                        required>
                                 <div class="px-4 h-[44px] flex items-center justify-center bg-[#293829] text-white text-[14px] leading-[21px] font-medium border border-[#3D543D] rounded-[12px] peer-checked:border-white peer-checked:bg-[#3D543D] transition-all">
-                                    No badge
+                                    <?php echo esc_html($badge_label); ?>
                                 </div>
                             </label>
-
-                            <label class="cursor-pointer">
-                                <input type="radio" 
-                                       name="personalization[badge]" 
-                                       value="League badge" 
-                                       class="sr-only peer" 
-                                       required>
-                                <div class="px-4 h-[44px] flex items-center justify-center bg-[#293829] text-white text-[14px] leading-[21px] font-medium border border-[#3D543D] rounded-[12px] peer-checked:border-white peer-checked:bg-[#3D543D] transition-all">
-                                    League badge
-                                </div>
-                            </label>
-
-                            <label class="cursor-pointer">
-                                <input type="radio" 
-                                       name="personalization[badge]" 
-                                       value="UCL badge" 
-                                       class="sr-only peer" 
-                                       required>
-                                <div class="px-4 h-[44px] flex items-center justify-center bg-[#293829] text-white text-[14px] leading-[21px] font-medium border border-[#3D543D] rounded-[12px] peer-checked:border-white peer-checked:bg-[#3D543D] transition-all">
-                                    UCL badge
-                                </div>
-                            </label>
+                            <?php } ?>
                         </div>
                     </div>
 
