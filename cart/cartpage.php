@@ -6,11 +6,50 @@ defined('ABSPATH') || exit;
 // Handle cart updates
 if (isset($_POST['update_cart']) && isset($_POST['cart'])) {
     foreach ($_POST['cart'] as $cart_item_key => $values) {
-        $quantity = wc_stock_amount($values['qty']);
-        WC()->cart->set_quantity($cart_item_key, $quantity, true);
-
-        // Update personalization data
+        $cart_item = WC()->cart->get_cart_item($cart_item_key);
+        $product_id = $cart_item['product_id'];
+        
+        // Get available options for this product
+        $available_sizes = get_post_meta($product_id, '_available_sizes', true);
+        $available_badges = get_post_meta($product_id, '_available_badges', true);
+        
+        if (empty($available_sizes)) {
+            $available_sizes = array('XS', 'S', 'M', 'L', 'XL', 'XXL');
+        }
+        if (empty($available_badges)) {
+            $available_badges = array('no_badge', 'league_badge', 'ucl_badge');
+        }
+        
+        // Validate size and badge
         if (isset($values['personalization'])) {
+            $size = $values['personalization']['size'];
+            $badge = $values['personalization']['badge'];
+            
+            // Check if selected size is still available
+            if (!in_array($size, $available_sizes)) {
+                wc_add_notice(sprintf(
+                    __('Size "%s" is no longer available for product "%s". Please select a different size.', 'woocommerce'),
+                    $size,
+                    get_the_title($product_id)
+                ), 'error');
+                continue;
+            }
+            
+            // Check if selected badge is still available
+            $badge_key = strtolower(str_replace(' ', '_', $badge));
+            if ($badge !== 'No badge' && !in_array($badge_key, $available_badges)) {
+                wc_add_notice(sprintf(
+                    __('Badge "%s" is no longer available for product "%s". Please select a different badge.', 'woocommerce'),
+                    $badge,
+                    get_the_title($product_id)
+                ), 'error');
+                continue;
+            }
+            
+            // Update cart item if validations pass
+            $quantity = wc_stock_amount($values['qty']);
+            WC()->cart->set_quantity($cart_item_key, $quantity, true);
+
             $cart_item = WC()->cart->get_cart_item($cart_item_key);
             if ($cart_item) {
                 $personalization = array(
@@ -25,7 +64,9 @@ if (isset($_POST['update_cart']) && isset($_POST['cart'])) {
     }
     
     WC()->cart->calculate_totals();
-    wc_add_notice(__('Cart updated.', 'woocommerce'));
+    if (!wc_notice_count('error')) {
+        wc_add_notice(__('Cart updated.', 'woocommerce'));
+    }
 }
 
 get_header();
@@ -55,9 +96,36 @@ get_header();
                     'size' => '',
                     'badge' => ''
                 );
+
+                // Get available options for this product
+                $available_sizes = get_post_meta($product_id, '_available_sizes', true);
+                $available_badges = get_post_meta($product_id, '_available_badges', true);
+                
+                if (empty($available_sizes)) {
+                    $available_sizes = array('XS', 'S', 'M', 'L', 'XL', 'XXL');
+                }
+                if (empty($available_badges)) {
+                    $available_badges = array('no_badge', 'league_badge', 'ucl_badge');
+                }
+
+                // Check if current selections are still available
+                $size_available = in_array($personalization['size'], $available_sizes);
+                $badge_key = strtolower(str_replace(' ', '_', $personalization['badge']));
+                $badge_available = $personalization['badge'] === 'No badge' || in_array($badge_key, $available_badges);
         ?>
 
-        <div class="bg-[#1a1f1a] rounded-xl p-6 space-y-4 shadow-lg">
+        <div class="bg-[#1a1f1a] rounded-xl p-6 space-y-4 shadow-lg <?php echo (!$size_available || !$badge_available) ? 'border-2 border-red-500' : ''; ?>">
+            <?php if (!$size_available || !$badge_available): ?>
+            <div class="bg-red-500/10 text-red-500 p-4 rounded-lg mb-4">
+                <?php if (!$size_available): ?>
+                <p>Size "<?php echo esc_html($personalization['size']); ?>" is no longer available. Please select a different size.</p>
+                <?php endif; ?>
+                <?php if (!$badge_available): ?>
+                <p>Badge "<?php echo esc_html($personalization['badge']); ?>" is no longer available. Please select a different badge.</p>
+                <?php endif; ?>
+            </div>
+            <?php endif; ?>
+
             <div class="flex justify-between items-center gap-4">
                 <div class="flex flex-col gap-1">
                     <div class="text-xl font-bold text-white"><?php echo $_product->get_name(); ?></div>
@@ -94,10 +162,9 @@ get_header();
                 <div>
                     <label class="block text-xs text-[#9EB89E] uppercase mb-1">Size</label>
                     <select name="cart[<?php echo $cart_item_key; ?>][personalization][size]"
-                            class="w-full px-3 py-2 bg-[#293829] rounded-lg text-white text-sm border-none focus:outline-none focus:ring-1 focus:ring-[#12A212]">
+                            class="w-full px-3 py-2 bg-[#293829] rounded-lg text-white text-sm border-none focus:outline-none focus:ring-1 focus:ring-[#12A212] <?php echo !$size_available ? 'border-2 border-red-500' : ''; ?>">
                         <?php
-                        $sizes = array('XS', 'S', 'M', 'L', 'XL', 'XXL');
-                        foreach ($sizes as $size) {
+                        foreach ($available_sizes as $size) {
                             printf(
                                 '<option value="%s" %s>%s</option>',
                                 esc_attr($size),
@@ -111,14 +178,20 @@ get_header();
                 <div>
                     <label class="block text-xs text-[#9EB89E] uppercase mb-1">Badge</label>
                     <select name="cart[<?php echo $cart_item_key; ?>][personalization][badge]"
-                            class="w-full px-3 py-2 bg-[#293829] rounded-lg text-white text-sm border-none focus:outline-none focus:ring-1 focus:ring-[#12A212]">
+                            class="w-full px-3 py-2 bg-[#293829] rounded-lg text-white text-sm border-none focus:outline-none focus:ring-1 focus:ring-[#12A212] <?php echo !$badge_available ? 'border-2 border-red-500' : ''; ?>">
                         <?php
-                        $badges = array(
-                            'No badge' => 'No badge',
-                            'League badge' => 'League badge',
-                            'UCL badge' => 'UCL badge'
+                        $badge_options = array(
+                            'No badge' => 'No badge'
                         );
-                        foreach ($badges as $value => $label) {
+                        
+                        if (in_array('league_badge', $available_badges)) {
+                            $badge_options['League badge'] = 'League badge';
+                        }
+                        if (in_array('ucl_badge', $available_badges)) {
+                            $badge_options['UCL badge'] = 'UCL badge';
+                        }
+                        
+                        foreach ($badge_options as $value => $label) {
                             printf(
                                 '<option value="%s" %s>%s</option>',
                                 esc_attr($value),
