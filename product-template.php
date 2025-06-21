@@ -43,7 +43,7 @@ while (have_posts()) :
             <span>Product succesvol toegevoegd aan winkelwagen!</span>
         </div>
     </div>
-    <div class="container mx-auto px-4 py-8">
+    <div class="container mx-auto px-4 py-6">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
             <!-- Left Column - Product Images -->
             <div class="relative">
