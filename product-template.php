@@ -144,21 +144,21 @@ while (have_posts()) :
                         <h3 class="text-lg font-semibold mb-4 text-white">Select badge</h3>
                         <div class="flex flex-wrap gap-3">
                             <label class="cursor-pointer">
-                                <input type="radio" name="badge" value="No badge" class="sr-only peer">
+                                <input type="radio" name="badge" value="No badge" class="sr-only peer" required>
                                 <div class="px-4 h-[44px] flex items-center justify-center bg-[#293829] text-white text-[14px] leading-[21px] font-medium border border-[#3D543D] rounded-[12px] peer-checked:border-white peer-checked:bg-[#3D543D] transition-all">
                                     No badge
                                 </div>
                             </label>
 
                             <label class="cursor-pointer">
-                                <input type="radio" name="badge" value="League badge" class="sr-only peer">
+                                <input type="radio" name="badge" value="League badge" class="sr-only peer" required>
                                 <div class="px-4 h-[44px] flex items-center justify-center bg-[#293829] text-white text-[14px] leading-[21px] font-medium border border-[#3D543D] rounded-[12px] peer-checked:border-white peer-checked:bg-[#3D543D] transition-all">
                                     League badge
                                 </div>
                             </label>
 
                             <label class="cursor-pointer">
-                                <input type="radio" name="badge" value="UCL badge" class="sr-only peer">
+                                <input type="radio" name="badge" value="UCL badge" class="sr-only peer" required>
                                 <div class="px-4 h-[44px] flex items-center justify-center bg-[#293829] text-white text-[14px] leading-[21px] font-medium border border-[#3D543D] rounded-[12px] peer-checked:border-white peer-checked:bg-[#3D543D] transition-all">
                                     UCL badge
                                 </div>
@@ -215,6 +215,17 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // Active style for badges
+    const badgeInputs = document.querySelectorAll('input[name="badge"]');
+    badgeInputs.forEach(input => {
+        input.addEventListener('change', function() {
+            badgeInputs.forEach(inp => inp.nextElementSibling.classList.remove('border-white', 'bg-[#3D543D]'));
+            if (this.checked) {
+                this.nextElementSibling.classList.add('border-white', 'bg-[#3D543D]');
+            }
+        });
+    });
+
     // Gallery
     const mainImage = document.querySelector('.main-product-image');
     const thumbnails = document.querySelectorAll('.gallery-thumbnail');
@@ -250,10 +261,16 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!document.querySelector('input[name="size"]:checked')) {
             e.preventDefault();
             alert('Please select a size');
-        } else {
-            // If size is selected, show notification after a small delay
-            setTimeout(showNotification, 500);
+            return;
         }
+        if (!document.querySelector('input[name="badge"]:checked')) {
+            e.preventDefault();
+            alert('Please select a badge option');
+            return;
+        }
+        
+        // If all required fields are selected, show notification after a small delay
+        setTimeout(showNotification, 500);
     });
 
     // Number input validation
