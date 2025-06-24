@@ -19,7 +19,7 @@ if (have_rows('hero_sections')) :
   
   <div class="max-w-7xl mx-auto h-full relative">
     <!-- Content -->
-    <div class="absolute top-1/2 left-0 right-0 -translate-y-1/2 z-10 px-8">
+    <div class="absolute top-1/2 left-0 right-0 -translate-y-1/2 z-10 px-4">
       <div class="max-w-7xl mx-auto">
         <!-- Heading -->
         <div class="max-w-5xl mb-8">
