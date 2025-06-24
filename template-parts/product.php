@@ -56,7 +56,7 @@ $query = new WP_Query($query_args);
         ?>
             <article class="group">
                 <!-- Product Image Container -->
-                <div class="relative aspect-[4/5] bg-[#1a1f1a]">
+                <div class="relative aspect-[4/5] bg-[#1a1f1a] rounded-[12px]">
                     <a href="<?php the_permalink(); ?>" class="block w-full h-full">
                         <!-- Main Product Image -->
                         <?php echo $product->get_image('full', [
