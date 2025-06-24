@@ -4,7 +4,8 @@ $logos = [
     ['src' => '2.svg', 'alt' => 'League 2'],
     ['src' => '3.svg', 'alt' => 'League 3'],
     ['src' => '4.svg', 'alt' => 'League 4'],
-    ['src' => '5.svg', 'alt' => 'League 5']
+    ['src' => '5.svg', 'alt' => 'League 5'],
+    ['src' => '6.svg', 'alt' => 'League 6'],
 ];
 ?>
 
