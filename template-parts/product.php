@@ -19,7 +19,7 @@ $query = new WP_Query($args);
 
 <h2 class="text-4xl font-bold mb-10 text-white"><?php echo esc_html($title); ?></h2>
 
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
   <?php 
   while ($query->have_posts()) : $query->the_post(); 
     global $product;
@@ -38,14 +38,16 @@ $query = new WP_Query($args);
     }
   ?>
     <div class="group">
-      <div class="relative aspect-[3/4] overflow-hidden bg-[url('/wp-content/themes/fastfoot-style/assets/images/mesh-pattern.svg')] bg-cover rounded-xl">
+      <div class="relative aspect-[4/5] overflow-hidden bg-[url('/wp-content/themes/fastfoot-style/assets/images/mesh-pattern.svg')] bg-cover rounded-xl">
         <a href="<?php the_permalink(); ?>" class="block w-full h-full relative">
-          <?php 
-            echo $product->get_image('full', [
-              'class' => 'w-full h-full object-contain transition duration-300 group-hover:opacity-0 transform-gpu will-change-transform'
-            ]);
-            if ($back_image) echo $back_image;
-          ?>
+          <div class="absolute inset-0 flex items-center justify-center">
+            <?php 
+              echo $product->get_image('full', [
+                'class' => 'w-[85%] h-[85%] object-contain transition duration-300 group-hover:opacity-0 transform-gpu will-change-transform'
+              ]);
+              if ($back_image) echo $back_image;
+            ?>
+          </div>
         </a>
       </div>
       <div class="mt-4">
