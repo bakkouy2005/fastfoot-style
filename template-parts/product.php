@@ -37,8 +37,8 @@ $query = new WP_Query($args);
       }
     }
   ?>
-    <div class="group relative">
-      <div class="relative w-full h-[461px] overflow-hidden bg-[url('/wp-content/themes/fastfoot-style/assets/images/mesh-pattern.png')] bg-cover rounded-[12px]">
+    <div class="group">
+      <div class="w-full h-[461px] overflow-hidden bg-[url('/wp-content/themes/fastfoot-style/assets/images/mesh-pattern.png')] bg-cover rounded-[12px]">
         <a href="<?php the_permalink(); ?>" class="block w-full h-full rounded-[12px] overflow-hidden relative">
           <?php 
             echo $product->get_image('full', [
@@ -48,7 +48,7 @@ $query = new WP_Query($args);
           ?>
         </a>
       </div>
-      <div class="">
+      <div class="mt-4">
         <h3 class="text-xl font-bold text-white"><?php the_title(); ?></h3>
         <p class="text-xl text-[#9EB89E]">€<?php echo $product->get_price(); ?></p>
       </div>
