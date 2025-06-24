@@ -16,7 +16,7 @@ $logos = [
                 <img 
                     src="<?php echo get_template_directory_uri(); ?>/assets/images/<?php echo $logo['src']; ?>" 
                     alt="<?php echo $logo['alt']; ?>" 
-                    class="h-34 w-auto opacity-70 hover:opacity-100 transition-opacity"
+                    class="h-24 w-auto opacity-70 hover:opacity-100 transition-opacity"
                 >
             </div>
             <?php endforeach; ?>
