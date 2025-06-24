@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
-<header class="site-header fixed w-full top-0 z-50 bg-black/5 backdrop-blur-md">
+<header class="site-header fixed w-full top-0 z-50 bg-black/15 backdrop-blur-md">
     <div class="w-full flex justify-between items-center py-4 px-8">
         <!-- Logo -->
         <a href="<?php echo esc_url(home_url('/')); ?>" class="flex items-center relative z-10">
