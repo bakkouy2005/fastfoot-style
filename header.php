@@ -11,7 +11,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
 </head>
-<body <?php body_class(); ?>>
+<body <?php body_class('font-inter'); ?>>
 <?php wp_body_open(); ?>
 
 <div class="custom-cursor" id="custom-cursor">
