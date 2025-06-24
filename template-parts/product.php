@@ -51,7 +51,7 @@ $query = new WP_Query($args);
         </div>
         <div class="mt-4">
           <h3 class="text-xl font-bold text-[#0A0A0A] font-impact"><?php the_title(); ?></h3>
-          <p class="text-xl text-[#45BD45] font-inter"><?php echo $product->get_price(); ?></p>
+          <p class="text-xl text-[#45BD45] font-inter">€<?php echo $product->get_price(); ?></p>
         </div>
       </div>
     <?php 
