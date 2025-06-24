@@ -6,6 +6,7 @@ get_header();
 <div>
     <div>
     <?php get_template_part('template-parts/hero-conf', null, ['hero_index' => 1]); ?>
+    <?php get_template_part('template-parts/slider-leauge'); ?>
     <?php get_template_part('template-parts/product', null, [
   'term' => 'new-collection', // <-- dit is de slug van de categorie
   'taxonomy' => 'product_cat',
