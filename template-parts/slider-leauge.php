@@ -16,14 +16,14 @@ $logos = [
                 <img 
                     src="<?php echo get_template_directory_uri(); ?>/assets/images/<?php echo $logo['src']; ?>" 
                     alt="<?php echo $logo['alt']; ?>" 
-                    class="h-24 w-auto opacity-70 hover:opacity-100 transition-opacity"
+                    class="h-24 w-auto opacity-70 hover:opacity-100 transition-all duration-300 ease-in-out transform hover:scale-110"
                 >
             </div>
             <?php endforeach; ?>
         </div>
         <!-- Navigation buttons -->
-        <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next after:!text-white/50 hover:after:!text-white after:!transition-colors"></div>
+        <div class="swiper-button-prev after:!text-white/50 hover:after:!text-white after:!transition-colors"></div>
     </div>
 </div>
 
@@ -34,10 +34,13 @@ document.addEventListener('DOMContentLoaded', function() {
         spaceBetween: 30,
         centeredSlides: true,
         loop: true,
+        speed: 800,
         navigation: {
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev',
         },
+        effect: 'slide',
+        grabCursor: true,
         breakpoints: {
             320: {
                 slidesPerView: 2,
