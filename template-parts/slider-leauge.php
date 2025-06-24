@@ -8,8 +8,8 @@ $logos = [
 ];
 ?>
 
-<div class="bg-black relative">
-    <div class="swiper league-slider max-w-7xl mx-auto px-8">
+<div class="bg-black">
+    <div class="swiper league-slider max-w-7xl mx-auto px-8 relative">
         <div class="swiper-wrapper py-4">
             <?php foreach ($logos as $logo): ?>
             <div class="swiper-slide flex items-center justify-center">
@@ -21,10 +21,10 @@ $logos = [
             </div>
             <?php endforeach; ?>
         </div>
+        <!-- Navigation buttons -->
+        <div class="swiper-button-next !text-white opacity-50 hover:opacity-100 transition-opacity !right-0"></div>
+        <div class="swiper-button-prev !text-white opacity-50 hover:opacity-100 transition-opacity !left-0"></div>
     </div>
-    <!-- Navigation buttons -->
-    <div class="swiper-button-next !text-white opacity-50 hover:opacity-100 transition-opacity !absolute !-right-3"></div>
-    <div class="swiper-button-prev !text-white opacity-50 hover:opacity-100 transition-opacity !absolute !-left-3"></div>
 </div>
 
 <style>
