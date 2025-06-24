@@ -133,6 +133,13 @@ a {
   will-change: transform;
   margin-left: -12px;
   margin-top: -12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: transparent;
+  font-size: 0;
+  font-weight: 500;
+  white-space: nowrap;
 }
 
 .custom-cursor .inner-circle {
@@ -146,6 +153,22 @@ a {
   margin-top: -10px;
   background-color: rgba(144, 238, 144, 1);
   transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* Product hover style */
+.custom-cursor.product-hover {
+  width: 80px;
+  height: 80px;
+  margin-left: -40px;
+  margin-top: -40px;
+  background-color: rgb(144, 238, 144);
+  color: black;
+  font-size: 14px;
+  transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.custom-cursor.product-hover::after {
+  content: 'VIEW →';
 }
 
 .custom-cursor.clicking {
