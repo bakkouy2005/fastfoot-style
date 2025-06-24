@@ -55,8 +55,21 @@ document.addEventListener('DOMContentLoaded', () => {
         customCursor.classList.remove('clicking');
     }, { passive: true });
 
-    // Hover effecten
-    const hoverTargets = document.querySelectorAll('a, button, [role="button"], input[type="button"], input[type="submit"], .hover-target');
+    // Product hover effecten
+    const productLinks = document.querySelectorAll('.woocommerce-loop-product__link, .wc-block-grid__product-link, .product a');
+    productLinks.forEach(link => {
+        link.addEventListener('mouseenter', () => {
+            customCursor.classList.remove('hover');
+            customCursor.classList.add('product-hover');
+        }, { passive: true });
+        
+        link.addEventListener('mouseleave', () => {
+            customCursor.classList.remove('product-hover');
+        }, { passive: true });
+    });
+
+    // Normale hover effecten (niet voor producten)
+    const hoverTargets = document.querySelectorAll('a:not(.woocommerce-loop-product__link):not(.wc-block-grid__product-link):not(.product a), button, [role="button"], input[type="button"], input[type="submit"], .hover-target');
     hoverTargets.forEach(target => {
         target.addEventListener('mouseenter', () => {
             customCursor.classList.add('hover');
