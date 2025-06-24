@@ -118,9 +118,7 @@ a {
 }
 
 /* Custom cursor styles */
-* {
-  cursor: crosshair !important;
-}
+
 
 .custom-cursor {
   width: 20px;
