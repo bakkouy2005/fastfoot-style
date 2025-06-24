@@ -9,7 +9,7 @@ $logos = [
 ?>
 
 <div class="bg-black">
-    <div class="swiper league-slider max-w-7xl mx-auto px-8 relative">
+    <div class="swiper league-slider max-w-[90%] mx-auto px-4 relative">
         <div class="swiper-wrapper py-4">
             <?php foreach ($logos as $logo): ?>
             <div class="swiper-slide flex items-center justify-center">
