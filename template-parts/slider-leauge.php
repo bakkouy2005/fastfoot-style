@@ -57,15 +57,15 @@ document.addEventListener('DOMContentLoaded', function() {
         breakpoints: {
             320: {
                 slidesPerView: 2,
-                spaceBetween: 30
+                spaceBetween: 20
             },
             640: {
                 slidesPerView: 3,
-                spaceBetween: 30
+                spaceBetween: 20
             },
             1024: {
                 slidesPerView: 4,
-                spaceBetween: 30
+                spaceBetween: 20
             }
         }
     });
