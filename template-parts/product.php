@@ -17,51 +17,53 @@ $args = [
 $query = new WP_Query($args);
 ?>
 
-<h2 class="text-4xl font-bold mb-10 text-white"><?php echo esc_html($title); ?></h2>
+<div class="px-8">
+  <h2 class="text-4xl font-bold mb-10 text-white"><?php echo esc_html($title); ?></h2>
 
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 ">
-  <?php 
-  while ($query->have_posts()) : $query->the_post(); 
-    global $product;
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    <?php 
+    while ($query->have_posts()) : $query->the_post(); 
+      global $product;
 
-    $gallery_images = $product->get_gallery_image_ids();
-    $back_image = '';
+      $gallery_images = $product->get_gallery_image_ids();
+      $back_image = '';
 
-    foreach ($gallery_images as $image_id) {
-      $image_title = strtolower(get_the_title($image_id));
-      if (strpos($image_title, 'achterkant') !== false) {
-        $back_image = wp_get_attachment_image($image_id, 'full', false, [
-          'class' => 'w-full h-[490px] object-contain rounded-[12px] absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 transform-gpu will-change-transform'
-          
-        ]);
-        break;
-      }
-    }
-  ?>
-    <div class="group relative">
-      <div class="relative w-full h-[461px] overflow-hidden bg-[url('/wp-content/themes/fastfoot-style/assets/images/mesh-pattern.png')] bg-cover rounded-[12px]">
-        <a href="<?php the_permalink(); ?>" class="block w-full h-full rounded-[12px] overflow-hidden relative">
-          <?php 
-            echo $product->get_image('full', [
-              'class' => 'w-full h-[490px] object-contain rounded-[12px] transition duration-300 group-hover:opacity-0 transform-gpu will-change-transform'
-            ]);
-            if ($back_image) echo $back_image;
-          ?>
-        </a>
+      foreach ($gallery_images as $image_id) {
+        $image_title = strtolower(get_the_title($image_id));
+        if (strpos($image_title, 'achterkant') !== false) {
+          $back_image = wp_get_attachment_image($image_id, 'full', false, [
+            'class' => 'w-full h-[490px] object-contain rounded-[12px] absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 transform-gpu will-change-transform'
+            
+          ]);
+          break;
+        }
+    
+    ?>
+      <div class="group relative">
+        <div class="relative w-full h-[461px] overflow-hidden bg-[url('/wp-content/themes/fastfoot-style/assets/images/mesh-pattern.png')] bg-cover rounded-[12px]">
+          <a href="<?php the_permalink(); ?>" class="block w-full h-full rounded-[12px] overflow-hidden relative">
+            <?php 
+              echo $product->get_image('full', [
+                'class' => 'w-full h-[490px] object-contain rounded-[12px] transition duration-300 group-hover:opacity-0 transform-gpu will-change-transform'
+              ]);
+              if ($back_image) echo $back_image;
+            ?>
+          </a>
+        </div>
+        <div class="mt-4">
+          <h3 class="text-xl font-bold text-white"><?php the_title(); ?></h3>
+          <p class="text-xl text-[#9EB89E]">€<?php echo $product->get_price(); ?></p>
+        </div>
       </div>
-      <div class="mt-4">
-        <h3 class="text-xl font-bold text-white"><?php the_title(); ?></h3>
-        <p class="text-xl text-[#9EB89E]">€<?php echo $product->get_price(); ?></p>
-      </div>
-    </div>
-  <?php 
-  endwhile; 
-  wp_reset_postdata(); 
-  ?>
-</div>
+    <?php 
+    endwhile; 
+    wp_reset_postdata(); 
+    ?>
+  </div>
 
-<div class="text-center mt-12">
-  <button class="inline-flex items-center justify-center px-8 py-3 text-base bg-[#324132] rounded-[12px] text-white font-medium hover:bg-white hover:text-black transition-colors">
-    View All
-  </button>
+  <div class="text-center mt-12">
+    <button class="inline-flex items-center justify-center px-8 py-3 text-base bg-[#324132] rounded-[12px] text-white font-medium hover:bg-white hover:text-black transition-colors">
+      View All
+    </button>
+  </div>
 </div>
