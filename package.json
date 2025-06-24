@@ -4,6 +4,7 @@
   "description": "",
   "main": "tailwind.config.js",
   "scripts": {
+    "build": "tailwindcss -i ./src/input.css -o ./style.css --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
