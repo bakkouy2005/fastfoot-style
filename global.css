@@ -151,7 +151,7 @@ a {
   height: 12px;
   margin-left: -10px;
   margin-top: -10px;
-  background-color: rgba(26, 91, 212, 0.8);
+  background-color: rgba(144, 238, 144, 1);
   transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
@@ -161,7 +161,7 @@ a {
   height: 80px;
   margin-left: -40px;
   margin-top: -40px;
-  background-color: rgb(144, 238, 144);
+  background-color: rgba(26, 91, 212, 0.8);
   color: black;
   font-size: 14px;
   transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
