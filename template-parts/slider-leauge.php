@@ -21,6 +21,9 @@ $logos = [
             </div>
             <?php endforeach; ?>
         </div>
+        <!-- Navigation buttons -->
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
     </div>
 </div>
 
@@ -31,9 +34,9 @@ document.addEventListener('DOMContentLoaded', function() {
         spaceBetween: 30,
         centeredSlides: true,
         loop: true,
-        autoplay: {
-            delay: 3000,
-            disableOnInteraction: false,
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
         },
         breakpoints: {
             320: {
