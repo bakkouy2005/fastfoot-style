@@ -10,7 +10,7 @@ if (have_rows('hero_sections')) :
       ?>
 
 <section 
-  class="<?php echo $hero_index === 1 ? '-mt-24' : ''; ?> relative w-full h-[90vh] bg-cover bg-center rounded-xl overflow-hidden"
+  class="<?php echo $hero_index === 1 ? '-mt-24' : ''; ?> relative w-full h-[120vh] bg-cover bg-center rounded-xl overflow-hidden"
   style="background-image: url('<?php echo esc_url($hero_group['hero_background_image']); ?>');"
   id="hero-<?php echo $hero_index; ?>"
 >
