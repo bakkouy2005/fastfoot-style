@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: true });
 
     // Product hover effecten
-    const productLinks = document.querySelectorAll('.woocommerce-loop-product__link, .wc-block-grid__product-link, .product a');
+    const productLinks = document.querySelectorAll('.group a, .woocommerce-loop-product__link, .wc-block-grid__product-link, .product a');
     productLinks.forEach(link => {
         link.addEventListener('mouseenter', () => {
             customCursor.classList.remove('hover');
