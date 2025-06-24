@@ -162,7 +162,7 @@ a {
   margin-left: -40px;
   margin-top: -40px;
   background-color: rgba(26, 91, 212, 0.8);
-  color: black;
+  color: rgb(231, 229, 229);
   font-size: 14px;
   transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
 }
