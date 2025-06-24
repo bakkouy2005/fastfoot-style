@@ -72,7 +72,7 @@ if (isset($_POST['update_cart']) && isset($_POST['cart'])) {
 get_header();
 ?>
 
-<div class="min-h-screen bg-[#212821] text-white py-12">
+<div class="min-h-screen  text-white py-12">
     <div class="container mx-auto px-4">
         <?php do_action('woocommerce_before_cart'); ?>
 
