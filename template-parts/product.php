@@ -17,7 +17,7 @@ $args = [
 $query = new WP_Query($args);
 ?>
 
-<div class="px-8">
+<div class="px-8 py-5">
   <h2 class="text-4xl font-bold mb-10 text-white font-impact"><?php echo esc_html($title); ?></h2>
 
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
