@@ -10,7 +10,23 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: fastfoot-style
 */
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
+:root {
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Impact', sans-serif;
+}
+
+.font-impact {
+  font-family: 'Impact', sans-serif;
+}
+
+.font-inter {
+  font-family: 'Inter', sans-serif;
+}
 
 /* Custom styles */
 body{
