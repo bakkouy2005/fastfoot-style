@@ -76,7 +76,7 @@ get_header();
     <div class="container mx-auto px-4">
         <?php do_action('woocommerce_before_cart'); ?>
 
-        <h1 class="text-3xl font-bold mb-8">Your Cart</h1>
+        <h1 class="text-3xl font-bold mb-8 py-10">Your Cart</h1>
 
         <form class="woocommerce-cart-form" action="<?php echo esc_url(get_permalink()); ?>" method="post">
             <div class="space-y-6">
