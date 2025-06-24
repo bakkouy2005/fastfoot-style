@@ -1,10 +1,10 @@
 <?php
 $logos = [
-    ['src' => 'premier-league.svg', 'alt' => 'Premier League'],
-    ['src' => 'bundesliga.svg', 'alt' => 'Bundesliga'],
-    ['src' => 'laliga.svg', 'alt' => 'La Liga'],
-    ['src' => 'serie-a.svg', 'alt' => 'Serie A'],
-    ['src' => 'ligue-1.svg', 'alt' => 'Ligue 1']
+    ['src' => '1.svg', 'alt' => 'League 1'],
+    ['src' => '2.svg', 'alt' => 'League 2'],
+    ['src' => '3.svg', 'alt' => 'League 3'],
+    ['src' => '4.svg', 'alt' => 'League 4'],
+    ['src' => '5.svg', 'alt' => 'League 5']
 ];
 ?>
 
