@@ -17,7 +17,7 @@ if (have_rows('hero_sections')) :
   <!-- Dark overlay with gradient -->
   <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-black/25 to-black/50"></div>
   
-  <div class="max-w-3xl mx-auto h-full relative">
+  <div class="max-w-7xl mx-auto h-full relative">
     <!-- Content -->
     <div class="absolute top-1/2 left-0 right-0 -translate-y-1/2 z-10 px-8">
       <div class="max-w-7xl mx-auto">
