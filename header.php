@@ -19,15 +19,32 @@
 document.addEventListener('DOMContentLoaded', () => {
     const customCursor = document.getElementById('custom-cursor');
     const innerCircle = document.getElementById('inner-circle');
+    let currentX = 0;
+    let currentY = 0;
+    let targetX = 0;
+    let targetY = 0;
 
-    function updateCursor(e) {
-        requestAnimationFrame(() => {
-            customCursor.style.left = `${e.clientX}px`;
-            customCursor.style.top = `${e.clientY}px`;
-        });
+    function lerp(start, end, factor) {
+        return start + (end - start) * factor;
     }
 
-    document.addEventListener('mousemove', updateCursor, { passive: true });
+    function updateCursor() {
+        currentX = lerp(currentX, targetX, 0.15);
+        currentY = lerp(currentY, targetY, 0.15);
+        
+        customCursor.style.left = `${currentX}px`;
+        customCursor.style.top = `${currentY}px`;
+        
+        requestAnimationFrame(updateCursor);
+    }
+
+    document.addEventListener('mousemove', (e) => {
+        targetX = e.clientX;
+        targetY = e.clientY;
+    }, { passive: true });
+
+    // Start the animation loop
+    updateCursor();
 
     // Klik effecten
     document.addEventListener('mousedown', () => {
@@ -46,11 +63,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { passive: true });
         target.addEventListener('mouseleave', () => {
             customCursor.classList.remove('hover');
-        }, { passive: true });
-        
-        // Extra snelle hover response
-        target.addEventListener('mouseover', () => {
-            customCursor.classList.add('hover');
         }, { passive: true });
     });
 
