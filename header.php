@@ -6,9 +6,70 @@
     <?php wp_head(); ?>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
 </head>
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
+
+<div class="custom-cursor" id="custom-cursor">
+    <div class="inner-circle" id="inner-circle"></div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const customCursor = document.getElementById('custom-cursor');
+    const innerCircle = document.getElementById('inner-circle');
+    let cursorX = 0;
+    let cursorY = 0;
+    const cursorSize = 35;
+
+    function updateCursor() {
+        requestAnimationFrame(() => {
+            customCursor.style.transform = `translate(${cursorX - cursorSize}px, ${cursorY - cursorSize}px)`;
+        });
+    }
+
+    document.addEventListener('mousemove', (e) => {
+        cursorX = e.clientX;
+        cursorY = e.clientY;
+        updateCursor();
+    }, { passive: true });
+
+    // Klik effecten
+    document.addEventListener('mousedown', () => {
+        customCursor.classList.add('clicking');
+    }, { passive: true });
+
+    document.addEventListener('mouseup', () => {
+        customCursor.classList.remove('clicking');
+    }, { passive: true });
+
+    // Hover effecten
+    const hoverTargets = document.querySelectorAll('a, button, [role="button"], input[type="button"], input[type="submit"], .hover-target');
+    hoverTargets.forEach(target => {
+        target.addEventListener('mouseenter', () => {
+            customCursor.classList.add('hover');
+        }, { passive: true });
+        target.addEventListener('mouseleave', () => {
+            customCursor.classList.remove('hover');
+        }, { passive: true });
+        
+        // Extra snelle hover response
+        target.addEventListener('mouseover', () => {
+            customCursor.classList.add('hover');
+        }, { passive: true });
+    });
+
+    // Voorkom cursor verdwijning
+    document.addEventListener('mouseleave', () => {
+        customCursor.style.opacity = '0';
+    }, { passive: true });
+
+    document.addEventListener('mouseenter', () => {
+        customCursor.style.opacity = '1';
+    }, { passive: true });
+});
+</script>
 
 <header class="site-header fixed w-full top-0 z-50">
     <div class="container mx-auto flex justify-between items-center py-4 px-4">
