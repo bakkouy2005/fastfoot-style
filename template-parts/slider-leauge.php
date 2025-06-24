@@ -9,7 +9,7 @@ $logos = [
 ?>
 
 <div class="bg-black">
-    <div class="swiper league-slider relative">
+    <div class="swiper league-slider relative max-w-7xl mx-auto px-8">
         <div class="swiper-wrapper py-4">
             <?php foreach ($logos as $logo): ?>
             <div class="swiper-slide flex items-center justify-center">
@@ -33,19 +33,19 @@ $logos = [
     font-size: 24px !important;
 }
 .swiper-button-next {
-    right: 10px !important;
+    right: 0 !important;
 }
 .swiper-button-prev {
-    left: 10px !important;
+    left: 0 !important;
 }
 </style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     new Swiper('.league-slider', {
-        slidesPerView: 'auto',
-        spaceBetween: 30,
-        centeredSlides: true,
+        slidesPerView: 4,
+        spaceBetween: 20,
+        centeredSlides: false,
         loop: true,
         speed: 800,
         navigation: {
