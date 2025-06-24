@@ -48,7 +48,7 @@ $query = new WP_Query($query_args);
             foreach ($gallery_images as $image_id) {
                 if (strpos(strtolower(get_the_title($image_id)), 'achterkant') !== false) {
                     $back_image = wp_get_attachment_image($image_id, 'full', false, [
-                        'class' => 'absolute inset-0 w-full h-full object-contain opacity-0 group-hover:opacity-100 transition-opacity duration-300'
+                        'class' => 'absolute inset-0 w-full h-full object-contain opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-[12px]'
                     ]);
                     break;
                 }
@@ -57,11 +57,20 @@ $query = new WP_Query($query_args);
             <article class="group">
                 <!-- Product Image Container -->
                 <div class="relative aspect-[4/5] bg-[#1a1f1a] rounded-[12px]">
-                    <a href="<?php the_permalink(); ?>" class="block w-full h-full rounded-[12px]" >
+                    <a href="<?php echo get_permalink(); ?>" class="block w-full h-full rounded-[12px]">
                         <!-- Main Product Image -->
-                        <?php echo $product->get_image('full ' , [
-                            'class' => 'w-full h-full object-contain rounded-[12px] group-hover:opacity-0 transition-opacity duration-300'
-                        ]); ?>
+                        <?php 
+                        if (has_post_thumbnail()) {
+                            $image_id = $product->get_image_id();
+                            echo wp_get_attachment_image($image_id, 'woocommerce_single', false, [
+                                'class' => 'w-full h-full object-contain rounded-[12px] group-hover:opacity-0 transition-opacity duration-300'
+                            ]);
+                        } else {
+                            echo wc_placeholder_img([
+                                'class' => 'w-full h-full object-contain rounded-[12px] group-hover:opacity-0 transition-opacity duration-300'
+                            ]);
+                        }
+                        ?>
                         
                         <!-- Back Image (if available) -->
                         <?php if ($back_image) echo $back_image; ?>
@@ -72,7 +81,7 @@ $query = new WP_Query($query_args);
                 <div class="mt-4">
                     <h3 class="text-[15px] font-medium text-white"><?php the_title(); ?></h3>
                     <div class="mt-1 text-[15px] text-[#9EB89E]">
-                        €<?php echo $product->get_price(); ?>
+                        <?php echo wc_price($product->get_price()); ?>
                     </div>
                 </div>
             </article>
