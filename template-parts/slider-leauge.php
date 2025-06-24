@@ -9,7 +9,7 @@ $logos = [
 ?>
 
 <div class="bg-black">
-    <div class="swiper league-slider">
+    <div class="swiper league-slider relative">
         <div class="swiper-wrapper py-4">
             <?php foreach ($logos as $logo): ?>
             <div class="swiper-slide flex items-center justify-center">
@@ -22,10 +22,23 @@ $logos = [
             <?php endforeach; ?>
         </div>
         <!-- Navigation buttons -->
-        <div class="swiper-button-next after:!text-white/50 hover:after:!text-white after:!transition-colors"></div>
-        <div class="swiper-button-prev after:!text-white/50 hover:after:!text-white after:!transition-colors"></div>
+        <div class="swiper-button-next !text-white opacity-50 hover:opacity-100 transition-opacity"></div>
+        <div class="swiper-button-prev !text-white opacity-50 hover:opacity-100 transition-opacity"></div>
     </div>
 </div>
+
+<style>
+.swiper-button-next:after,
+.swiper-button-prev:after {
+    font-size: 24px !important;
+}
+.swiper-button-next {
+    right: 10px !important;
+}
+.swiper-button-prev {
+    left: 10px !important;
+}
+</style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
