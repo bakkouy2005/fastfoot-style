@@ -48,7 +48,7 @@ $query = new WP_Query($args);
           ?>
         </a>
       </div>
-      <div class="mt-4 px-4">
+      <div class="">
         <h3 class="text-xl font-bold text-white"><?php the_title(); ?></h3>
         <p class="text-xl text-[#9EB89E]">€<?php echo $product->get_price(); ?></p>
       </div>
