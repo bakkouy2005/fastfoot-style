@@ -22,7 +22,7 @@ if (have_rows('hero_sections')) :
     <div class="absolute top-1/2 left-0 right-0 -translate-y-1/2 z-10 px-1">
       <div class="max-w-7xl mx-auto">
         <!-- Heading -->
-        <div class="max-w-5xl ">
+        <div class="max-w-5xl mb-8">
           <?php if (!empty($hero_group['hero_heading'])): ?>
             <h2 class="text-5xl md:text-7xl font-bold mb-4 leading-tight text-white text-start">
               <?php echo esc_html($hero_group['hero_heading']); ?>
