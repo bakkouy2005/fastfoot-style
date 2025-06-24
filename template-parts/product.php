@@ -57,7 +57,7 @@ $query = new WP_Query($query_args);
             <article class="group">
                 <!-- Product Image Container -->
                 <div class="relative aspect-[4/5] bg-[#1a1f1a] rounded-[12px]">
-                    <a href="<?php the_permalink(); ?>" class="block w-full h-full">
+                    <a href="<?php the_permalink(); ?>" class="block w-full h-full rounded-[12px]" >
                         <!-- Main Product Image -->
                         <?php echo $product->get_image('full', [
                             'class' => 'w-full h-full object-contain rounded-[12px] group-hover:opacity-0 transition-opacity duration-300'
