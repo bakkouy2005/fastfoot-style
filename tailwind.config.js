@@ -5,11 +5,12 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
+    fontFamily: {
+      'sans': ['Inter', 'system-ui', 'sans-serif'],
+      'impact': ['Impact', 'sans-serif'],
+      'inter': ['Inter', 'sans-serif'],
+    },
     extend: {
-      fontFamily: {
-        'impact': ['Impact', 'sans-serif'],
-        'inter': ['Inter', 'sans-serif'],
-      },
     },
   },
   plugins: [],
