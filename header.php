@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
-<header class="site-header fixed w-full top-0 z-50">
+<header class="site-header fixed w-full top-0 z-50 bg-black/5 backdrop-blur-md">
     <div class="container mx-auto flex justify-between items-center py-4 px-4">
         <!-- Logo -->
         <a href="<?php echo esc_url(home_url('/')); ?>" class="flex items-center relative z-10">
@@ -108,18 +108,18 @@ document.addEventListener('DOMContentLoaded', () => {
             ));
             ?>
             <div class="flex items-center space-x-6">
-                <button class="text-white bg-[#333d33]/80 hover:bg-[#333d33] rounded-xl p-2 px-3 transition-all duration-300">
+                <button class="text-white bg-white/10 hover:bg-white/20 rounded-xl p-2 px-3 transition-all duration-300 backdrop-blur-sm">
                     <i class="fas fa-search text-xl"></i>
                 </button>
-                <button class="text-white bg-[#333d33]/80 hover:bg-[#333d33] rounded-xl p-2 px-3 transition-all duration-300">
+                <button class="text-white bg-white/10 hover:bg-white/20 rounded-xl p-2 px-3 transition-all duration-300 backdrop-blur-sm">
                     <i class="fas fa-user text-xl"></i>
                 </button>
                 <div class="relative group">
-                    <a href="<?php echo site_url('cart'); ?>" class="text-white bg-[#333d33]/80 hover:bg-[#333d33] rounded-xl p-2 px-3 transition-all duration-300 inline-block">
+                    <a href="<?php echo site_url('cart'); ?>" class="text-white bg-white/10 hover:bg-white/20 rounded-xl p-2 px-3 transition-all duration-300 backdrop-blur-sm inline-block">
                         <i class="fas fa-shopping-bag text-xl"></i>
                     </a>
                     <!-- Cart Dropdown -->
-                    <div class="absolute right-0 top-full mt-2 w-80 bg-[#333d33]/80 backdrop-blur-md rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                    <div class="absolute right-0 top-full mt-2 w-80 bg-black/50 backdrop-blur-md rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
                         <div class="p-4">
                             <?php if (WC()->cart->is_empty()): ?>
                                 <p class="text-white/80 text-center py-4">Je winkelwagen is leeg</p>
@@ -164,6 +164,3 @@ document.addEventListener('DOMContentLoaded', () => {
         </button>
     </div>
 </header>
-
-<!-- Spacer to prevent content from going under fixed header -->
-<div class="h-32"></div>
