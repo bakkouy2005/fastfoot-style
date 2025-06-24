@@ -19,21 +19,15 @@
 document.addEventListener('DOMContentLoaded', () => {
     const customCursor = document.getElementById('custom-cursor');
     const innerCircle = document.getElementById('inner-circle');
-    let cursorX = 0;
-    let cursorY = 0;
-    const cursorSize = 35;
 
-    function updateCursor() {
+    function updateCursor(e) {
         requestAnimationFrame(() => {
-            customCursor.style.transform = `translate(${cursorX - cursorSize}px, ${cursorY - cursorSize}px)`;
+            customCursor.style.left = `${e.clientX}px`;
+            customCursor.style.top = `${e.clientY}px`;
         });
     }
 
-    document.addEventListener('mousemove', (e) => {
-        cursorX = e.clientX;
-        cursorY = e.clientY;
-        updateCursor();
-    }, { passive: true });
+    document.addEventListener('mousemove', updateCursor, { passive: true });
 
     // Klik effecten
     document.addEventListener('mousedown', () => {
