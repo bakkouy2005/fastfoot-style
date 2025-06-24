@@ -43,7 +43,7 @@ $query = new WP_Query($args);
           <a href="<?php the_permalink(); ?>" class="block w-full h-full relative">
             <?php 
               echo $product->get_image('full', [
-                'class' => 'w-full h-[490px] object-contain transition duration-300 group-hover:opacity-0 transform-gpu will-change-transform'
+                'class' => 'w-full h-[490px] object-cover object-contain transition duration-300 group-hover:opacity-0 transform-gpu will-change-transform'
               ]);
               if ($back_image) echo $back_image;
             ?>
