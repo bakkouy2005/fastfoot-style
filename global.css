@@ -186,7 +186,17 @@ a {
   transition: opacity 0.3s;
 }
 
-.group:hover .wp-post-image {
+.product-grid .group:hover .wp-post-image {
   opacity: 0;
+}
+
+.product-grid img:not(.wp-post-image) {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+.product-grid .group:hover img:not(.wp-post-image) {
+  opacity: 1;
 }
 
