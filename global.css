@@ -177,26 +177,3 @@ a {
   transition: all 0.2s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
-/* Product styling */
-.product-grid img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  border-radius: 12px;
-  transition: opacity 0.3s;
-}
-
-.product-grid .group:hover .wp-post-image {
-  opacity: 0;
-}
-
-.product-grid img:not(.wp-post-image) {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-}
-
-.product-grid .group:hover img:not(.wp-post-image) {
-  opacity: 1;
-}
-

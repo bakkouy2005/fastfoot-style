@@ -47,17 +47,21 @@ $query = new WP_Query($query_args);
             $gallery_images = $product->get_gallery_image_ids();
             foreach ($gallery_images as $image_id) {
                 if (strpos(strtolower(get_the_title($image_id)), 'achterkant') !== false) {
-                    $back_image = wp_get_attachment_image($image_id, 'full');
+                    $back_image = wp_get_attachment_image($image_id, 'full', false, [
+                        'class' => 'absolute inset-0 w-full h-full object-contain opacity-0 group-hover:opacity-100 transition-opacity duration-300'
+                    ]);
                     break;
                 }
             }
         ?>
             <article class="group">
                 <!-- Product Image Container -->
-                <div class="relative aspect-[4/5] bg-[#1a1f1a] rounded-[12px] overflow-hidden">
-                    <a href="<?php the_permalink(); ?>" class="block w-full h-full">
+                <div class="relative aspect-[4/5] bg-[#1a1f1a] rounded-[12px]">
+                    <a href="<?php the_permalink(); ?>" class="block w-full h-full rounded-[12px]" >
                         <!-- Main Product Image -->
-                        <?php echo $product->get_image('full'); ?>
+                        <?php echo $product->get_image('full ' , [
+                            'class' => 'w-full h-full object-contain rounded-[12px] group-hover:opacity-0 transition-opacity duration-300'
+                        ]); ?>
                         
                         <!-- Back Image (if available) -->
                         <?php if ($back_image) echo $back_image; ?>
