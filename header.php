@@ -18,6 +18,12 @@
     <div class="inner-circle" id="inner-circle"></div>
 </div>
 
+<!-- Test text -->
+<div class="fixed top-32 left-8 z-50 bg-black/50 backdrop-blur-sm p-4 rounded-lg">
+    <p class="text-white mb-2">Test tekst in Inter (standaard)</p>
+    <p class="text-white font-impact">Test tekst in Impact</p>
+</div>
+
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     const customCursor = document.getElementById('custom-cursor');
